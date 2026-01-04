@@ -1,0 +1,58 @@
+[
+    {
+        "id": "1",
+        "name": "Tomate",
+        "category": "Verduras",
+        "price": 1500,
+        "unit": "kg"
+    },
+    {
+        "id": "2",
+        "name": "Lechuga",
+        "category": "Verduras",
+        "price": 800,
+        "unit": "unidad"
+    },
+    {
+        "id": "3",
+        "name": "Coca Cola 1.5L",
+        "category": "Bebidas",
+        "price": 1200,
+        "unit": "unidad"
+    },
+    {
+        "id": "4",
+        "name": "Pan Hallulla",
+        "category": "Pan",
+        "price": 100,
+        "unit": "unidad"
+    },
+    {
+        "id": "5",
+        "name": "Galletas Tritón",
+        "category": "Galletas",
+        "price": 900,
+        "unit": "paquete"
+    },
+    {
+        "id": "6",
+        "name": "Queso Mantecoso",
+        "category": "Queso",
+        "price": 2500,
+        "unit": "kg"
+    },
+    {
+        "id": "7",
+        "name": "Jamón",
+        "category": "Laminado",
+        "price": 3500,
+        "unit": "kg"
+    },
+    {
+        "id": "8",
+        "name": "Cecina",
+        "category": "Cecina",
+        "price": 4000,
+        "unit": "kg"
+    }
+]
