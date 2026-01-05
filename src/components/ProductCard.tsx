@@ -1,6 +1,7 @@
 "use client";
 
 import { Product } from "@/types/product";
+import Image from "next/image";
 
 interface ProductCardProps {
   product: Product;
@@ -24,7 +25,19 @@ export default function ProductCard({
 
   return (
     <div className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow">
-      <div className="flex justify-between items-start mb-2">
+      <div className="flex justify-between items-start mb-2 gap-3">
+        {product.image && (
+          <div className="flex-shrink-0">
+            <Image
+              src={product.image}
+              alt={product.name}
+              width={80}
+              height={80}
+              className="w-20 h-20 object-cover rounded-md"
+              unoptimized
+            />
+          </div>
+        )}
         <div className="flex-1">
           <h3 className="text-lg font-semibold text-gray-800">
             {product.name}

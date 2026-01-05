@@ -4,6 +4,7 @@ export interface Product {
     category: string;
     price: number;
     unit: string;
+    image?: string; // URL o base64 de la imagen del producto
 }
 
 export const categories = [
