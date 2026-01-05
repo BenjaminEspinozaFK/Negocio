@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Product, categories, units } from "@/types/product";
+import Image from "next/image";
 
 interface ProductFormProps {
   product?: Product | null;
@@ -14,24 +15,12 @@ export default function ProductForm({
   onSubmit,
   onCancel,
 }: ProductFormProps) {
-  const [name, setName] = useState("");
-  const [category, setCategory] = useState("Otros");
-  const [price, setPrice] = useState("");
-  const [unit, setUnit] = useState("unidad");
-
-  useEffect(() => {
-    if (product) {
-      setName(product.name);
-      setCategory(product.category);
-      setPrice(product.price.toString());
-      setUnit(product.unit);
-    } else {
-      setName("");
-      setCategory("Otros");
-      setPrice("");
-      setUnit("unidad");
-    }
-  }, [product]);
+  const [name, setName] = useState(product?.name || "");
+  const [category, setCategory] = useState(product?.category || "Otros");
+  const [price, setPrice] = useState(product?.price.toString() || "");
+  const [unit, setUnit] = useState(product?.unit || "unidad");
+  const [image, setImage] = useState(product?.image || "");
+  const [imagePreview, setImagePreview] = useState(product?.image || "");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,12 +35,46 @@ export default function ProductForm({
       category,
       price: parseFloat(price),
       unit,
+      image: image || undefined,
     });
 
     setName("");
     setCategory("Otros");
     setPrice("");
     setUnit("unidad");
+    setImage("");
+    setImagePreview("");
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Validar que sea una imagen
+      if (!file.type.startsWith("image/")) {
+        alert("Por favor selecciona una imagen válida");
+        return;
+      }
+
+      // Validar tamaño (máximo 2MB)
+      if (file.size > 2 * 1024 * 1024) {
+        alert("La imagen es muy grande. Máximo 2MB");
+        return;
+      }
+
+      // Convertir a base64
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        setImage(base64String);
+        setImagePreview(base64String);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setImage("");
+    setImagePreview("");
   };
 
   return (
@@ -107,6 +130,39 @@ export default function ProductForm({
                 </option>
               ))}
             </select>
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Imagen del Producto
+          </label>
+          <div className="space-y-2">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+            />
+            {imagePreview && (
+              <div className="relative inline-block">
+                <Image
+                  src={imagePreview}
+                  alt="Vista previa"
+                  width={128}
+                  height={128}
+                  className="w-32 h-32 object-cover rounded-md border border-gray-300"
+                  unoptimized
+                />
+                <button
+                  type="button"
+                  onClick={handleRemoveImage}
+                  className="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs"
+                >
+                  ✕
+                </button>
+              </div>
+            )}
           </div>
         </div>
 

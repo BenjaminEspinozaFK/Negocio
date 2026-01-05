@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Product, categories } from "@/types/product";
+import ProductCard from "@/components/ProductCard";
 import Link from "next/link";
 
 export default function CatalogoPublico() {
@@ -41,13 +42,6 @@ export default function CatalogoPublico() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("es-CL", {
-      style: "currency",
-      currency: "CLP",
-    }).format(price);
   };
 
   return (
@@ -129,28 +123,11 @@ export default function CatalogoPublico() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredProducts.map((product) => (
-                <div
+                <ProductCard
                   key={product.id}
-                  className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow"
-                >
-                  <div className="flex justify-between items-start mb-2">
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-gray-800">
-                        {product.name}
-                      </h3>
-                      <span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mt-1">
-                        {product.category}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="mt-3">
-                    <p className="text-2xl font-bold text-green-600">
-                      {formatPrice(product.price)}
-                    </p>
-                    <p className="text-sm text-gray-500">por {product.unit}</p>
-                  </div>
-                </div>
+                  product={product}
+                  readOnly={true}
+                />
               ))}
             </div>
           </>
