@@ -227,6 +227,7 @@ export default function AdminPanel() {
 
         {/* Formulario */}
         <ProductForm
+          key={editingProduct?.id || 'new'}
           product={editingProduct}
           onSubmit={editingProduct ? handleUpdateProduct : handleAddProduct}
           onCancel={() => setEditingProduct(null)}
