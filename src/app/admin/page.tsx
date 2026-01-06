@@ -157,7 +157,7 @@ export default function AdminPanel() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Ingresa tu contraseña"
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 autoFocus
               />
             </div>
@@ -227,7 +227,7 @@ export default function AdminPanel() {
 
         {/* Formulario */}
         <ProductForm
-          key={editingProduct?.id || 'new'}
+          key={editingProduct?.id || "new"}
           product={editingProduct}
           onSubmit={editingProduct ? handleUpdateProduct : handleAddProduct}
           onCancel={() => setEditingProduct(null)}
@@ -245,7 +245,7 @@ export default function AdminPanel() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Escribe el nombre del producto..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               />
             </div>
 
@@ -256,7 +256,7 @@ export default function AdminPanel() {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
               >
                 <option value="Todas">Todas las categorías</option>
                 {categories.map((cat) => (
