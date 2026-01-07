@@ -9,13 +9,11 @@ export interface Product {
 
 export const categories = [
     "Verduras",
+    "Frutas",
+    "Otros",
     "Bebidas",
-    "Pan",
-    "Galletas",
-    "Queso",
-    "Laminado",
-    "Cecina",
-    "Otros"
+    "Fiambreria",
+    "Congelados"
 ];
 
 export const units = ["kg", "unidad", "paquete", "litro"];
