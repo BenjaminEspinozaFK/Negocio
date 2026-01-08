@@ -45,28 +45,31 @@ export default function CatalogoPublico() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-2">
-            🏪 Mi Negocio de la Villa
-          </h1>
-          <p className="text-gray-600 text-lg mb-4">
-            Nuestros productos y precios
-          </p>
+        <div className="text-center mb-12">
+          <div className="inline-block bg-white rounded-2xl shadow-lg p-8 mb-6">
+            <div className="text-6xl mb-4">🏪</div>
+            <h1 className="text-4xl md:text-6xl font-bold bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">
+              Provisiones Mily
+            </h1>
+            <p className="text-gray-600 text-lg">
+              Nuestros productos y precios actualizados
+            </p>
+          </div>
 
           {/* Botón Admin - Discreto */}
           <Link
             href="/admin"
-            className="inline-block text-xs text-gray-400 hover:text-gray-600 transition-colors"
+            className="inline-block text-sm text-gray-400 hover:text-blue-600 transition-colors font-medium"
           >
-            Administración
+            → Acceso administración
           </Link>
         </div>
 
         {/* Filtros */}
-        <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -88,7 +91,7 @@ export default function CatalogoPublico() {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 transition-all duration-200 hover:border-gray-400 bg-white"
               >
                 <option value="Todas">Todas las categorías</option>
                 {categories.map((cat) => (
@@ -116,12 +119,12 @@ export default function CatalogoPublico() {
           </div>
         ) : (
           <>
-            <div className="mb-4 text-gray-700 font-medium">
+            <div className="mb-6 inline-block bg-linear-to-r from-blue-500 to-indigo-500 text-white px-6 py-3 rounded-xl shadow-md font-semibold">
               📦 {filteredProducts.length} producto
               {filteredProducts.length !== 1 ? "s" : ""} disponible
               {filteredProducts.length !== 1 ? "s" : ""}
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -134,8 +137,14 @@ export default function CatalogoPublico() {
         )}
 
         {/* Footer */}
-        <div className="mt-12 text-center text-gray-600 text-sm">
-          <p>💚 Gracias por preferirnos</p>
+        <div className="mt-16 text-center">
+          <div className="bg-white rounded-2xl shadow-lg p-8 inline-block">
+            <p className="text-2xl mb-2">💚</p>
+            <p className="text-gray-700 font-medium">Gracias por preferirnos</p>
+            <p className="text-gray-500 text-sm mt-1">
+              Tu negocio de confianza en la villa
+            </p>
+          </div>
         </div>
       </div>
     </div>
