@@ -24,54 +24,57 @@ export default function ProductCard({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow">
-      <div className="flex justify-between items-start mb-2 gap-3">
-        {product.image && (
-          <div className="flex-shrink-0">
-            <Image
-              src={product.image}
-              alt={product.name}
-              width={80}
-              height={80}
-              className="w-20 h-20 object-cover rounded-md"
-              unoptimized
-            />
-          </div>
-        )}
-        <div className="flex-1">
-          <h3 className="text-lg font-semibold text-gray-800">
-            {product.name}
-          </h3>
-          <span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mt-1">
+    <div className="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-blue-200 group">
+      {product.image && (
+        <div className="relative h-48 w-full overflow-hidden bg-linear-to-br from-gray-50 to-gray-100">
+          <Image
+            src={product.image}
+            alt={product.name}
+            width={400}
+            height={300}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            unoptimized
+          />
+        </div>
+      )}
+      
+      <div className="p-5">
+        <div className="mb-3">
+          <span className="inline-block bg-linear-to-r from-blue-500 to-indigo-500 text-white text-xs font-medium px-3 py-1 rounded-full mb-2">
             {product.category}
           </span>
-        </div>
-      </div>
-
-      <div className="mt-3 flex justify-between items-center">
-        <div>
-          <p className="text-2xl font-bold text-green-600">
-            {formatPrice(product.price)}
-          </p>
-          <p className="text-sm text-gray-500">por {product.unit}</p>
+          <h3 className="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
+            {product.name}
+          </h3>
         </div>
 
-        {!readOnly && (
-          <div className="flex gap-2">
-            <button
-              onClick={() => onEdit?.(product)}
-              className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm transition-colors"
-            >
-              ✏️ Editar
-            </button>
-            <button
-              onClick={() => onDelete?.(product.id)}
-              className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition-colors"
-            >
-              🗑️ Eliminar
-            </button>
+        <div className="flex justify-between items-end mt-4">
+          <div>
+            <p className="text-3xl font-bold bg-linear-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+              {formatPrice(product.price)}
+            </p>
+            <p className="text-sm text-gray-500 mt-1">por {product.unit}</p>
           </div>
-        )}
+
+          {!readOnly && (
+            <div className="flex gap-2">
+              <button
+                onClick={() => onEdit?.(product)}
+                className="bg-linear-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md flex items-center gap-1"
+                title="Editar producto"
+              >
+                <span>✏️</span>
+              </button>
+              <button
+                onClick={() => onDelete?.(product.id)}
+                className="bg-linear-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md flex items-center gap-1"
+                title="Eliminar producto"
+              >
+                <span>🗑️</span>
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

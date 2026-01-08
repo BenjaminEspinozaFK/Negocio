@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mi Negocio de la Villa - Gestión de Productos",
-  description: "Aplicación para gestionar productos y precios de mi negocio",
+  title: "Provisiones Mily - Gestión de Productos",
+  description:
+    "Aplicación para gestionar productos y precios de Provisiones Mily",
 };
 
 export default function RootLayout({
