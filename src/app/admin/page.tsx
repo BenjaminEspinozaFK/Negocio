@@ -136,11 +136,14 @@ export default function AdminPanel() {
   // Pantalla de Login
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center px-4">
-        <div className="bg-white rounded-lg shadow-2xl p-8 max-w-md w-full">
-          <div className="text-center mb-6">
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">
-              🔒 Panel de Administración
+      <div className="min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center px-4">
+        <div className="bg-white rounded-2xl shadow-2xl p-10 max-w-md w-full border border-gray-100">
+          <div className="text-center mb-8">
+            <div className="bg-linear-to-r from-blue-500 to-indigo-500 text-white w-20 h-20 rounded-2xl flex items-center justify-center text-4xl shadow-lg mb-4 mx-auto">
+              🔒
+            </div>
+            <h1 className="text-3xl font-bold bg-linear-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-2">
+              Panel de Administración
             </h1>
             <p className="text-gray-600">
               Ingresa la contraseña para continuar
@@ -157,7 +160,7 @@ export default function AdminPanel() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Ingresa tu contraseña"
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 transition-all duration-200 hover:border-gray-400"
                 autoFocus
               />
             </div>
@@ -170,7 +173,7 @@ export default function AdminPanel() {
 
             <button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-md transition-colors"
+              className="w-full bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
             >
               🔓 Ingresar
             </button>
@@ -198,31 +201,34 @@ export default function AdminPanel() {
 
   // Panel de Admin (después de autenticarse)
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header con logout */}
-        <div className="text-center mb-8">
-          <div className="flex justify-between items-center mb-4">
+        <div className="text-center mb-12">
+          <div className="flex justify-between items-center mb-6 bg-white rounded-xl shadow-sm p-4">
             <Link
               href="/catalogo"
-              className="text-sm text-blue-600 hover:text-blue-800"
+              className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors flex items-center gap-2 hover:gap-3 duration-200"
             >
               ← Ver catálogo público
             </Link>
             <button
               onClick={handleLogout}
-              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm transition-colors"
+              className="bg-linear-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white px-5 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-md hover:shadow-lg"
             >
               🚪 Cerrar Sesión
             </button>
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-2">
-            🔧 Panel de Administración
-          </h1>
-          <p className="text-gray-600 text-lg">
-            Gestiona tus productos y precios
-          </p>
+          <div className="inline-block bg-white rounded-2xl shadow-lg p-8">
+            <div className="text-6xl mb-4">🔧</div>
+            <h1 className="text-4xl md:text-6xl font-bold bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">
+              Panel de Administración
+            </h1>
+            <p className="text-gray-600 text-lg">
+              Gestiona tus productos y precios
+            </p>
+          </div>
         </div>
 
         {/* Formulario */}
@@ -234,7 +240,7 @@ export default function AdminPanel() {
         />
 
         {/* Filtros */}
-        <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -245,7 +251,7 @@ export default function AdminPanel() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Escribe el nombre del producto..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 transition-all duration-200 hover:border-gray-400"
               />
             </div>
 
@@ -256,7 +262,7 @@ export default function AdminPanel() {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 transition-all duration-200 hover:border-gray-400 bg-white"
               >
                 <option value="Todas">Todas las categorías</option>
                 {categories.map((cat) => (
@@ -284,12 +290,12 @@ export default function AdminPanel() {
           </div>
         ) : (
           <>
-            <div className="mb-4 text-gray-700 font-medium">
+            <div className="mb-6 inline-block bg-linear-to-r from-blue-500 to-indigo-500 text-white px-6 py-3 rounded-xl shadow-md font-semibold">
               📦 {filteredProducts.length} producto
               {filteredProducts.length !== 1 ? "s" : ""} encontrado
               {filteredProducts.length !== 1 ? "s" : ""}
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredProducts.map((product) => (
                 <ProductCard
                   key={product.id}

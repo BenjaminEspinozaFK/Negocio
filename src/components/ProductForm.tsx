@@ -78,10 +78,15 @@ export default function ProductForm({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">
-        {product ? "✏️ Editar Producto" : "➕ Agregar Nuevo Producto"}
-      </h2>
+    <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 mb-8 hover:shadow-xl transition-shadow duration-300">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="bg-linear-to-r from-blue-500 to-indigo-500 text-white w-12 h-12 rounded-xl flex items-center justify-center text-2xl shadow-md">
+          {product ? "✏️" : "➕"}
+        </div>
+        <h2 className="text-3xl font-bold text-gray-800">
+          {product ? "Editar Producto" : "Agregar Nuevo Producto"}
+        </h2>
+      </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -92,7 +97,7 @@ export default function ProductForm({
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 transition-all duration-200 hover:border-gray-400"
             placeholder="Ej: Tomate, Pan, Coca Cola"
           />
         </div>
@@ -105,7 +110,7 @@ export default function ProductForm({
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 transition-all duration-200 hover:border-gray-400 bg-white"
             >
               {categories.map((cat) => (
                 <option key={cat} value={cat}>
@@ -122,7 +127,7 @@ export default function ProductForm({
             <select
               value={unit}
               onChange={(e) => setUnit(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 transition-all duration-200 hover:border-gray-400 bg-white"
             >
               {units.map((unit) => (
                 <option key={unit} value={unit}>
@@ -142,7 +147,7 @@ export default function ProductForm({
               type="file"
               accept="image/*"
               onChange={handleImageChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 text-gray-900"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-linear-to-r file:from-blue-500 file:to-indigo-500 file:text-white hover:file:from-blue-600 hover:file:to-indigo-600 file:transition-all file:duration-200 file:shadow-sm hover:file:shadow-md text-gray-900 transition-all duration-200 hover:border-gray-400 cursor-pointer"
             />
             {imagePreview && (
               <div className="relative inline-block">
@@ -174,17 +179,17 @@ export default function ProductForm({
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 transition-all duration-200 hover:border-gray-400"
             placeholder="1500"
             min="0"
             step="50"
           />
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 pt-2">
           <button
             type="submit"
-            className="flex-1 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md transition-colors"
+            className="flex-1 bg-linear-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
           >
             {product ? "💾 Guardar Cambios" : "➕ Agregar Producto"}
           </button>
@@ -193,7 +198,7 @@ export default function ProductForm({
             <button
               type="button"
               onClick={onCancel}
-              className="flex-1 bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-4 rounded-md transition-colors"
+              className="flex-1 bg-gray-400 hover:bg-gray-500 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg"
             >
               ❌ Cancelar
             </button>
