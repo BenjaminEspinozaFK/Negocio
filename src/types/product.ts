@@ -8,11 +8,11 @@ export interface Product {
 }
 
 export const categories = [
-    "Verduras",
-    "Frutas",
+    "Frutas y Verduras",
     "Otros",
     "Bebidas",
     "Fiambreria",
+    "Limpieza",
     "Congelados"
 ];
 

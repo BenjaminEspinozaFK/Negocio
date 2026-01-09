@@ -2,358 +2,729 @@
     {
         "id": "1",
         "name": "Tomate",
-        "category": "Verduras",
+        "category": "Frutas y Verduras",
         "price": 1890,
-        "unit": "kg"
+        "unit": "kg",
+        "image": "https://images.pexels.com/photos/1327838/pexels-photo-1327838.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "2",
         "name": "Papas",
-        "category": "Verduras",
+        "category": "Frutas y Verduras",
         "price": 650,
-        "unit": "kg"
+        "unit": "kg",
+        "image": "https://images.pexels.com/photos/144248/potatoes-vegetables-erdfrucht-bio-144248.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "3",
         "name": "Cebolla",
-        "category": "Verduras",
+        "category": "Frutas y Verduras",
         "price": 990,
-        "unit": "kg"
+        "unit": "kg",
+        "image": "https://images.pexels.com/photos/533342/pexels-photo-533342.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "4",
         "name": "Ajo",
-        "category": "Verduras",
+        "category": "Frutas y Verduras",
         "price": 350,
-        "unit": "kg"
+        "unit": "kg",
+        "image": "https://images.pexels.com/photos/1435904/pexels-photo-1435904.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "5",
         "name": "Limon",
-        "category": "Verduras",
+        "category": "Frutas y Verduras",
         "price": 1890,
-        "unit": "kg"
+        "unit": "kg",
+        "image": "https://images.pexels.com/photos/1414130/pexels-photo-1414130.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "6",
         "name": "Platanos",
-        "category": "Frutas",
+        "category": "Frutas y Verduras",
         "price": 1790,
-        "unit": "kg"
+        "unit": "kg",
+        "image": "https://images.pexels.com/photos/2872755/pexels-photo-2872755.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "7",
         "name": "Durazno",
-        "category": "Frutas",
+        "category": "Frutas y Verduras",
         "price": 1500,
-        "unit": "kg"
+        "unit": "kg",
+        "image": "https://images.pexels.com/photos/175727/pexels-photo-175727.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "8",
         "name": "Melon",
-        "category": "Frutas",
+        "category": "Frutas y Verduras",
         "price": 1000,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/2363347/pexels-photo-2363347.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "9",
         "name": "Yoghurt",
         "category": "Otros",
         "price": 350,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1854652/pexels-photo-1854652.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "10",
         "name": "Jalea",
         "category": "Otros",
         "price": 450,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1435903/pexels-photo-1435903.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "11",
         "name": "Chandelle",
         "category": "Otros",
         "price": 890,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/3992204/pexels-photo-3992204.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "12",
         "name": "Sahne nuss yogurt",
         "category": "Otros",
         "price": 790,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1854652/pexels-photo-1854652.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "13",
         "name": "Gold",
         "category": "Otros",
         "price": 790,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1854652/pexels-photo-1854652.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "14",
         "name": "Batifrut",
         "category": "Otros",
         "price": 750,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1854652/pexels-photo-1854652.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "15",
         "name": "Chiquitin",
         "category": "Otros",
         "price": 390,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1854652/pexels-photo-1854652.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "16",
         "name": "1+1",
         "category": "Otros",
         "price": 750,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1854652/pexels-photo-1854652.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "17",
         "name": "Vital grande",
         "category": "Bebidas",
-        "price": 1100,
-        "unit": "unidad"
+        "price": 1200,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/327090/pexels-photo-327090.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "18",
         "name": "Vital chica",
         "category": "Bebidas",
-        "price": 750,
-        "unit": "unidad"
+        "price": 900,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/327090/pexels-photo-327090.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "19",
         "name": "Coca-Cola 2L",
         "category": "Bebidas",
         "price": 1800,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/50593/coca-cola-cold-drink-soft-drink-coke-50593.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "20",
         "name": "Coca-Cola 3L",
         "category": "Bebidas",
         "price": 2400,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/50593/coca-cola-cold-drink-soft-drink-coke-50593.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "21",
         "name": "Fanta 2L",
         "category": "Bebidas",
         "price": 1800,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1292294/pexels-photo-1292294.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "22",
         "name": "Fanta 3L",
         "category": "Bebidas",
         "price": 2400,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1292294/pexels-photo-1292294.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "23",
         "name": "Sprit 2L",
         "category": "Bebidas",
         "price": 1800,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/4113938/pexels-photo-4113938.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "24",
         "name": "Sprit 3L",
         "category": "Bebidas",
         "price": 2400,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/4113938/pexels-photo-4113938.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "25",
         "name": "Lata",
         "category": "Bebidas",
         "price": 1000,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/2983100/pexels-photo-2983100.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "26",
         "name": "Monster",
         "category": "Bebidas",
-        "price": 1750,
-        "unit": "unidad"
+        "price": 1800,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/2480493/pexels-photo-2480493.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "27",
         "name": "Expres",
         "category": "Bebidas",
         "price": 450,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "28",
         "name": "Jugo en caja",
         "category": "Bebidas",
         "price": 450,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/96974/pexels-photo-96974.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "29",
         "name": "Jugo Andina",
         "category": "Bebidas",
         "price": 1800,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/96974/pexels-photo-96974.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "30",
         "name": "Gatorade",
         "category": "Bebidas",
         "price": 1790,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/2480493/pexels-photo-2480493.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "31",
         "name": "Bebida desechable 3L",
         "category": "Bebidas",
         "price": 3400,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/50593/coca-cola-cold-drink-soft-drink-coke-50593.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "32",
         "name": "Bebida desechable 2.5L",
         "category": "Bebidas",
         "price": 3000,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/50593/coca-cola-cold-drink-soft-drink-coke-50593.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "33",
         "name": "Power",
         "category": "Bebidas",
         "price": 1690,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/2480493/pexels-photo-2480493.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "34",
         "name": "Vianesas",
         "category": "Fiambreria",
         "price": 1480,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/4518843/pexels-photo-4518843.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "35",
         "name": "Salame",
         "category": "Fiambreria",
         "price": 1690,
-        "unit": "kg"
+        "unit": "kg",
+        "image": "https://images.pexels.com/photos/1893556/pexels-photo-1893556.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "36",
         "name": "Pate cerdo",
         "category": "Fiambreria",
         "price": 1000,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/4518843/pexels-photo-4518843.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "37",
         "name": "Ternera",
         "category": "Fiambreria",
         "price": 800,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "38",
         "name": "Jamonada",
         "category": "Fiambreria",
-        "price": 6490,
-        "unit": "kg"
+        "price": 6990,
+        "unit": "kg",
+        "image": "https://images.pexels.com/photos/1893556/pexels-photo-1893556.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "39",
         "name": "Queso cabeza",
         "category": "Fiambreria",
         "price": 7800,
-        "unit": "kg"
+        "unit": "kg",
+        "image": "https://images.pexels.com/photos/821365/pexels-photo-821365.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "40",
         "name": "Lisa PF",
         "category": "Fiambreria",
         "price": 4800,
-        "unit": "kg"
+        "unit": "kg",
+        "image": "https://images.pexels.com/photos/1893556/pexels-photo-1893556.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "41",
         "name": "Carne Molida",
         "category": "Congelados",
         "price": 1890,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "42",
         "name": "Chuleta",
         "category": "Congelados",
         "price": 1690,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "43",
         "name": "Hamburguesa",
         "category": "Congelados",
         "price": 300,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1639565/pexels-photo-1639565.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "44",
         "name": "Hamburguesa PF",
         "category": "Congelados",
         "price": 450,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1639565/pexels-photo-1639565.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "45",
         "name": "Primavera",
         "category": "Congelados",
         "price": 890,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1268558/pexels-photo-1268558.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "46",
         "name": "Arvejas",
         "category": "Congelados",
         "price": 890,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/255469/pexels-photo-255469.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "47",
         "name": "Choclo",
         "category": "Congelados",
         "price": 890,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1448665/pexels-photo-1448665.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "48",
         "name": "Choclo desgranado",
         "category": "Congelados",
         "price": 900,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1448665/pexels-photo-1448665.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "49",
         "name": "Pollo",
         "category": "Congelados",
         "price": 3690,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "50",
         "name": "Nuggets",
         "category": "Congelados",
         "price": 3480,
-        "unit": "kg"
+        "unit": "kg",
+        "image": "https://images.pexels.com/photos/60616/fried-chicken-chicken-fried-crunchy-60616.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     },
     {
         "id": "51",
         "name": "Hielo",
         "category": "Congelados",
         "price": 890,
-        "unit": "unidad"
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1571458/pexels-photo-1571458.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "52",
+        "name": "Arrollado de Lomo",
+        "category": "Fiambreria",
+        "price": 7800,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1893556/pexels-photo-1893556.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "53",
+        "name": "Lisa artesanal",
+        "category": "Fiambreria",
+        "price": 8100,
+        "unit": "kg",
+        "image": "https://images.pexels.com/photos/1893556/pexels-photo-1893556.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "54",
+        "name": "Margarina Soprole chica",
+        "category": "Otros",
+        "price": 700,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/4110256/pexels-photo-4110256.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "55",
+        "name": "Margarina Soprole grande",
+        "category": "Otros",
+        "price": 1400,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/4110256/pexels-photo-4110256.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "56",
+        "name": "Quix chico",
+        "category": "Limpieza",
+        "price": 890,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/4239091/pexels-photo-4239091.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "57",
+        "name": "Quix mediano",
+        "category": "Limpieza",
+        "price": 1890,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/4239091/pexels-photo-4239091.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "58",
+        "name": "Quix grande",
+        "category": "Limpieza",
+        "price": 2290,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/4239091/pexels-photo-4239091.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "59",
+        "name": "Detergente en polvo",
+        "category": "Limpieza",
+        "price": 1990,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/4239091/pexels-photo-4239091.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "60",
+        "name": "Poett",
+        "category": "Limpieza",
+        "price": 890,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/4239091/pexels-photo-4239091.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "61",
+        "name": "Cloro clorinda",
+        "category": "Limpieza",
+        "price": 750,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/4239091/pexels-photo-4239091.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "62",
+        "name": "Clorogel clorinda",
+        "category": "Limpieza",
+        "price": 890,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/4239091/pexels-photo-4239091.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "63",
+        "name": "Esponja",
+        "category": "Limpieza",
+        "price": 490,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/4239091/pexels-photo-4239091.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "64",
+        "name": "Cif",
+        "category": "Limpieza",
+        "price": 1890,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/4239091/pexels-photo-4239091.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "65",
+        "name": "Toalla Humeda",
+        "category": "Limpieza",
+        "price": 1480,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/4239091/pexels-photo-4239091.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "66",
+        "name": "Servilletas",
+        "category": "Limpieza",
+        "price": 350,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/6474471/pexels-photo-6474471.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "67",
+        "name": "Nova",
+        "category": "Limpieza",
+        "price": 750,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/4239091/pexels-photo-4239091.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "68",
+        "name": "Confort unidad",
+        "category": "Limpieza",
+        "price": 350,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/4239091/pexels-photo-4239091.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "69",
+        "name": "Confort pack",
+        "category": "Limpieza",
+        "price": 1400,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/4239091/pexels-photo-4239091.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "70",
+        "name": "Leche condensada soprole",
+        "category": "Otros",
+        "price": 1890,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/236010/pexels-photo-236010.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "71",
+        "name": "Jurel",
+        "category": "Otros",
+        "price": 1890,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1460505/pexels-photo-1460505.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "72",
+        "name": "Atun",
+        "category": "Otros",
+        "price": 1390,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1460505/pexels-photo-1460505.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "73",
+        "name": "Sal 1kg",
+        "category": "Otros",
+        "price": 550,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1340116/pexels-photo-1340116.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "74",
+        "name": "Aceite 900ml",
+        "category": "Otros",
+        "price": 1990,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/33783/olive-oil-salad-dressing-cooking-olive.jpg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "75",
+        "name": "Azucar flor 500g",
+        "category": "Otros",
+        "price": 1480,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/216951/pexels-photo-216951.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "76",
+        "name": "Salsa de tomate",
+        "category": "Otros",
+        "price": 690,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1640772/pexels-photo-1640772.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "77",
+        "name": "Limon traverso 500ml",
+        "category": "Otros",
+        "price": 1290,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1414130/pexels-photo-1414130.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "78",
+        "name": "Limon traverso 250ml",
+        "category": "Otros",
+        "price": 790,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1414130/pexels-photo-1414130.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "79",
+        "name": "Azucar Iansa 1kg",
+        "category": "Otros",
+        "price": 1690,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/216951/pexels-photo-216951.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "80",
+        "name": "Azucar San Geronimo 1kg",
+        "category": "Otros",
+        "price": 1480,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/216951/pexels-photo-216951.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "81",
+        "name": "Te Mildred tea",
+        "category": "Otros",
+        "price": 1100,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1638280/pexels-photo-1638280.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "82",
+        "name": "Te supremo",
+        "category": "Otros",
+        "price": 790,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1638280/pexels-photo-1638280.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "83",
+        "name": "Arroz valle de oro 1kg",
+        "category": "Otros",
+        "price": 1890,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "84",
+        "name": "Arroz Tucapel 1kg",
+        "category": "Otros",
+        "price": 1750,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "85",
+        "name": "Sopa maggi",
+        "category": "Otros",
+        "price": 750,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "86",
+        "name": "Vinagre de vino rosado 250 ml",
+        "category": "Otros",
+        "price": 790,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/4393021/pexels-photo-4393021.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "87",
+        "name": "Aji Pebre traverso 230g",
+        "category": "Otros",
+        "price": 1390,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1640772/pexels-photo-1640772.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "88",
+        "name": "Mostaza traverso 240g",
+        "category": "Otros",
+        "price": 1390,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1640772/pexels-photo-1640772.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "89",
+        "name": "Sopa maggi para 1",
+        "category": "Otros",
+        "price": 490,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "90",
+        "name": "Juego en sobre",
+        "category": "Otros",
+        "price": 300,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/96974/pexels-photo-96974.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
+    },
+    {
+        "id": "91",
+        "name": "Huevo",
+        "category": "Otros",
+        "price": 250,
+        "unit": "unidad",
+        "image": "https://images.pexels.com/photos/1556707/pexels-photo-1556707.jpeg?auto=compress&cs=tinysrgb&w=400&h=300"
     }
 ]
