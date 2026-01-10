@@ -17,9 +17,6 @@ export default function AdminPanel() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Contraseña del admin (puedes cambiarla aquí)
-  const ADMIN_PASSWORD = "admin123";
-
   useEffect(() => {
     // Verificar si ya está autenticado en la sesión
     const auth = sessionStorage.getItem("adminAuth");
@@ -47,16 +44,28 @@ export default function AdminPanel() {
     setFilteredProducts(filtered);
   }, [products, searchTerm, selectedCategory]);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
 
-    if (password === ADMIN_PASSWORD) {
-      setIsAuthenticated(true);
-      sessionStorage.setItem("adminAuth", "true");
-      setError("");
-      fetchProducts();
-    } else {
-      setError("❌ Contraseña incorrecta");
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+
+      if (response.ok) {
+        setIsAuthenticated(true);
+        sessionStorage.setItem("adminAuth", "true");
+        fetchProducts();
+      } else {
+        setError("❌ Contraseña incorrecta");
+        setPassword("");
+      }
+    } catch (error) {
+      console.error("Error en login:", error);
+      setError("❌ Error al verificar contraseña");
       setPassword("");
     }
   };
@@ -186,13 +195,6 @@ export default function AdminPanel() {
             >
               ← Volver al catálogo
             </Link>
-          </div>
-
-          <div className="mt-4 text-center text-xs text-gray-500">
-            <p>
-              Contraseña por defecto:{" "}
-              <code className="bg-gray-200 px-2 py-1 rounded">admin123</code>
-            </p>
           </div>
         </div>
       </div>
