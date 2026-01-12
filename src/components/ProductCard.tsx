@@ -26,13 +26,13 @@ export default function ProductCard({
   return (
     <div className="bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-200 hover:border-blue-400 group hover:-translate-y-1">
       {product.image && (
-        <div className="relative h-48 w-full overflow-hidden bg-linear-to-br from-blue-50 to-indigo-50">
+        <div className="relative h-32 w-full overflow-hidden bg-linear-to-br from-blue-50 to-indigo-50">
           <Image
             src={product.image}
             alt={product.name}
-            width={400}
-            height={300}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            width={300}
+            height={200}
+            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 p-2"
             unoptimized
           />
         </div>

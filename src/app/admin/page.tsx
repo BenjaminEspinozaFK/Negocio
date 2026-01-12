@@ -16,6 +16,7 @@ export default function AdminPanel() {
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     // Verificar si ya está autenticado en la sesión
@@ -98,6 +99,7 @@ export default function AdminPanel() {
 
       if (res.ok) {
         fetchProducts();
+        setShowModal(false); // Cerrar el modal después de agregar
       }
     } catch (error) {
       console.error("Error al agregar producto:", error);
@@ -118,6 +120,7 @@ export default function AdminPanel() {
       if (res.ok) {
         fetchProducts();
         setEditingProduct(null);
+        setShowModal(false); // Cerrar el modal después de editar
       }
     } catch (error) {
       console.error("Error al actualizar producto:", error);
@@ -233,13 +236,56 @@ export default function AdminPanel() {
           </div>
         </div>
 
-        {/* Formulario */}
-        <ProductForm
-          key={editingProduct?.id || "new"}
-          product={editingProduct}
-          onSubmit={editingProduct ? handleUpdateProduct : handleAddProduct}
-          onCancel={() => setEditingProduct(null)}
-        />
+        {/* Botón para Agregar Producto */}
+        <div className="mb-8">
+          <button
+            onClick={() => {
+              setEditingProduct(null);
+              setShowModal(true);
+            }}
+            className="w-full md:w-auto bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3 text-lg"
+          >
+            <span className="text-2xl">➕</span>
+            Agregar Nuevo Producto
+          </button>
+        </div>
+
+        {/* Modal para Agregar/Editar Producto */}
+        {showModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center rounded-t-2xl">
+                <h2 className="text-2xl font-bold text-gray-800">
+                  {editingProduct
+                    ? "✏️ Editar Producto"
+                    : "➕ Agregar Nuevo Producto"}
+                </h2>
+                <button
+                  onClick={() => {
+                    setShowModal(false);
+                    setEditingProduct(null);
+                  }}
+                  className="text-gray-500 hover:text-gray-700 text-3xl leading-none transition-colors"
+                >
+                  ×
+                </button>
+              </div>
+              <div className="p-6">
+                <ProductForm
+                  key={editingProduct?.id || "new"}
+                  product={editingProduct}
+                  onSubmit={
+                    editingProduct ? handleUpdateProduct : handleAddProduct
+                  }
+                  onCancel={() => {
+                    setShowModal(false);
+                    setEditingProduct(null);
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Filtros */}
         <div className="bg-white rounded-2xl shadow-lg border border-purple-200 p-6 mb-8 hover:shadow-2xl transition-all duration-300">
@@ -302,7 +348,10 @@ export default function AdminPanel() {
                 <ProductCard
                   key={product.id}
                   product={product}
-                  onEdit={setEditingProduct}
+                  onEdit={(product) => {
+                    setEditingProduct(product);
+                    setShowModal(true);
+                  }}
                   onDelete={handleDeleteProduct}
                 />
               ))}
