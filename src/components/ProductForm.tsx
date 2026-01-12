@@ -78,16 +78,7 @@ export default function ProductForm({
   };
 
   return (
-    <div className="bg-linear-to-br from-white to-blue-50 rounded-2xl shadow-xl border border-blue-200 p-8 mb-8 hover:shadow-2xl transition-all duration-300">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="bg-linear-to-r from-blue-500 to-indigo-500 text-white w-12 h-12 rounded-xl flex items-center justify-center text-2xl shadow-md">
-          {product ? "✏️" : "➕"}
-        </div>
-        <h2 className="text-3xl font-bold text-gray-800">
-          {product ? "Editar Producto" : "Agregar Nuevo Producto"}
-        </h2>
-      </div>
-
+    <div>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -182,7 +173,7 @@ export default function ProductForm({
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 transition-all duration-200 hover:border-gray-400"
             placeholder="1500"
             min="0"
-            step="50"
+            step="1"
           />
         </div>
 
