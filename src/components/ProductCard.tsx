@@ -24,9 +24,9 @@ export default function ProductCard({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-blue-200 group">
+    <div className="bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-200 hover:border-blue-400 group hover:-translate-y-1">
       {product.image && (
-        <div className="relative h-48 w-full overflow-hidden bg-linear-to-br from-gray-50 to-gray-100">
+        <div className="relative h-48 w-full overflow-hidden bg-linear-to-br from-blue-50 to-indigo-50">
           <Image
             src={product.image}
             alt={product.name}
@@ -37,7 +37,7 @@ export default function ProductCard({
           />
         </div>
       )}
-      
+
       <div className="p-5">
         <div className="mb-3">
           <span className="inline-block bg-linear-to-r from-blue-500 to-indigo-500 text-white text-xs font-medium px-3 py-1 rounded-full mb-2">

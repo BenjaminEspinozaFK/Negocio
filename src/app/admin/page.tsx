@@ -203,11 +203,11 @@ export default function AdminPanel() {
 
   // Panel de Admin (después de autenticarse)
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 py-8 px-4">
+    <div className="min-h-screen bg-linear-to-br from-indigo-50 via-purple-50 to-pink-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header con logout */}
         <div className="text-center mb-12">
-          <div className="flex justify-between items-center mb-6 bg-white rounded-xl shadow-sm p-4">
+          <div className="flex justify-between items-center mb-6 bg-white rounded-xl shadow-lg p-4 hover:shadow-xl transition-all duration-300 border border-purple-100">
             <Link
               href="/catalogo"
               className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors flex items-center gap-2 hover:gap-3 duration-200"
@@ -222,7 +222,7 @@ export default function AdminPanel() {
             </button>
           </div>
 
-          <div className="inline-block bg-white rounded-2xl shadow-lg p-8">
+          <div className="inline-block bg-white rounded-2xl shadow-2xl p-8 hover:shadow-3xl transition-all duration-300 border border-purple-100">
             <div className="text-6xl mb-4">🔧</div>
             <h1 className="text-4xl md:text-6xl font-bold bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">
               Panel de Administración
@@ -242,7 +242,7 @@ export default function AdminPanel() {
         />
 
         {/* Filtros */}
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 mb-8">
+        <div className="bg-white rounded-2xl shadow-lg border border-purple-200 p-6 mb-8 hover:shadow-2xl transition-all duration-300">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
