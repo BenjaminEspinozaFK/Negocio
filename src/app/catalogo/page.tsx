@@ -45,11 +45,11 @@ export default function CatalogoPublico() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 py-8 px-4">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-block bg-white rounded-2xl shadow-lg p-8 mb-6">
+          <div className="inline-block bg-white rounded-2xl shadow-2xl p-8 mb-6 hover:shadow-3xl transition-all duration-300 border border-blue-100">
             <div className="text-6xl mb-4">🏪</div>
             <h1 className="text-4xl md:text-6xl font-bold bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">
               Provisiones Mily
@@ -69,7 +69,7 @@ export default function CatalogoPublico() {
         </div>
 
         {/* Filtros */}
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 mb-8">
+        <div className="bg-white rounded-2xl shadow-lg border border-blue-200 p-6 mb-8 hover:shadow-2xl transition-all duration-300">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -138,7 +138,7 @@ export default function CatalogoPublico() {
 
         {/* Footer */}
         <div className="mt-16 text-center">
-          <div className="bg-white rounded-2xl shadow-lg p-8 inline-block">
+          <div className="bg-linear-to-br from-white to-blue-50 rounded-2xl shadow-xl p-8 inline-block hover:shadow-2xl transition-all duration-300 border border-blue-100">
             <p className="text-2xl mb-2">💚</p>
             <p className="text-gray-700 font-medium">Gracias por preferirnos</p>
             <p className="text-gray-500 text-sm mt-1">

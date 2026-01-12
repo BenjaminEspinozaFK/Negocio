@@ -78,7 +78,7 @@ export default function ProductForm({
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 mb-8 hover:shadow-xl transition-shadow duration-300">
+    <div className="bg-linear-to-br from-white to-blue-50 rounded-2xl shadow-xl border border-blue-200 p-8 mb-8 hover:shadow-2xl transition-all duration-300">
       <div className="flex items-center gap-3 mb-6">
         <div className="bg-linear-to-r from-blue-500 to-indigo-500 text-white w-12 h-12 rounded-xl flex items-center justify-center text-2xl shadow-md">
           {product ? "✏️" : "➕"}
