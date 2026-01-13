@@ -45,105 +45,127 @@ export default function CatalogoPublico() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 py-8 px-4">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-block bg-white rounded-2xl shadow-2xl p-8 mb-6 hover:shadow-3xl transition-all duration-300 border border-blue-100">
-            <div className="text-6xl mb-4">🏪</div>
-            <h1 className="text-4xl md:text-6xl font-bold bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">
-              Provisiones Mily
-            </h1>
-            <p className="text-gray-600 text-lg">
-              Nuestros productos y precios actualizados
-            </p>
-          </div>
+    <div className="min-h-screen py-4 px-2 sm:py-6 sm:px-4">
+      {/* Contenedor con fondo claro */}
+      <div className="max-w-[1400px] mx-auto min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-3xl shadow-2xl py-8 px-4 relative">
+        {/* Botón Admin - Posición absoluta en esquina */}
+        <Link
+          href="/admin"
+          className="absolute top-6 right-6 inline-flex items-center gap-2 text-sm text-gray-400 hover:text-blue-600 transition-all duration-300 font-semibold hover:gap-3 group bg-white px-4 py-2 rounded-full shadow-lg hover:shadow-xl z-10"
+        >
+          <span className="group-hover:animate-pulse">🔐</span>
+          <span>Admin</span>
+        </Link>
 
-          {/* Botón Admin - Discreto */}
-          <Link
-            href="/admin"
-            className="inline-block text-sm text-gray-400 hover:text-blue-600 transition-colors font-medium"
-          >
-            → Acceso administración
-          </Link>
-        </div>
-
-        {/* Filtros */}
-        <div className="bg-white rounded-2xl shadow-lg border border-blue-200 p-6 mb-8 hover:shadow-2xl transition-all duration-300">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                🔍 Buscar Producto
-              </label>
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Escribe el nombre del producto..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
-              />
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12 animate-fadeIn">
+            <div className="inline-block bg-gradient-to-br from-white via-blue-50 to-purple-50 rounded-3xl shadow-2xl p-10 mb-6 hover:shadow-3xl transition-all duration-500 border-4 border-blue-200 hover:border-purple-300 hover:scale-105">
+              <div className="text-7xl mb-5 animate-bounce">🏪</div>
+              <h1 className="text-5xl md:text-7xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4 drop-shadow-sm">
+                Provisiones Mily
+              </h1>
+              <div className="h-1.5 w-32 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full mx-auto mb-4"></div>
+              <p className="text-gray-700 text-xl font-medium">
+                🛒 Nuestros productos y precios actualizados
+              </p>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                📂 Filtrar por Categoría
-              </label>
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 transition-all duration-200 hover:border-gray-400 bg-white"
-              >
-                <option value="Todas">Todas las categorías</option>
-                {categories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
+            {/* Filtros */}
+            <div className="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-xl border-2 border-blue-200 p-8 mb-10 hover:shadow-2xl transition-all duration-300">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-base font-bold text-gray-700 mb-3 flex items-center gap-2">
+                    <span className="text-2xl">🔍</span>
+                    <span>Buscar Producto</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Escribe el nombre del producto..."
+                    className="w-full px-5 py-4 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-300 focus:border-blue-500 text-gray-900 text-lg font-medium transition-all duration-200 hover:border-blue-400 shadow-sm hover:shadow-md"
+                  />
+                </div>
 
-        {/* Lista de Productos - SOLO LECTURA */}
-        {isLoading ? (
-          <div className="text-center py-12">
-            <p className="text-gray-600 text-lg">Cargando productos...</p>
-          </div>
-        ) : filteredProducts.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-lg shadow-md">
-            <p className="text-gray-600 text-lg">
-              {searchTerm || selectedCategory !== "Todas"
-                ? "No se encontraron productos con esos filtros"
-                : "No hay productos disponibles"}
-            </p>
-          </div>
-        ) : (
-          <>
-            <div className="mb-6 inline-block bg-linear-to-r from-blue-500 to-indigo-500 text-white px-6 py-3 rounded-xl shadow-md font-semibold">
-              📦 {filteredProducts.length} producto
-              {filteredProducts.length !== 1 ? "s" : ""} disponible
-              {filteredProducts.length !== 1 ? "s" : ""}
+                <div>
+                  <label className="block text-base font-bold text-gray-700 mb-3 flex items-center gap-2">
+                    <span className="text-2xl">📂</span>
+                    <span>Filtrar por Categoría</span>
+                  </label>
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="w-full px-5 py-4 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-purple-500 text-gray-900 text-lg font-bold transition-all duration-200 hover:border-purple-400 bg-white shadow-sm hover:shadow-md cursor-pointer"
+                  >
+                    <option value="Todas">✨ Todas las categorías</option>
+                    {categories.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  readOnly={true}
-                />
-              ))}
-            </div>
-          </>
-        )}
 
-        {/* Footer */}
-        <div className="mt-16 text-center">
-          <div className="bg-linear-to-br from-white to-blue-50 rounded-2xl shadow-xl p-8 inline-block hover:shadow-2xl transition-all duration-300 border border-blue-100">
-            <p className="text-2xl mb-2">💚</p>
-            <p className="text-gray-700 font-medium">Gracias por preferirnos</p>
-            <p className="text-gray-500 text-sm mt-1">
-              Tu negocio de confianza en la villa
-            </p>
+            {/* Lista de Productos - SOLO LECTURA */}
+            {isLoading ? (
+              <div className="text-center py-20">
+                <div className="inline-block animate-spin text-6xl mb-4">
+                  ⏳
+                </div>
+                <p className="text-gray-600 text-xl font-semibold">
+                  Cargando productos...
+                </p>
+              </div>
+            ) : filteredProducts.length === 0 ? (
+              <div className="text-center py-20 bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-xl border-2 border-gray-200">
+                <div className="text-6xl mb-4">📦</div>
+                <p className="text-gray-600 text-xl font-semibold">
+                  {searchTerm || selectedCategory !== "Todas"
+                    ? "No se encontraron productos con esos filtros"
+                    : "No hay productos disponibles"}
+                </p>
+              </div>
+            ) : (
+              <>
+                <div className="mb-8 inline-block bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white px-8 py-4 rounded-2xl shadow-xl font-bold text-lg animate-pulse">
+                  📦 {filteredProducts.length} producto
+                  {filteredProducts.length !== 1 ? "s" : ""} disponible
+                  {filteredProducts.length !== 1 ? "s" : ""}
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                  {filteredProducts.map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      readOnly={true}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+
+            {/* Footer */}
+            <div className="mt-16 pt-10 border-t-4 border-gradient-to-r from-blue-300 to-purple-300 text-center">
+              <div className="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-xl p-8 inline-block hover:shadow-2xl transition-all duration-300 border-2 border-blue-200 hover:scale-105">
+                <p className="text-5xl mb-4">💚</p>
+                <p className="text-2xl font-bold text-gray-800 mb-2">
+                  ¡Gracias por preferirnos!
+                </p>
+                <p className="text-gray-600 text-lg font-medium">
+                  Tu negocio de confianza en la villa
+                </p>
+                <div className="mt-4 flex justify-center gap-2">
+                  <span className="text-2xl">⭐</span>
+                  <span className="text-2xl">⭐</span>
+                  <span className="text-2xl">⭐</span>
+                  <span className="text-2xl">⭐</span>
+                  <span className="text-2xl">⭐</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
