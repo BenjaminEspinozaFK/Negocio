@@ -206,158 +206,161 @@ export default function AdminPanel() {
 
   // Panel de Admin (después de autenticarse)
   return (
-    <div className="min-h-screen bg-linear-to-br from-indigo-50 via-purple-50 to-pink-50 py-8 px-4">
-      <div className="max-w-7xl mx-auto">
-        {/* Header con logout */}
-        <div className="text-center mb-12">
-          <div className="flex justify-between items-center mb-6 bg-white rounded-xl shadow-lg p-4 hover:shadow-xl transition-all duration-300 border border-purple-100">
-            <Link
-              href="/catalogo"
-              className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors flex items-center gap-2 hover:gap-3 duration-200"
-            >
-              ← Ver catálogo público
-            </Link>
+    <div className="min-h-screen py-4 px-2 sm:py-6 sm:px-4">
+      {/* Contenedor con fondo claro */}
+      <div className="max-w-[1400px] mx-auto min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 rounded-3xl shadow-2xl py-8 px-4">
+        <div className="max-w-7xl mx-auto">
+          {/* Header con logout */}
+          <div className="text-center mb-12">
+            <div className="flex justify-between items-center mb-6 bg-white rounded-xl shadow-lg p-4 hover:shadow-xl transition-all duration-300 border border-purple-100">
+              <Link
+                href="/catalogo"
+                className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors flex items-center gap-2 hover:gap-3 duration-200"
+              >
+                ← Ver catálogo público
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="bg-linear-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white px-5 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-md hover:shadow-lg"
+              >
+                🚪 Cerrar Sesión
+              </button>
+            </div>
+
+            <div className="inline-block bg-white rounded-2xl shadow-2xl p-8 hover:shadow-3xl transition-all duration-300 border border-purple-100">
+              <div className="text-6xl mb-4">🔧</div>
+              <h1 className="text-4xl md:text-6xl font-bold bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">
+                Panel de Administración
+              </h1>
+              <p className="text-gray-600 text-lg">
+                Gestiona tus productos y precios
+              </p>
+            </div>
+          </div>
+
+          {/* Botón para Agregar Producto */}
+          <div className="mb-8">
             <button
-              onClick={handleLogout}
-              className="bg-linear-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white px-5 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-md hover:shadow-lg"
+              onClick={() => {
+                setEditingProduct(null);
+                setShowModal(true);
+              }}
+              className="w-full md:w-auto bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3 text-lg"
             >
-              🚪 Cerrar Sesión
+              <span className="text-2xl">➕</span>
+              Agregar Nuevo Producto
             </button>
           </div>
 
-          <div className="inline-block bg-white rounded-2xl shadow-2xl p-8 hover:shadow-3xl transition-all duration-300 border border-purple-100">
-            <div className="text-6xl mb-4">🔧</div>
-            <h1 className="text-4xl md:text-6xl font-bold bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">
-              Panel de Administración
-            </h1>
-            <p className="text-gray-600 text-lg">
-              Gestiona tus productos y precios
-            </p>
-          </div>
-        </div>
+          {/* Modal para Agregar/Editar Producto */}
+          {showModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
+              <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center rounded-t-2xl">
+                  <h2 className="text-2xl font-bold text-gray-800">
+                    {editingProduct
+                      ? "✏️ Editar Producto"
+                      : "➕ Agregar Nuevo Producto"}
+                  </h2>
+                  <button
+                    onClick={() => {
+                      setShowModal(false);
+                      setEditingProduct(null);
+                    }}
+                    className="text-gray-500 hover:text-gray-700 text-3xl leading-none transition-colors"
+                  >
+                    ×
+                  </button>
+                </div>
+                <div className="p-6">
+                  <ProductForm
+                    key={editingProduct?.id || "new"}
+                    product={editingProduct}
+                    onSubmit={
+                      editingProduct ? handleUpdateProduct : handleAddProduct
+                    }
+                    onCancel={() => {
+                      setShowModal(false);
+                      setEditingProduct(null);
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
 
-        {/* Botón para Agregar Producto */}
-        <div className="mb-8">
-          <button
-            onClick={() => {
-              setEditingProduct(null);
-              setShowModal(true);
-            }}
-            className="w-full md:w-auto bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3 text-lg"
-          >
-            <span className="text-2xl">➕</span>
-            Agregar Nuevo Producto
-          </button>
-        </div>
+          {/* Filtros */}
+          <div className="bg-white rounded-2xl shadow-lg border border-purple-200 p-6 mb-8 hover:shadow-2xl transition-all duration-300">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  🔍 Buscar Producto
+                </label>
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Escribe el nombre del producto..."
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 transition-all duration-200 hover:border-gray-400"
+                />
+              </div>
 
-        {/* Modal para Agregar/Editar Producto */}
-        {showModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
-            <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center rounded-t-2xl">
-                <h2 className="text-2xl font-bold text-gray-800">
-                  {editingProduct
-                    ? "✏️ Editar Producto"
-                    : "➕ Agregar Nuevo Producto"}
-                </h2>
-                <button
-                  onClick={() => {
-                    setShowModal(false);
-                    setEditingProduct(null);
-                  }}
-                  className="text-gray-500 hover:text-gray-700 text-3xl leading-none transition-colors"
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  📂 Filtrar por Categoría
+                </label>
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 transition-all duration-200 hover:border-gray-400 bg-white"
                 >
-                  ×
-                </button>
-              </div>
-              <div className="p-6">
-                <ProductForm
-                  key={editingProduct?.id || "new"}
-                  product={editingProduct}
-                  onSubmit={
-                    editingProduct ? handleUpdateProduct : handleAddProduct
-                  }
-                  onCancel={() => {
-                    setShowModal(false);
-                    setEditingProduct(null);
-                  }}
-                />
+                  <option value="Todas">Todas las categorías</option>
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
           </div>
-        )}
 
-        {/* Filtros */}
-        <div className="bg-white rounded-2xl shadow-lg border border-purple-200 p-6 mb-8 hover:shadow-2xl transition-all duration-300">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                🔍 Buscar Producto
-              </label>
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Escribe el nombre del producto..."
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 transition-all duration-200 hover:border-gray-400"
-              />
+          {/* Lista de Productos */}
+          {isLoading ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600 text-lg">Cargando productos...</p>
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                📂 Filtrar por Categoría
-              </label>
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 transition-all duration-200 hover:border-gray-400 bg-white"
-              >
-                <option value="Todas">Todas las categorías</option>
-                {categories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
+          ) : filteredProducts.length === 0 ? (
+            <div className="text-center py-12 bg-white rounded-lg shadow-md">
+              <p className="text-gray-600 text-lg">
+                {searchTerm || selectedCategory !== "Todas"
+                  ? "No se encontraron productos con esos filtros"
+                  : "No hay productos. ¡Agrega tu primer producto!"}
+              </p>
+            </div>
+          ) : (
+            <>
+              <div className="mb-6 inline-block bg-linear-to-r from-blue-500 to-indigo-500 text-white px-6 py-3 rounded-xl shadow-md font-semibold">
+                📦 {filteredProducts.length} producto
+                {filteredProducts.length !== 1 ? "s" : ""} encontrado
+                {filteredProducts.length !== 1 ? "s" : ""}
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredProducts.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    onEdit={(product) => {
+                      setEditingProduct(product);
+                      setShowModal(true);
+                    }}
+                    onDelete={handleDeleteProduct}
+                  />
                 ))}
-              </select>
-            </div>
-          </div>
+              </div>
+            </>
+          )}
         </div>
-
-        {/* Lista de Productos */}
-        {isLoading ? (
-          <div className="text-center py-12">
-            <p className="text-gray-600 text-lg">Cargando productos...</p>
-          </div>
-        ) : filteredProducts.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-lg shadow-md">
-            <p className="text-gray-600 text-lg">
-              {searchTerm || selectedCategory !== "Todas"
-                ? "No se encontraron productos con esos filtros"
-                : "No hay productos. ¡Agrega tu primer producto!"}
-            </p>
-          </div>
-        ) : (
-          <>
-            <div className="mb-6 inline-block bg-linear-to-r from-blue-500 to-indigo-500 text-white px-6 py-3 rounded-xl shadow-md font-semibold">
-              📦 {filteredProducts.length} producto
-              {filteredProducts.length !== 1 ? "s" : ""} encontrado
-              {filteredProducts.length !== 1 ? "s" : ""}
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  onEdit={(product) => {
-                    setEditingProduct(product);
-                    setShowModal(true);
-                  }}
-                  onDelete={handleDeleteProduct}
-                />
-              ))}
-            </div>
-          </>
-        )}
       </div>
     </div>
   );
