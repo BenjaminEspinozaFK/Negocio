@@ -5,6 +5,16 @@ import ProductCard from "@/components/ProductCard";
 import ProductForm from "@/components/ProductForm";
 import { Product, categories } from "@/types/product";
 import Link from "next/link";
+import {
+  Search,
+  Filter,
+  Plus,
+  Settings,
+  LogOut,
+  ArrowLeft,
+  Lock,
+  X,
+} from "lucide-react";
 
 export default function AdminPanel() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -19,7 +29,6 @@ export default function AdminPanel() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    // Verificar si ya está autenticado en la sesión
     const auth = sessionStorage.getItem("adminAuth");
     if (auth === "true") {
       setIsAuthenticated(true);
@@ -61,12 +70,12 @@ export default function AdminPanel() {
         sessionStorage.setItem("adminAuth", "true");
         fetchProducts();
       } else {
-        setError("❌ Contraseña incorrecta");
+        setError("Contraseña incorrecta");
         setPassword("");
       }
     } catch (error) {
       console.error("Error en login:", error);
-      setError("❌ Error al verificar contraseña");
+      setError("Error al verificar contraseña");
       setPassword("");
     }
   };
@@ -91,19 +100,21 @@ export default function AdminPanel() {
 
   const handleAddProduct = async (product: Omit<Product, "id">) => {
     try {
-      const res = await fetch("/api/products", {
+      const response = await fetch("/api/products", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(product),
       });
 
-      if (res.ok) {
-        fetchProducts();
-        setShowModal(false); // Cerrar el modal después de agregar
+      if (response.ok) {
+        await fetchProducts();
+        setShowModal(false);
+      } else {
+        alert("Error al agregar producto");
       }
     } catch (error) {
-      console.error("Error al agregar producto:", error);
-      alert("Error al agregar el producto");
+      console.error("Error:", error);
+      alert("Error al agregar producto");
     }
   };
 
@@ -111,20 +122,25 @@ export default function AdminPanel() {
     if (!editingProduct) return;
 
     try {
-      const res = await fetch(`/api/products/${editingProduct.id}`, {
+      const response = await fetch(`/api/products/${editingProduct.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(product),
+        body: JSON.stringify({
+          id: editingProduct.id,
+          ...product,
+        }),
       });
 
-      if (res.ok) {
-        fetchProducts();
+      if (response.ok) {
+        await fetchProducts();
         setEditingProduct(null);
-        setShowModal(false); // Cerrar el modal después de editar
+        setShowModal(false);
+      } else {
+        alert("Error al actualizar producto");
       }
     } catch (error) {
-      console.error("Error al actualizar producto:", error);
-      alert("Error al actualizar el producto");
+      console.error("Error:", error);
+      alert("Error al actualizar producto");
     }
   };
 
@@ -132,29 +148,31 @@ export default function AdminPanel() {
     if (!confirm("¿Estás seguro de eliminar este producto?")) return;
 
     try {
-      const res = await fetch(`/api/products/${id}`, {
+      const response = await fetch(`/api/products/${id}`, {
         method: "DELETE",
       });
 
-      if (res.ok) {
-        fetchProducts();
+      if (response.ok) {
+        await fetchProducts();
+      } else {
+        alert("Error al eliminar producto");
       }
     } catch (error) {
-      console.error("Error al eliminar producto:", error);
-      alert("Error al eliminar el producto");
+      console.error("Error:", error);
+      alert("Error al eliminar producto");
     }
   };
 
-  // Pantalla de Login
+  // Login Screen
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center px-4">
-        <div className="bg-white rounded-2xl shadow-2xl p-10 max-w-md w-full border border-gray-100">
-          <div className="text-center mb-8">
-            <div className="bg-linear-to-r from-blue-500 to-indigo-500 text-white w-20 h-20 rounded-2xl flex items-center justify-center text-4xl shadow-lg mb-4 mx-auto">
-              🔒
+      <div className="min-h-screen flex items-center justify-center px-4 py-8">
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg p-8 max-w-md w-full border border-gray-200">
+          <div className="text-center mb-6">
+            <div className="bg-blue-600 text-white w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <Lock className="w-8 h-8" />
             </div>
-            <h1 className="text-3xl font-bold bg-linear-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-2">
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">
               Panel de Administración
             </h1>
             <p className="text-gray-600">
@@ -164,7 +182,7 @@ export default function AdminPanel() {
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Contraseña
               </label>
               <input
@@ -172,31 +190,32 @@ export default function AdminPanel() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Ingresa tu contraseña"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 transition-all duration-200 hover:border-gray-400"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
                 autoFocus
               />
             </div>
 
             {error && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
                 {error}
               </div>
             )}
 
             <button
               type="submit"
-              className="w-full bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
             >
-              🔓 Ingresar
+              Ingresar
             </button>
           </form>
 
           <div className="mt-6 text-center">
             <Link
               href="/catalogo"
-              className="text-sm text-blue-600 hover:text-blue-800"
+              className="text-sm text-blue-600 hover:text-blue-700 inline-flex items-center gap-1"
             >
-              ← Volver al catálogo
+              <ArrowLeft className="w-4 h-4" />
+              Volver al catálogo
             </Link>
           </div>
         </div>
@@ -204,163 +223,171 @@ export default function AdminPanel() {
     );
   }
 
-  // Panel de Admin (después de autenticarse)
+  // Admin Panel
   return (
-    <div className="min-h-screen py-4 px-2 sm:py-6 sm:px-4">
-      {/* Contenedor con fondo claro */}
-      <div className="max-w-[1400px] mx-auto min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 rounded-3xl shadow-2xl py-8 px-4">
-        <div className="max-w-7xl mx-auto">
-          {/* Header con logout */}
-          <div className="text-center mb-12">
-            <div className="flex justify-between items-center mb-6 bg-white rounded-xl shadow-lg p-4 hover:shadow-xl transition-all duration-300 border border-purple-100">
+    <div className="min-h-screen py-6 px-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 p-6">
+            <div className="flex justify-between items-center mb-4">
               <Link
                 href="/catalogo"
-                className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors flex items-center gap-2 hover:gap-3 duration-200"
+                className="text-sm text-blue-600 hover:text-blue-700 font-medium inline-flex items-center gap-2"
               >
-                ← Ver catálogo público
+                <ArrowLeft className="w-4 h-4" />
+                Ver catálogo público
               </Link>
               <button
                 onClick={handleLogout}
-                className="bg-linear-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white px-5 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-md hover:shadow-lg"
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-flex items-center gap-2"
               >
-                🚪 Cerrar Sesión
+                <LogOut className="w-4 h-4" />
+                Cerrar Sesión
               </button>
             </div>
 
-            <div className="inline-block bg-white rounded-2xl shadow-2xl p-8 hover:shadow-3xl transition-all duration-300 border border-purple-100">
-              <div className="text-6xl mb-4">🔧</div>
-              <h1 className="text-4xl md:text-6xl font-bold bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">
-                Panel de Administración
-              </h1>
-              <p className="text-gray-600 text-lg">
-                Gestiona tus productos y precios
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-3 mb-2">
+                <Settings className="w-8 h-8 text-blue-600" />
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+                  Panel de Administración
+                </h1>
+              </div>
+              <p className="text-gray-600">Gestiona tus productos y precios</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Add Product Button */}
+        <div className="mb-6">
+          <button
+            onClick={() => {
+              setEditingProduct(null);
+              setShowModal(true);
+            }}
+            className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors inline-flex items-center justify-center gap-2"
+          >
+            <Plus className="w-5 h-5" />
+            Agregar Nuevo Producto
+          </button>
+        </div>
+
+        {/* Filters */}
+        <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-md border border-gray-200 p-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                <Search className="w-4 h-4 text-blue-600" />
+                Buscar Producto
+              </label>
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Escribe el nombre del producto..."
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder:text-gray-400"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                <Filter className="w-4 h-4 text-blue-600" />
+                Filtrar por Categoría
+              </label>
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white cursor-pointer"
+              >
+                <option value="Todas">Todas las categorías</option>
+                {categories.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Products List */}
+        {isLoading ? (
+          <div className="text-center py-20">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-blue-600 mb-4"></div>
+            <p className="text-gray-600 text-lg font-medium">
+              Cargando productos...
+            </p>
+          </div>
+        ) : filteredProducts.length === 0 ? (
+          <div className="text-center py-20 bg-white/95 backdrop-blur-sm rounded-xl shadow-md border border-gray-200">
+            <div className="text-6xl mb-4">📦</div>
+            <p className="text-gray-600 text-lg font-medium">
+              {searchTerm || selectedCategory !== "Todas"
+                ? "No se encontraron productos con esos filtros"
+                : "No hay productos disponibles"}
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className="mb-6">
+              <p className="text-sm font-medium text-gray-600">
+                Mostrando {filteredProducts.length} producto
+                {filteredProducts.length !== 1 ? "s" : ""}
               </p>
             </div>
-          </div>
-
-          {/* Botón para Agregar Producto */}
-          <div className="mb-8">
-            <button
-              onClick={() => {
-                setEditingProduct(null);
-                setShowModal(true);
-              }}
-              className="w-full md:w-auto bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3 text-lg"
-            >
-              <span className="text-2xl">➕</span>
-              Agregar Nuevo Producto
-            </button>
-          </div>
-
-          {/* Modal para Agregar/Editar Producto */}
-          {showModal && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
-              <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-                <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center rounded-t-2xl">
-                  <h2 className="text-2xl font-bold text-gray-800">
-                    {editingProduct
-                      ? "✏️ Editar Producto"
-                      : "➕ Agregar Nuevo Producto"}
-                  </h2>
-                  <button
-                    onClick={() => {
-                      setShowModal(false);
-                      setEditingProduct(null);
-                    }}
-                    className="text-gray-500 hover:text-gray-700 text-3xl leading-none transition-colors"
-                  >
-                    ×
-                  </button>
-                </div>
-                <div className="p-6">
-                  <ProductForm
-                    key={editingProduct?.id || "new"}
-                    product={editingProduct}
-                    onSubmit={
-                      editingProduct ? handleUpdateProduct : handleAddProduct
-                    }
-                    onCancel={() => {
-                      setShowModal(false);
-                      setEditingProduct(null);
-                    }}
-                  />
-                </div>
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filteredProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  onEdit={(product) => {
+                    setEditingProduct(product);
+                    setShowModal(true);
+                  }}
+                  onDelete={handleDeleteProduct}
+                  readOnly={false}
+                />
+              ))}
             </div>
-          )}
+          </>
+        )}
 
-          {/* Filtros */}
-          <div className="bg-white rounded-2xl shadow-lg border border-purple-200 p-6 mb-8 hover:shadow-2xl transition-all duration-300">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  🔍 Buscar Producto
-                </label>
-                <input
-                  type="text"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Escribe el nombre del producto..."
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 transition-all duration-200 hover:border-gray-400"
+        {/* Modal */}
+        {showModal && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center rounded-t-xl">
+                <h2 className="text-xl font-bold text-gray-900">
+                  {editingProduct
+                    ? "Editar Producto"
+                    : "Agregar Nuevo Producto"}
+                </h2>
+                <button
+                  onClick={() => {
+                    setShowModal(false);
+                    setEditingProduct(null);
+                  }}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+              <div className="p-6">
+                <ProductForm
+                  product={editingProduct}
+                  onSubmit={
+                    editingProduct ? handleUpdateProduct : handleAddProduct
+                  }
+                  onCancel={() => {
+                    setShowModal(false);
+                    setEditingProduct(null);
+                  }}
                 />
               </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  📂 Filtrar por Categoría
-                </label>
-                <select
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 transition-all duration-200 hover:border-gray-400 bg-white"
-                >
-                  <option value="Todas">Todas las categorías</option>
-                  {categories.map((cat) => (
-                    <option key={cat} value={cat}>
-                      {cat}
-                    </option>
-                  ))}
-                </select>
-              </div>
             </div>
           </div>
-
-          {/* Lista de Productos */}
-          {isLoading ? (
-            <div className="text-center py-12">
-              <p className="text-gray-600 text-lg">Cargando productos...</p>
-            </div>
-          ) : filteredProducts.length === 0 ? (
-            <div className="text-center py-12 bg-white rounded-lg shadow-md">
-              <p className="text-gray-600 text-lg">
-                {searchTerm || selectedCategory !== "Todas"
-                  ? "No se encontraron productos con esos filtros"
-                  : "No hay productos. ¡Agrega tu primer producto!"}
-              </p>
-            </div>
-          ) : (
-            <>
-              <div className="mb-6 inline-block bg-linear-to-r from-blue-500 to-indigo-500 text-white px-6 py-3 rounded-xl shadow-md font-semibold">
-                📦 {filteredProducts.length} producto
-                {filteredProducts.length !== 1 ? "s" : ""} encontrado
-                {filteredProducts.length !== 1 ? "s" : ""}
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    onEdit={(product) => {
-                      setEditingProduct(product);
-                      setShowModal(true);
-                    }}
-                    onDelete={handleDeleteProduct}
-                  />
-                ))}
-              </div>
-            </>
-          )}
-        </div>
+        )}
       </div>
     </div>
   );
