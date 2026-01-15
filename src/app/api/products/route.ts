@@ -1,28 +1,41 @@
 import { NextResponse } from 'next/server';
-import productsData from '@/data/products.json';
-import { Product } from '@/types/product';
-
-// En una app real, esto estaría en una base de datos
-let products: Product[] = productsData as Product[];
+import { prisma } from '@/lib/prisma';
 
 export async function GET() {
-    return NextResponse.json(products);
+    try {
+        const products = await prisma.product.findMany({
+            orderBy: [
+                { category: 'asc' },
+                { name: 'asc' }
+            ]
+        });
+        return NextResponse.json(products);
+    } catch (error) {
+        console.error('Error al obtener productos:', error);
+        return NextResponse.json(
+            { error: 'Error al obtener productos' },
+            { status: 500 }
+        );
+    }
 }
 
 export async function POST(request: Request) {
     try {
-        const newProduct: Product = await request.json();
+        const data = await request.json();
 
-        // Generar ID único
-        const maxId = products.length > 0
-            ? Math.max(...products.map(p => parseInt(p.id)))
-            : 0;
-        newProduct.id = (maxId + 1).toString();
-
-        products.push(newProduct);
+        const newProduct = await prisma.product.create({
+            data: {
+                name: data.name,
+                category: data.category,
+                price: data.price,
+                unit: data.unit,
+                image: data.image,
+            }
+        });
 
         return NextResponse.json(newProduct, { status: 201 });
     } catch (error) {
+        console.error('Error al crear producto:', error);
         return NextResponse.json(
             { error: 'Error al crear el producto' },
             { status: 500 }

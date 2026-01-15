@@ -1,8 +1,5 @@
 import { NextResponse } from 'next/server';
-import productsData from '@/data/products.json';
-import { Product } from '@/types/product';
-
-let products: Product[] = productsData as Product[];
+import { prisma } from '@/lib/prisma';
 
 export async function PUT(
     request: Request,
@@ -10,21 +7,22 @@ export async function PUT(
 ) {
     try {
         const { id } = await params;
-        const updatedProduct: Product = await request.json();
+        const data = await request.json();
 
-        const index = products.findIndex(p => p.id === id);
+        const updatedProduct = await prisma.product.update({
+            where: { id },
+            data: {
+                name: data.name,
+                category: data.category,
+                price: data.price,
+                unit: data.unit,
+                image: data.image,
+            }
+        });
 
-        if (index === -1) {
-            return NextResponse.json(
-                { error: 'Producto no encontrado' },
-                { status: 404 }
-            );
-        }
-
-        products[index] = { ...products[index], ...updatedProduct, id };
-
-        return NextResponse.json(products[index]);
+        return NextResponse.json(updatedProduct);
     } catch (error) {
+        console.error('Error al actualizar producto:', error);
         return NextResponse.json(
             { error: 'Error al actualizar el producto' },
             { status: 500 }
@@ -38,19 +36,14 @@ export async function DELETE(
 ) {
     try {
         const { id } = await params;
-        const index = products.findIndex(p => p.id === id);
 
-        if (index === -1) {
-            return NextResponse.json(
-                { error: 'Producto no encontrado' },
-                { status: 404 }
-            );
-        }
-
-        products.splice(index, 1);
+        await prisma.product.delete({
+            where: { id }
+        });
 
         return NextResponse.json({ message: 'Producto eliminado' });
     } catch (error) {
+        console.error('Error al eliminar producto:', error);
         return NextResponse.json(
             { error: 'Error al eliminar el producto' },
             { status: 500 }
