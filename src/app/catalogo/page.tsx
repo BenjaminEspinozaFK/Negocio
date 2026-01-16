@@ -46,57 +46,57 @@ export default function CatalogoPublico() {
   };
 
   return (
-    <div className="min-h-screen py-6 px-4">
+    <div className="min-h-screen py-3 sm:py-6 px-3 sm:px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="relative mb-8">
-          <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 p-8 text-center">
+        <div className="relative mb-4 sm:mb-8">
+          <div className="bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-8 text-center">
             <Link
               href="/admin"
-              className="absolute top-4 right-4 inline-flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors px-4 py-2 rounded-lg hover:bg-blue-50"
+              className="absolute top-2 right-2 sm:top-4 sm:right-4 inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-gray-600 hover:text-blue-600 transition-colors px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg hover:bg-blue-50"
             >
-              <Lock className="w-4 h-4" />
-              <span className="font-medium">Admin</span>
+              <Lock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="font-medium hidden sm:inline">Admin</span>
             </Link>
             
-            <div className="flex items-center justify-center gap-3 mb-3">
-              <Store className="w-10 h-10 text-blue-600" />
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
+            <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2 sm:mb-3 pr-12 sm:pr-0">
+              <Store className="w-7 h-7 sm:w-10 sm:h-10 text-blue-600 flex-shrink-0" />
+              <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
                 Provisiones Mily
               </h1>
             </div>
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-600 text-sm sm:text-lg">
               Productos y precios actualizados
             </p>
           </div>
         </div>
 
         {/* Filtros */}
-        <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-md border border-gray-200 p-6 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-md border border-gray-200 p-4 sm:p-6 mb-4 sm:mb-8">
+          <div className="flex flex-col gap-3 sm:gap-4 md:grid md:grid-cols-2">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-                <Search className="w-4 h-4 text-blue-600" />
+              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2 flex items-center gap-2">
+                <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600" />
                 Buscar Producto
               </label>
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Escribe el nombre del producto..."
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder:text-gray-400"
+                placeholder="Escribe el nombre..."
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base text-gray-900 placeholder:text-gray-400"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-                <Filter className="w-4 h-4 text-blue-600" />
+              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2 flex items-center gap-2">
+                <Filter className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600" />
                 Filtrar por Categoría
               </label>
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white cursor-pointer"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base text-gray-900 bg-white cursor-pointer"
               >
                 <option value="Todas">Todas las categorías</option>
                 {categories.map((cat) => (
@@ -111,29 +111,29 @@ export default function CatalogoPublico() {
 
         {/* Lista de Productos */}
         {isLoading ? (
-          <div className="text-center py-20">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-blue-600 mb-4"></div>
-            <p className="text-gray-600 text-lg font-medium">
+          <div className="text-center py-12 sm:py-20">
+            <div className="inline-block animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-4 border-gray-300 border-t-blue-600 mb-3 sm:mb-4"></div>
+            <p className="text-gray-600 text-base sm:text-lg font-medium">
               Cargando productos...
             </p>
           </div>
         ) : filteredProducts.length === 0 ? (
-          <div className="text-center py-20 bg-white/95 backdrop-blur-sm rounded-xl shadow-md border border-gray-200">
-            <div className="text-6xl mb-4">📦</div>
-            <p className="text-gray-600 text-lg font-medium">
+          <div className="text-center py-12 sm:py-20 bg-white/95 backdrop-blur-sm rounded-xl shadow-md border border-gray-200">
+            <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">📦</div>
+            <p className="text-gray-600 text-base sm:text-lg font-medium px-4">
               {searchTerm || selectedCategory !== "Todas"
-                ? "No se encontraron productos con esos filtros"
+                ? "No se encontraron productos"
                 : "No hay productos disponibles"}
             </p>
           </div>
         ) : (
           <>
-            <div className="mb-6">
-              <p className="text-sm font-medium text-gray-600">
+            <div className="mb-3 sm:mb-6">
+              <p className="text-xs sm:text-sm font-medium text-gray-600 px-1">
                 Mostrando {filteredProducts.length} producto{filteredProducts.length !== 1 ? "s" : ""}
               </p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 mb-8 sm:mb-12">
               {filteredProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -146,12 +146,12 @@ export default function CatalogoPublico() {
         )}
 
         {/* Footer */}
-        <div className="mt-12 pt-8 border-t border-gray-200">
-          <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-md border border-gray-200 p-6 text-center">
-            <p className="text-gray-900 font-semibold text-lg mb-1">
+        <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-200">
+          <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-md border border-gray-200 p-4 sm:p-6 text-center">
+            <p className="text-gray-900 font-semibold text-base sm:text-lg mb-1">
               ¡Gracias por preferirnos!
             </p>
-            <p className="text-gray-600">
+            <p className="text-gray-600 text-sm sm:text-base">
               Tu negocio de confianza en la villa
             </p>
           </div>

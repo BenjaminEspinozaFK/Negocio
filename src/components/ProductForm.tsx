@@ -78,32 +78,32 @@ export default function ProductForm({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-      <form onSubmit={handleSubmit} className="space-y-5">
+    <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 border border-gray-200">
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-            <Tag className="w-4 h-4 text-blue-600" />
+          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2 flex items-center gap-2">
+            <Tag className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600" />
             Nombre del Producto
           </label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+            className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base text-gray-900"
             placeholder="Ej: Tomate, Pan, Coca Cola"
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-              <FolderOpen className="w-4 h-4 text-blue-600" />
+            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2 flex items-center gap-2">
+              <FolderOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600" />
               Categoría
             </label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white cursor-pointer"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base text-gray-900 bg-white cursor-pointer"
             >
               {categories.map((cat) => (
                 <option key={cat} value={cat}>
@@ -114,14 +114,14 @@ export default function ProductForm({
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-              <Package className="w-4 h-4 text-blue-600" />
+            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2 flex items-center gap-2">
+              <Package className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600" />
               Unidad
             </label>
             <select
               value={unit}
               onChange={(e) => setUnit(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white cursor-pointer"
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base text-gray-900 bg-white cursor-pointer"
             >
               {units.map((unit) => (
                 <option key={unit} value={unit}>
@@ -133,17 +133,17 @@ export default function ProductForm({
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-            <ImageIcon className="w-4 h-4 text-blue-600" />
+          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2 flex items-center gap-2">
+            <ImageIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600" />
             Imagen del Producto
           </label>
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3">
             <input
               key={fileInputKey}
               type="file"
               accept="image/*"
               onChange={handleImageChange}
-              className="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 file:cursor-pointer cursor-pointer"
+              className="w-full text-xs sm:text-sm text-gray-600 file:mr-3 sm:file:mr-4 file:py-2 file:px-3 sm:file:px-4 file:rounded-lg file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 file:cursor-pointer cursor-pointer"
             />
             {imagePreview && (
               <div className="relative inline-block">
@@ -152,13 +152,13 @@ export default function ProductForm({
                   alt="Vista previa"
                   width={120}
                   height={120}
-                  className="w-32 h-32 object-cover rounded-lg border border-gray-300"
+                  className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded-lg border border-gray-300"
                   unoptimized
                 />
                 <button
                   type="button"
                   onClick={handleRemoveImage}
-                  className="absolute -top-2 -right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold transition-colors"
+                  className="absolute -top-2 -right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold transition-colors touch-manipulation"
                 >
                   ✕
                 </button>
@@ -168,37 +168,37 @@ export default function ProductForm({
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-            <DollarSign className="w-4 h-4 text-blue-600" />
+          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2 flex items-center gap-2">
+            <DollarSign className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600" />
             Precio (CLP)
           </label>
           <input
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+            className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base text-gray-900"
             placeholder="Ej: 1500"
             min="0"
             step="1"
           />
         </div>
 
-        <div className="flex gap-3 pt-3">
+        <div className="flex gap-2 sm:gap-3 pt-2 sm:pt-3">
           <button
             type="submit"
-            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2"
+            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg transition-colors flex items-center justify-center gap-1.5 sm:gap-2 text-sm sm:text-base touch-manipulation"
           >
-            <Save className="w-4 h-4" />
-            {product ? "Guardar Cambios" : "Agregar Producto"}
+            <Save className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            {product ? "Guardar" : "Agregar"}
           </button>
 
           {product && (
             <button
               type="button"
               onClick={onCancel}
-              className="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2"
+              className="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg transition-colors flex items-center justify-center gap-1.5 sm:gap-2 text-sm sm:text-base touch-manipulation"
             >
-              <X className="w-4 h-4" />
+              <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               Cancelar
             </button>
           )}
