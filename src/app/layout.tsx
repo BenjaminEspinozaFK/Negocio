@@ -16,6 +16,11 @@ export const metadata: Metadata = {
   title: "Provisiones Mily - Gestión de Productos",
   description:
     "Aplicación para gestionar productos y precios de Provisiones Mily",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+  },
 };
 
 export default function RootLayout({
