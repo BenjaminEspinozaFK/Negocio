@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import ProductCard from "@/components/ProductCard";
 import ProductForm from "@/components/ProductForm";
+import ChangePasswordModal from "@/components/ChangePasswordModal";
 import { Product, categories } from "@/types/product";
 import Link from "next/link";
 import {
@@ -14,6 +15,7 @@ import {
   ArrowLeft,
   Lock,
   X,
+  Key,
 } from "lucide-react";
 
 export default function AdminPanel() {
@@ -27,6 +29,7 @@ export default function AdminPanel() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
 
   useEffect(() => {
     const auth = sessionStorage.getItem("adminAuth");
@@ -238,13 +241,22 @@ export default function AdminPanel() {
                 <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 Ver catálogo público
               </Link>
-              <button
-                onClick={handleLogout}
-                className="bg-red-600 hover:bg-red-700 text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors inline-flex items-center justify-center gap-2 order-1 sm:order-2 touch-manipulation"
-              >
-                <LogOut className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                Cerrar Sesión
-              </button>
+              <div className="flex gap-2 order-1 sm:order-2">
+                <button
+                  onClick={() => setShowChangePasswordModal(true)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors inline-flex items-center justify-center gap-2 touch-manipulation"
+                >
+                  <Key className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  Cambiar Contraseña
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-600 hover:bg-red-700 text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors inline-flex items-center justify-center gap-2 touch-manipulation"
+                >
+                  <LogOut className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  Cerrar Sesión
+                </button>
+              </div>
             </div>
 
             <div className="text-center">
@@ -387,6 +399,13 @@ export default function AdminPanel() {
               </div>
             </div>
           </div>
+        )}
+
+        {/* Modal de Cambio de Contraseña */}
+        {showChangePasswordModal && (
+          <ChangePasswordModal
+            onClose={() => setShowChangePasswordModal(false)}
+          />
         )}
       </div>
     </div>
