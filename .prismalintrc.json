@@ -1,0 +1,5 @@
+{
+  "prisma.linting.rules": {
+    "datasource-url-env": "off"
+  }
+}
