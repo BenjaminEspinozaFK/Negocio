@@ -232,11 +232,11 @@ export default function AdminPanel() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-4 sm:mb-8">
-          <div className="bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6">
+          <div className="bg-slate-800/90 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg border border-slate-700 p-4 sm:p-6">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 mb-4">
               <Link
                 href="/catalogo"
-                className="text-xs sm:text-sm text-blue-600 hover:text-blue-700 font-medium inline-flex items-center gap-2 order-2 sm:order-1"
+                className="text-xs sm:text-sm text-blue-400 hover:text-blue-300 font-medium inline-flex items-center gap-2 order-2 sm:order-1"
               >
                 <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 Ver catálogo público
@@ -261,12 +261,12 @@ export default function AdminPanel() {
 
             <div className="text-center">
               <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2">
-                <Settings className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
+                <Settings className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400" />
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
                   Panel Admin
                 </h1>
               </div>
-              <p className="text-sm sm:text-base text-gray-600">Gestiona tus productos y precios</p>
+              <p className="text-sm sm:text-base text-slate-300">Gestiona tus productos y precios</p>
             </div>
           </div>
         </div>
@@ -286,11 +286,11 @@ export default function AdminPanel() {
         </div>
 
         {/* Filters */}
-        <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-md border border-gray-200 p-4 sm:p-6 mb-4 sm:mb-8">
+        <div className="bg-slate-800/90 backdrop-blur-sm rounded-xl shadow-md border border-slate-700 p-4 sm:p-6 mb-4 sm:mb-8">
           <div className="flex flex-col gap-3 sm:gap-4 md:grid md:grid-cols-2">
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2 flex items-center gap-2">
-                <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600" />
+              <label className="block text-xs sm:text-sm font-semibold text-slate-200 mb-1.5 sm:mb-2 flex items-center gap-2">
+                <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" />
                 Buscar Producto
               </label>
               <input
@@ -298,19 +298,19 @@ export default function AdminPanel() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Escribe el nombre..."
-                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base text-gray-900 placeholder:text-gray-400"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-slate-600 bg-slate-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base text-white placeholder:text-slate-400"
               />
             </div>
 
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2 flex items-center gap-2">
-                <Filter className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600" />
+              <label className="block text-xs sm:text-sm font-semibold text-slate-200 mb-1.5 sm:mb-2 flex items-center gap-2">
+                <Filter className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" />
                 Filtrar por Categoría
               </label>
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base text-gray-900 bg-white cursor-pointer"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-slate-600 bg-slate-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base text-white cursor-pointer"
               >
                 <option value="Todas">Todas las categorías</option>
                 {categories.map((cat) => (
@@ -326,15 +326,15 @@ export default function AdminPanel() {
         {/* Products List */}
         {isLoading ? (
           <div className="text-center py-12 sm:py-20">
-            <div className="inline-block animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-4 border-gray-300 border-t-blue-600 mb-3 sm:mb-4"></div>
-            <p className="text-gray-600 text-base sm:text-lg font-medium">
+            <div className="inline-block animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-4 border-slate-700 border-t-blue-500 mb-3 sm:mb-4"></div>
+            <p className="text-slate-300 text-base sm:text-lg font-medium">
               Cargando productos...
             </p>
           </div>
         ) : filteredProducts.length === 0 ? (
-          <div className="text-center py-20 bg-white/95 backdrop-blur-sm rounded-xl shadow-md border border-gray-200">
+          <div className="text-center py-20 bg-slate-800/90 backdrop-blur-sm rounded-xl shadow-md border border-slate-700">
             <div className="text-6xl mb-4">📦</div>
-            <p className="text-gray-600 text-lg font-medium">
+            <p className="text-slate-300 text-lg font-medium">
               {searchTerm || selectedCategory !== "Todas"
                 ? "No se encontraron productos con esos filtros"
                 : "No hay productos disponibles"}
@@ -343,7 +343,7 @@ export default function AdminPanel() {
         ) : (
           <>
             <div className="mb-3 sm:mb-6">
-              <p className="text-xs sm:text-sm font-medium text-gray-600 px-1">
+              <p className="text-xs sm:text-sm font-medium text-slate-400 px-1">
                 Mostrando {filteredProducts.length} producto
                 {filteredProducts.length !== 1 ? "s" : ""}
               </p>
