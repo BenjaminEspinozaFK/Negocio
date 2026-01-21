@@ -4,6 +4,17 @@ import { useState } from "react";
 import { Product, categories, units } from "@/types/product";
 import Image from "next/image";
 import { Tag, FolderOpen, Package, ImageIcon, DollarSign, Save, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { toast } from "sonner";
 
 interface ProductFormProps {
   product?: Product | null;
@@ -28,7 +39,7 @@ export default function ProductForm({
     e.preventDefault();
 
     if (!name || !price) {
-      alert("Por favor completa todos los campos");
+      toast.error("Por favor completa todos los campos");
       return;
     }
 
@@ -39,6 +50,8 @@ export default function ProductForm({
       unit,
       image: image || "",
     });
+
+    toast.success(product ? "Producto actualizado" : "Producto agregado");
 
     setName("");
     setCategory("Otros");
@@ -52,12 +65,12 @@ export default function ProductForm({
     const file = e.target.files?.[0];
     if (file) {
       if (!file.type.startsWith("image/")) {
-        alert("Por favor selecciona una imagen válida");
+        toast.error("Por favor selecciona una imagen válida");
         return;
       }
 
       if (file.size > 2 * 1024 * 1024) {
-        alert("La imagen es muy grande. Máximo 2MB");
+        toast.error("La imagen es muy grande. Máximo 2MB");
         return;
       }
 
@@ -66,6 +79,7 @@ export default function ProductForm({
         const base64String = reader.result as string;
         setImage(base64String);
         setImagePreview(base64String);
+        toast.success("Imagen cargada correctamente");
       };
       reader.readAsDataURL(file);
     }
@@ -75,135 +89,136 @@ export default function ProductForm({
     setImage("");
     setImagePreview("");
     setFileInputKey((prev) => prev + 1);
+    toast.info("Imagen eliminada");
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 border border-gray-200">
-      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-        <div>
-          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2 flex items-center gap-2">
-            <Tag className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600" />
-            Nombre del Producto
-          </label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base text-gray-900"
-            placeholder="Ej: Tomate, Pan, Coca Cola"
-          />
-        </div>
+    <form onSubmit={handleSubmit} className="space-y-5 bg-white rounded-lg p-1">
+      <div className="space-y-2">
+        <Label htmlFor="name" className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+          <Tag className="w-4 h-4 text-blue-600" />
+          Nombre del Producto
+        </Label>
+        <Input
+          id="name"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Ej: Tomate, Pan, Coca Cola"
+          className="text-gray-900"
+        />
+      </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-          <div>
-            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2 flex items-center gap-2">
-              <FolderOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600" />
-              Categoría
-            </label>
-            <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base text-gray-900 bg-white cursor-pointer"
-            >
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="category" className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+            <FolderOpen className="w-4 h-4 text-blue-600" />
+            Categoría
+          </Label>
+          <Select value={category} onValueChange={setCategory}>
+            <SelectTrigger id="category" className="text-gray-900">
+              <SelectValue placeholder="Selecciona categoría" />
+            </SelectTrigger>
+            <SelectContent>
               {categories.map((cat) => (
-                <option key={cat} value={cat}>
+                <SelectItem key={cat} value={cat}>
                   {cat}
-                </option>
+                </SelectItem>
               ))}
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2 flex items-center gap-2">
-              <Package className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600" />
-              Unidad
-            </label>
-            <select
-              value={unit}
-              onChange={(e) => setUnit(e.target.value)}
-              className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base text-gray-900 bg-white cursor-pointer"
-            >
-              {units.map((unit) => (
-                <option key={unit} value={unit}>
-                  {unit}
-                </option>
-              ))}
-            </select>
-          </div>
+            </SelectContent>
+          </Select>
         </div>
 
-        <div>
-          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2 flex items-center gap-2">
-            <ImageIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600" />
-            Imagen del Producto
-          </label>
-          <div className="space-y-2 sm:space-y-3">
-            <input
-              key={fileInputKey}
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="w-full text-xs sm:text-sm text-gray-600 file:mr-3 sm:file:mr-4 file:py-2 file:px-3 sm:file:px-4 file:rounded-lg file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 file:cursor-pointer cursor-pointer"
+        <div className="space-y-2">
+          <Label htmlFor="unit" className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+            <Package className="w-4 h-4 text-blue-600" />
+            Unidad
+          </Label>
+          <Select value={unit} onValueChange={setUnit}>
+            <SelectTrigger id="unit" className="text-gray-900">
+              <SelectValue placeholder="Selecciona unidad" />
+            </SelectTrigger>
+            <SelectContent>
+              {units.map((u) => (
+                <SelectItem key={u} value={u}>
+                  {u}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+          <ImageIcon className="w-4 h-4 text-blue-600" />
+          Imagen del Producto
+        </Label>
+        <Input
+          key={fileInputKey}
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          className="cursor-pointer text-gray-900"
+        />
+        {imagePreview && (
+          <div className="relative inline-block">
+            <Image
+              src={imagePreview}
+              alt="Vista previa"
+              width={120}
+              height={120}
+              className="w-32 h-32 object-cover rounded-lg border"
+              unoptimized
             />
-            {imagePreview && (
-              <div className="relative inline-block">
-                <Image
-                  src={imagePreview}
-                  alt="Vista previa"
-                  width={120}
-                  height={120}
-                  className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded-lg border border-gray-300"
-                  unoptimized
-                />
-                <button
-                  type="button"
-                  onClick={handleRemoveImage}
-                  className="absolute -top-2 -right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold transition-colors touch-manipulation"
-                >
-                  ✕
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2 flex items-center gap-2">
-            <DollarSign className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600" />
-            Precio (CLP)
-          </label>
-          <input
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base text-gray-900"
-            placeholder="Ej: 1500"
-            min="0"
-            step="1"
-          />
-        </div>
-
-        <div className="flex gap-2 sm:gap-3 pt-2 sm:pt-3">
-          <button
-            type="submit"
-            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg transition-colors flex items-center justify-center gap-1.5 sm:gap-2 text-sm sm:text-base touch-manipulation"
-          >
-            <Save className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            {product ? "Guardar" : "Agregar"}
-          </button>
-
-          {product && (
-            <button
+            <Button
               type="button"
-              onClick={onCancel}
-              className="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg transition-colors flex items-center justify-center gap-1.5 sm:gap-2 text-sm sm:text-base touch-manipulation"
+              onClick={handleRemoveImage}
+              variant="destructive"
+              size="icon"
+              className="absolute -top-2 -right-2 h-7 w-7 rounded-full"
             >
-              <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              Cancelar
-            </button>
-          )}
-        </div>
-      </form>
-    </div>
+              ✕
+            </Button>
+          </div>
+        )}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="price" className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+          <DollarSign className="w-4 h-4 text-blue-600" />
+          Precio (CLP)
+        </Label>
+        <Input
+          id="price"
+          type="number"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          placeholder="Ej: 1500"
+          min="0"
+          step="1"
+          className="text-gray-900"
+        />
+      </div>
+
+      <div className="flex gap-3 pt-3">
+        <Button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-700">
+          <Save className="w-4 h-4 mr-2" />
+          {product ? "Guardar Cambios" : "Agregar Producto"}
+        </Button>
+
+        {product && (
+          <Button
+            type="button"
+            onClick={onCancel}
+            variant="secondary"
+            className="flex-1 bg-gray-500 hover:bg-gray-600 text-white"
+          >
+            <X className="w-4 h-4 mr-2" />
+            Cancelar
+          </Button>
+        )}
+      </div>
+    </form>
   );
 }
