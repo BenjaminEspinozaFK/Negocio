@@ -67,24 +67,24 @@ export default function ProductCard({
       </CardContent>
 
       {!readOnly && (
-        <CardFooter className="p-3 sm:p-4 pt-0 gap-2">
+        <CardFooter className="p-2 sm:p-4 pt-0 gap-1.5 sm:gap-2 flex-wrap sm:flex-nowrap">
           <Button
             onClick={() => onEdit?.(product)}
             variant="default"
             size="sm"
-            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+            className="flex-1 min-w-0 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm px-2 sm:px-4 h-8 sm:h-9"
           >
-            <Edit2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1" />
-            Editar
+            <Edit2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 sm:mr-1.5 flex-shrink-0" />
+            <span className="hidden sm:inline truncate">Editar</span>
           </Button>
           <Button
             onClick={() => onDelete?.(product.id)}
             variant="destructive"
             size="sm"
-            className="flex-1"
+            className="flex-1 min-w-0 text-xs sm:text-sm px-2 sm:px-4 h-8 sm:h-9"
           >
-            <Trash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1" />
-            Eliminar
+            <Trash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 sm:mr-1.5 flex-shrink-0" />
+            <span className="hidden sm:inline truncate">Eliminar</span>
           </Button>
         </CardFooter>
       )}
