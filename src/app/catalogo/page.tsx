@@ -146,14 +146,34 @@ export default function CatalogoPublico() {
         )}
 
         {/* Footer */}
-        <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-slate-700">
-          <div className="bg-slate-800/90 backdrop-blur-sm rounded-xl shadow-md border border-slate-700 p-4 sm:p-6 text-center">
-            <p className="text-white font-semibold text-base sm:text-lg mb-1">
-              ¡Gracias por preferirnos!
-            </p>
-            <p className="text-slate-300 text-sm sm:text-base">
-              Tu negocio de confianza en la villa
-            </p>
+        <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t-2 border-slate-700">
+          <div className="bg-gradient-to-br from-slate-800 to-slate-900 backdrop-blur-sm rounded-xl shadow-lg border border-slate-700 p-4 sm:p-6">
+            <div className="max-w-2xl mx-auto space-y-3">
+              {/* Nombre del negocio con línea */}
+              <div className="text-center">
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-1.5">
+                  Provisiones Mily
+                </h3>
+                <div className="w-16 h-0.5 bg-blue-500 mx-auto rounded-full"></div>
+              </div>
+
+              {/* Mensaje */}
+              <div className="text-center">
+                <p className="text-white font-semibold text-sm sm:text-base mb-1">
+                  ¡Gracias por preferirnos!
+                </p>
+                <p className="text-slate-300 text-xs sm:text-sm">
+                  Tu negocio de confianza en la villa
+                </p>
+              </div>
+
+              {/* Copyright */}
+              <div className="text-center pt-2 border-t border-slate-700/50">
+                <p className="text-slate-500 text-xs">
+                  © 2026 Provisiones Mily
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
