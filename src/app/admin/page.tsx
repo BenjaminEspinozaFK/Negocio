@@ -16,6 +16,7 @@ import {
   Lock,
   X,
   Key,
+  ArrowUpDown,
 } from "lucide-react";
 
 export default function AdminPanel() {
@@ -25,6 +26,7 @@ export default function AdminPanel() {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Todas");
+  const [sortBy, setSortBy] = useState<"name-asc" | "name-desc" | "price-asc" | "price-desc" | "date-desc">("date-desc");
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -42,20 +44,39 @@ export default function AdminPanel() {
   }, []);
 
   useEffect(() => {
-    let filtered = products;
+    let filtered = [...products]; // Crear una copia del array
 
+    // Filtrar por categoría
     if (selectedCategory !== "Todas") {
       filtered = filtered.filter((p) => p.category === selectedCategory);
     }
 
+    // Filtrar por búsqueda de nombre
     if (searchTerm) {
       filtered = filtered.filter((p) =>
         p.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
+    // Ordenar productos
+    filtered = filtered.sort((a, b) => {
+      switch (sortBy) {
+        case "name-asc":
+          return a.name.localeCompare(b.name, 'es'); // A-Z
+        case "name-desc":
+          return b.name.localeCompare(a.name, 'es'); // Z-A
+        case "price-asc":
+          return a.price - b.price; // Menor a mayor
+        case "price-desc":
+          return b.price - a.price; // Mayor a menor
+        case "date-desc":
+        default:
+          return 0; // Mantener orden original (más recientes primero)
+      }
+    });
+
     setFilteredProducts(filtered);
-  }, [products, searchTerm, selectedCategory]);
+  }, [products, searchTerm, selectedCategory, sortBy]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -287,39 +308,77 @@ export default function AdminPanel() {
 
         {/* Filters */}
         <div className="bg-slate-800/90 backdrop-blur-sm rounded-xl shadow-md border border-slate-700 p-4 sm:p-6 mb-4 sm:mb-8">
-          <div className="flex flex-col gap-3 sm:gap-4 md:grid md:grid-cols-2">
-            <div>
-              <label className="block text-xs sm:text-sm font-semibold text-slate-200 mb-1.5 sm:mb-2 flex items-center gap-2">
-                <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" />
-                Buscar Producto
-              </label>
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Escribe el nombre..."
-                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-slate-600 bg-slate-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base text-white placeholder:text-slate-400"
-              />
+          <div className="space-y-4">
+            {/* Búsqueda, Categoría y Ordenar */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+              <div>
+                <label className="block text-xs sm:text-sm font-semibold text-slate-200 mb-1.5 sm:mb-2 flex items-center gap-2">
+                  <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" />
+                  Buscar Producto
+                </label>
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Escribe el nombre..."
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-slate-600 bg-slate-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base text-white placeholder:text-slate-400"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs sm:text-sm font-semibold text-slate-200 mb-1.5 sm:mb-2 flex items-center gap-2">
+                  <Filter className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" />
+                  Filtrar por Categoría
+                </label>
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-slate-600 bg-slate-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base text-white cursor-pointer"
+                >
+                  <option value="Todas">Todas las categorías</option>
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs sm:text-sm font-semibold text-slate-200 mb-1.5 sm:mb-2 flex items-center gap-2">
+                  <ArrowUpDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" />
+                  Ordenar por
+                </label>
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as "name-asc" | "name-desc" | "price-asc" | "price-desc" | "date-desc")}
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-slate-600 bg-slate-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base text-white cursor-pointer"
+                >
+                  <option value="date-desc">Más recientes</option>
+                  <option value="name-asc">Nombre A-Z</option>
+                  <option value="name-desc">Nombre Z-A</option>
+                  <option value="price-asc">Precio menor a mayor</option>
+                  <option value="price-desc">Precio mayor a menor</option>
+                </select>
+              </div>
             </div>
 
-            <div>
-              <label className="block text-xs sm:text-sm font-semibold text-slate-200 mb-1.5 sm:mb-2 flex items-center gap-2">
-                <Filter className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" />
-                Filtrar por Categoría
-              </label>
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-slate-600 bg-slate-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base text-white cursor-pointer"
-              >
-                <option value="Todas">Todas las categorías</option>
-                {categories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {/* Botón para limpiar filtros */}
+            {(searchTerm || selectedCategory !== "Todas" || sortBy !== "date-desc") && (
+              <div className="flex justify-end">
+                <button
+                  onClick={() => {
+                    setSearchTerm("");
+                    setSelectedCategory("Todas");
+                    setSortBy("date-desc");
+                  }}
+                  className="text-xs sm:text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors inline-flex items-center gap-1.5"
+                >
+                  <X className="w-3.5 h-3.5" />
+                  Limpiar filtros
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
