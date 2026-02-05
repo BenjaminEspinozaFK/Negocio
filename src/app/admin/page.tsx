@@ -254,33 +254,8 @@ export default function AdminPanel() {
         {/* Header */}
         <div className="mb-4 sm:mb-8">
           <div className="bg-slate-800/90 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg border border-slate-700 p-4 sm:p-6">
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 mb-4">
-              <Link
-                href="/catalogo"
-                className="text-xs sm:text-sm text-blue-400 hover:text-blue-300 font-medium inline-flex items-center gap-2 order-2 sm:order-1"
-              >
-                <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                Ver catálogo público
-              </Link>
-              <div className="flex gap-2 order-1 sm:order-2">
-                <button
-                  onClick={() => setShowChangePasswordModal(true)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors inline-flex items-center justify-center gap-2 touch-manipulation"
-                >
-                  <Key className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                  Cambiar Contraseña
-                </button>
-                <button
-                  onClick={handleLogout}
-                  className="bg-red-600 hover:bg-red-700 text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors inline-flex items-center justify-center gap-2 touch-manipulation"
-                >
-                  <LogOut className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                  Cerrar Sesión
-                </button>
-              </div>
-            </div>
-
-            <div className="text-center">
+            {/* Título Principal */}
+            <div className="text-center mb-6">
               <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2">
                 <Settings className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400" />
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
@@ -288,6 +263,33 @@ export default function AdminPanel() {
                 </h1>
               </div>
               <p className="text-sm sm:text-base text-slate-300">Gestiona tus productos y precios</p>
+            </div>
+
+            {/* Botones de Acción - Organizados en Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <Link
+                href="/catalogo"
+                className="bg-slate-700/50 hover:bg-slate-700 border border-slate-600 text-white px-4 py-3 rounded-lg text-sm font-medium transition-colors inline-flex items-center justify-center gap-2 touch-manipulation"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Ver Catálogo Público
+              </Link>
+              
+              <button
+                onClick={() => setShowChangePasswordModal(true)}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg text-sm font-medium transition-colors inline-flex items-center justify-center gap-2 touch-manipulation"
+              >
+                <Key className="w-4 h-4" />
+                Cambiar Contraseña
+              </button>
+              
+              <button
+                onClick={handleLogout}
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg text-sm font-medium transition-colors inline-flex items-center justify-center gap-2 touch-manipulation"
+              >
+                <LogOut className="w-4 h-4" />
+                Cerrar Sesión
+              </button>
             </div>
           </div>
         </div>
