@@ -153,3 +153,27 @@ html {
     @apply bg-background text-foreground;
   }
 }
+
+/* Estilos para mejorar la visibilidad de los selects y sus opciones */
+select {
+  background-color: rgb(51 65 85 / 0.5) !important;
+}
+
+select option {
+  background-color: #1e293b !important;
+  color: #ffffff !important;
+  padding: 8px 12px !important;
+  font-weight: 500;
+}
+
+select option:hover,
+select option:focus,
+select option:checked {
+  background-color: #3b82f6 !important;
+  color: #ffffff !important;
+}
+
+select option:checked {
+  background: linear-gradient(#3b82f6, #3b82f6);
+  background-color: #3b82f6 !important;
+}
