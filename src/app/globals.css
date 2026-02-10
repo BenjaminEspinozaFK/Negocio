@@ -160,7 +160,7 @@ select {
 }
 
 select option {
-  background-color: #1e293b !important;
+  background-color: #334155 !important; /* slate-700 - más claro que antes */
   color: #ffffff !important;
   padding: 8px 12px !important;
   font-weight: 500;
@@ -169,11 +169,11 @@ select option {
 select option:hover,
 select option:focus,
 select option:checked {
-  background-color: #3b82f6 !important;
+  background-color: #475569 !important; /* slate-600 - un poco más claro al seleccionar */
   color: #ffffff !important;
 }
 
 select option:checked {
-  background: linear-gradient(#3b82f6, #3b82f6);
-  background-color: #3b82f6 !important;
+  background: linear-gradient(#475569, #475569);
+  background-color: #475569 !important;
 }
