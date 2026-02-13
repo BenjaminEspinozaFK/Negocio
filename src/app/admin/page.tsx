@@ -7,7 +7,8 @@ import ChangePasswordModal from "@/components/ChangePasswordModal";
 import { Product, categories } from "@/types/product";
 import Link from "next/link";
 import PrintableProductList from "@/components/PrintableProductList";
-import { Printer } from "lucide-react";
+import ShoppingCalculator from "@/components/ShoppingCalculator";
+import { Printer, Calculator } from "lucide-react";
 import {
   Search,
   Filter,
@@ -36,6 +37,7 @@ export default function AdminPanel() {
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
+  const [showCalculator, setShowCalculator] = useState(false);
 
   useEffect(() => {
     const auth = sessionStorage.getItem("adminAuth");
@@ -496,17 +498,33 @@ export default function AdminPanel() {
             </div>
           )}
 
-          {/* Modal de Cambio de Contraseña */}
-          {showChangePasswordModal && (
-            <ChangePasswordModal
-              onClose={() => setShowChangePasswordModal(false)}
-            />
-          )}
-        </div>
-      </div>
+        {/* Modal de Cambio de Contraseña */}
+        {showChangePasswordModal && (
+          <ChangePasswordModal
+            onClose={() => setShowChangePasswordModal(false)}
+          />
+        )}
 
-      {/* Componente de impresión (fuera del contenedor principal) */}
-      <PrintableProductList products={filteredProducts} showCategories={true} />
-    </>
+        {/* Botón flotante de calculadora */}
+        <button
+          onClick={() => setShowCalculator(true)}
+          className="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all hover:scale-110 z-30"
+          title="Abrir Calculadora"
+        >
+          <Calculator className="w-6 h-6" />
+        </button>
+
+        {/* Componente de calculadora */}
+        <ShoppingCalculator
+          products={products}
+          isOpen={showCalculator}
+          onClose={() => setShowCalculator(false)}
+        />
+      </div>
+    </div>
+
+    {/* Componente de impresión (fuera del contenedor principal) */}
+    <PrintableProductList products={filteredProducts} showCategories={true} />
+  </>
   );
 }
