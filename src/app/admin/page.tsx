@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ProductCard from "@/components/ProductCard";
 import ProductForm from "@/components/ProductForm";
 import ChangePasswordModal from "@/components/ChangePasswordModal";
 import { Product, categories } from "@/types/product";
 import Link from "next/link";
 import PrintableProductList from "@/components/PrintableProductList";
-import ShoppingCalculator from "@/components/ShoppingCalculator";
+import ShoppingCalculator, { ShoppingCalculatorRef } from "@/components/ShoppingCalculator";
 import { Printer, Calculator } from "lucide-react";
 import {
   Search,
@@ -28,6 +28,7 @@ export default function AdminPanel() {
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const calculatorRef = useRef<ShoppingCalculatorRef>(null);
   const [selectedCategory, setSelectedCategory] = useState("Todas");
   const [sortBy, setSortBy] = useState<
     "name-asc" | "name-desc" | "price-asc" | "price-desc" | "date-desc"
@@ -195,6 +196,13 @@ export default function AdminPanel() {
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleAddToCart = (product: Product) => {
+    if (calculatorRef.current) {
+      calculatorRef.current.addToCart(product);
+      setShowCalculator(true); // Abrir la calculadora al agregar
+    }
   };
 
   // Login Screen
@@ -455,6 +463,7 @@ export default function AdminPanel() {
                       setShowModal(true);
                     }}
                     onDelete={handleDeleteProduct}
+                    onAddToCart={handleAddToCart}
                     readOnly={false}
                   />
                 ))}
@@ -516,6 +525,7 @@ export default function AdminPanel() {
 
         {/* Componente de calculadora */}
         <ShoppingCalculator
+          ref={calculatorRef}
           products={products}
           isOpen={showCalculator}
           onClose={() => setShowCalculator(false)}
