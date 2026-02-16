@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Product } from "@/types/product";
 import Image from "next/image";
-import { Edit2, Trash2, Package, AlertTriangle } from "lucide-react";
+import { Edit2, Trash2, Package, AlertTriangle, ShoppingCart } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -22,6 +22,7 @@ interface ProductCardProps {
   product: Product;
   onEdit?: (product: Product) => void;
   onDelete?: (id: string) => void;
+  onAddToCart?: (product: Product) => void;
   readOnly?: boolean;
 }
 
@@ -29,6 +30,7 @@ export default function ProductCard({
   product,
   onEdit,
   onDelete,
+  onAddToCart,
   readOnly = false,
 }: ProductCardProps) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -87,6 +89,17 @@ export default function ProductCard({
       {!readOnly && (
         <>
           <CardFooter className="p-2 sm:p-4 pt-0 gap-1.5 sm:gap-2 flex-wrap sm:flex-nowrap">
+            {onAddToCart && (
+              <Button
+                onClick={() => onAddToCart(product)}
+                variant="outline"
+                size="sm"
+                className="flex-1 min-w-0 bg-green-600 hover:bg-green-700 border-green-700 text-white text-xs sm:text-sm px-2 sm:px-4 h-8 sm:h-9"
+              >
+                <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4 sm:mr-1.5 flex-shrink-0" />
+                <span className="hidden sm:inline truncate">Agregar</span>
+              </Button>
+            )}
             <Button
               onClick={() => onEdit?.(product)}
               variant="default"
