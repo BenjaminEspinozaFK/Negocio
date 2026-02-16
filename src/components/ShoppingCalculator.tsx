@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useImperativeHandle, forwardRef } from "react";
 import { Product } from "@/types/product";
 import { X, ShoppingCart, Plus, Minus, Trash2, Calculator } from "lucide-react";
 
@@ -15,11 +15,12 @@ interface ShoppingCalculatorProps {
   onClose: () => void;
 }
 
-export default function ShoppingCalculator({
-  products,
-  isOpen,
-  onClose,
-}: ShoppingCalculatorProps) {
+export interface ShoppingCalculatorRef {
+  addToCart: (product: Product) => void;
+}
+
+const ShoppingCalculator = forwardRef<ShoppingCalculatorRef, ShoppingCalculatorProps>(
+  ({ products, isOpen, onClose }, ref) => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -45,6 +46,11 @@ export default function ShoppingCalculator({
     }
     setSearchTerm(""); // Limpiar búsqueda después de agregar
   };
+
+  // Exponer la función addToCart a través del ref
+  useImperativeHandle(ref, () => ({
+    addToCart,
+  }));
 
   // Aumentar cantidad
   const increaseQuantity = (productId: string) => {
@@ -252,4 +258,8 @@ export default function ShoppingCalculator({
       </div>
     </>
   );
-}
+});
+
+ShoppingCalculator.displayName = "ShoppingCalculator";
+
+export default ShoppingCalculator;
