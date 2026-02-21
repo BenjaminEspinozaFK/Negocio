@@ -17,12 +17,9 @@ export const metadata: Metadata = {
   title: "Provisiones Mily - Gestión de Productos",
   description:
     "Aplicación para gestionar productos y precios de Provisiones Mily",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-  },
 };
+
+export const viewport = "width=device-width, initial-scale=1, maximum-scale=5";
 
 export default function RootLayout({
   children,
@@ -30,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
