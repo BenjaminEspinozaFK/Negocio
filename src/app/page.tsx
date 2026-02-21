@@ -12,12 +12,12 @@ export default function Home() {
   }, [router]);
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center">
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
+        <h1 className="text-3xl font-bold text-white mb-4">
           🏪 Provisiones Mily
         </h1>
-        <p className="text-gray-600">Cargando...</p>
+        <p className="text-slate-300">Cargando...</p>
       </div>
     </div>
   );

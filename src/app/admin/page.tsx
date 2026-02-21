@@ -8,7 +8,6 @@ import { Product, categories } from "@/types/product";
 import Link from "next/link";
 import PrintableProductList from "@/components/PrintableProductList";
 import ShoppingCalculator, { ShoppingCalculatorRef } from "@/components/ShoppingCalculator";
-import { Printer, Calculator } from "lucide-react";
 import {
   Search,
   Filter,
@@ -20,6 +19,8 @@ import {
   X,
   Key,
   ArrowUpDown,
+  Printer,
+  Calculator,
 } from "lucide-react";
 
 export default function AdminPanel() {
