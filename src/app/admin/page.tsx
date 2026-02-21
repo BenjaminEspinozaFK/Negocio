@@ -8,6 +8,7 @@ import { Product, categories } from "@/types/product";
 import Link from "next/link";
 import PrintableProductList from "@/components/PrintableProductList";
 import ShoppingCalculator, { ShoppingCalculatorRef } from "@/components/ShoppingCalculator";
+import { toast } from "sonner";
 import {
   Search,
   Filter,
@@ -116,6 +117,7 @@ export default function AdminPanel() {
     setIsAuthenticated(false);
     sessionStorage.removeItem("adminAuth");
     setPassword("");
+    toast.info("👋 Sesión cerrada");
   };
 
   const fetchProducts = async () => {
@@ -123,8 +125,6 @@ export default function AdminPanel() {
       const res = await fetch("/api/products");
       const data = await res.json();
       setProducts(data);
-    } catch (error) {
-      console.error("Error al cargar productos:", error);
     } finally {
       setIsLoading(false);
     }
@@ -141,12 +141,12 @@ export default function AdminPanel() {
       if (response.ok) {
         await fetchProducts();
         setShowModal(false);
+        toast.success("✅ Producto agregado exitosamente");
       } else {
-        alert("Error al agregar producto");
+        toast.error("❌ Error al agregar producto");
       }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Error al agregar producto");
+    } catch {
+      toast.error("❌ Error al conectar con el servidor");
     }
   };
 
@@ -167,18 +167,16 @@ export default function AdminPanel() {
         await fetchProducts();
         setEditingProduct(null);
         setShowModal(false);
+        toast.success("✅ Producto actualizado exitosamente");
       } else {
-        alert("Error al actualizar producto");
+        toast.error("❌ Error al actualizar producto");
       }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Error al actualizar producto");
+    } catch {
+      toast.error("❌ Error al conectar con el servidor");
     }
   };
 
   const handleDeleteProduct = async (id: string) => {
-    if (!confirm("¿Estás seguro de eliminar este producto?")) return;
-
     try {
       const response = await fetch(`/api/products/${id}`, {
         method: "DELETE",
@@ -186,12 +184,12 @@ export default function AdminPanel() {
 
       if (response.ok) {
         await fetchProducts();
+        toast.success("✅ Producto eliminado exitosamente");
       } else {
-        alert("Error al eliminar producto");
+        toast.error("❌ Error al eliminar producto");
       }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Error al eliminar producto");
+    } catch {
+      toast.error("❌ Error al conectar con el servidor");
     }
   };
 

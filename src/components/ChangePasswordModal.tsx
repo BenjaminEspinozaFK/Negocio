@@ -68,8 +68,7 @@ export default function ChangePasswordModal({ onClose }: ChangePasswordProps) {
       } else {
         setError(data.error || "Error al cambiar la contraseña");
       }
-    } catch (error) {
-      console.error("Error:", error);
+    } catch {
       setError("Error al conectar con el servidor");
     } finally {
       setIsLoading(false);
