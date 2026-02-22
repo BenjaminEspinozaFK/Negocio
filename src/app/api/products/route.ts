@@ -29,6 +29,15 @@ export async function GET() {
 
 export async function POST(request: Request) {
     try {
+        // 🔒 Verificar autenticación
+        const authHeader = request.headers.get('x-admin-auth');
+        if (authHeader !== process.env.ADMIN_API_KEY) {
+            return NextResponse.json(
+                { error: 'No autorizado' },
+                { status: 401 }
+            );
+        }
+
         const data = await request.json();
 
         const newProduct = await prisma.product.create({

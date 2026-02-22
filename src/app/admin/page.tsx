@@ -7,7 +7,9 @@ import ChangePasswordModal from "@/components/ChangePasswordModal";
 import { Product, categories } from "@/types/product";
 import Link from "next/link";
 import PrintableProductList from "@/components/PrintableProductList";
-import ShoppingCalculator, { ShoppingCalculatorRef } from "@/components/ShoppingCalculator";
+import ShoppingCalculator, {
+  ShoppingCalculatorRef,
+} from "@/components/ShoppingCalculator";
 import { toast } from "sonner";
 import {
   Search,
@@ -134,7 +136,10 @@ export default function AdminPanel() {
     try {
       const response = await fetch("/api/products", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-auth": process.env.NEXT_PUBLIC_ADMIN || "",
+        },
         body: JSON.stringify(product),
       });
 
@@ -156,7 +161,10 @@ export default function AdminPanel() {
     try {
       const response = await fetch(`/api/products/${editingProduct.id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-auth": process.env.NEXT_PUBLIC_ADMIN || "",
+        },
         body: JSON.stringify({
           id: editingProduct.id,
           ...product,
@@ -180,6 +188,9 @@ export default function AdminPanel() {
     try {
       const response = await fetch(`/api/products/${id}`, {
         method: "DELETE",
+        headers: {
+          "x-admin-auth": process.env.NEXT_PUBLIC_ADMIN || "",
+        },
       });
 
       if (response.ok) {
@@ -506,34 +517,34 @@ export default function AdminPanel() {
             </div>
           )}
 
-        {/* Modal de Cambio de Contraseña */}
-        {showChangePasswordModal && (
-          <ChangePasswordModal
-            onClose={() => setShowChangePasswordModal(false)}
+          {/* Modal de Cambio de Contraseña */}
+          {showChangePasswordModal && (
+            <ChangePasswordModal
+              onClose={() => setShowChangePasswordModal(false)}
+            />
+          )}
+
+          {/* Botón flotante de calculadora */}
+          <button
+            onClick={() => setShowCalculator(true)}
+            className="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all hover:scale-110 z-30"
+            title="Abrir Calculadora"
+          >
+            <Calculator className="w-6 h-6" />
+          </button>
+
+          {/* Componente de calculadora */}
+          <ShoppingCalculator
+            ref={calculatorRef}
+            products={products}
+            isOpen={showCalculator}
+            onClose={() => setShowCalculator(false)}
           />
-        )}
-
-        {/* Botón flotante de calculadora */}
-        <button
-          onClick={() => setShowCalculator(true)}
-          className="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all hover:scale-110 z-30"
-          title="Abrir Calculadora"
-        >
-          <Calculator className="w-6 h-6" />
-        </button>
-
-        {/* Componente de calculadora */}
-        <ShoppingCalculator
-          ref={calculatorRef}
-          products={products}
-          isOpen={showCalculator}
-          onClose={() => setShowCalculator(false)}
-        />
+        </div>
       </div>
-    </div>
 
-    {/* Componente de impresión (fuera del contenedor principal) */}
-    <PrintableProductList products={filteredProducts} showCategories={true} />
-  </>
+      {/* Componente de impresión (fuera del contenedor principal) */}
+      <PrintableProductList products={filteredProducts} showCategories={true} />
+    </>
   );
 }
