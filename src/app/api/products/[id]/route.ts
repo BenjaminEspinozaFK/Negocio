@@ -6,6 +6,15 @@ export async function PUT(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        // 🔒 Verificar autenticación
+        const authHeader = request.headers.get('x-admin-auth');
+        if (authHeader !== process.env.ADMIN_API_KEY) {
+            return NextResponse.json(
+                { error: 'No autorizado' },
+                { status: 401 }
+            );
+        }
+
         const { id } = await params;
         const data = await request.json();
 
@@ -35,6 +44,15 @@ export async function DELETE(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        // 🔒 Verificar autenticación
+        const authHeader = request.headers.get('x-admin-auth');
+        if (authHeader !== process.env.ADMIN_API_KEY) {
+            return NextResponse.json(
+                { error: 'No autorizado' },
+                { status: 401 }
+            );
+        }
+
         const { id } = await params;
 
         await prisma.product.delete({
