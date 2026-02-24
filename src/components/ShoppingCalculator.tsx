@@ -19,27 +19,30 @@ export interface ShoppingCalculatorRef {
   addToCart: (product: Product) => void;
 }
 
-const ShoppingCalculator = forwardRef<ShoppingCalculatorRef, ShoppingCalculatorProps>(
-  ({ products, isOpen, onClose }, ref) => {
+const ShoppingCalculator = forwardRef<
+  ShoppingCalculatorRef,
+  ShoppingCalculatorProps
+>(({ products, isOpen, onClose }, ref) => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [paymentAmount, setPaymentAmount] = useState<string>("");
 
   // Filtrar productos por búsqueda
   const filteredProducts = products.filter((p) =>
-    p.name.toLowerCase().includes(searchTerm.toLowerCase())
+    p.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   // Agregar producto al carrito
   const addToCart = (product: Product) => {
     const existingItem = cart.find((item) => item.product.id === product.id);
-    
+
     if (existingItem) {
       setCart(
         cart.map((item) =>
           item.product.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
-            : item
-        )
+            : item,
+        ),
       );
     } else {
       setCart([...cart, { product, quantity: 1 }]);
@@ -58,8 +61,8 @@ const ShoppingCalculator = forwardRef<ShoppingCalculatorRef, ShoppingCalculatorP
       cart.map((item) =>
         item.product.id === productId
           ? { ...item, quantity: item.quantity + 1 }
-          : item
-      )
+          : item,
+      ),
     );
   };
 
@@ -69,8 +72,8 @@ const ShoppingCalculator = forwardRef<ShoppingCalculatorRef, ShoppingCalculatorP
       cart.map((item) =>
         item.product.id === productId
           ? { ...item, quantity: Math.max(1, item.quantity - 1) }
-          : item
-      )
+          : item,
+      ),
     );
   };
 
@@ -83,14 +86,19 @@ const ShoppingCalculator = forwardRef<ShoppingCalculatorRef, ShoppingCalculatorP
   const clearCart = () => {
     if (confirm("¿Limpiar toda la calculadora?")) {
       setCart([]);
+      setPaymentAmount("");
     }
   };
 
   // Calcular total
   const total = cart.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
-    0
+    0,
   );
+
+  // Calcular vuelto
+  const payment = parseFloat(paymentAmount) || 0;
+  const change = payment - total;
 
   // Formatear precio
   const formatPrice = (price: number) => {
@@ -98,6 +106,13 @@ const ShoppingCalculator = forwardRef<ShoppingCalculatorRef, ShoppingCalculatorP
       style: "currency",
       currency: "CLP",
     }).format(price);
+  };
+
+  // Manejar cambios en el monto de pago
+  const handlePaymentChange = (value: string) => {
+    // Solo permitir números
+    const numericValue = value.replace(/[^0-9]/g, "");
+    setPaymentAmount(numericValue);
   };
 
   if (!isOpen) return null;
@@ -254,6 +269,50 @@ const ShoppingCalculator = forwardRef<ShoppingCalculatorRef, ShoppingCalculatorP
               </span>
             </div>
           </div>
+
+          {/* Campo de pago y vuelto */}
+          {cart.length > 0 && (
+            <div className="bg-slate-700 rounded-lg p-4">
+              <div className="mb-3">
+                <label className="block text-sm text-slate-300 mb-2">
+                  Pago del cliente:
+                </label>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={paymentAmount}
+                  onChange={(e) => handlePaymentChange(e.target.value)}
+                  placeholder="Ej: 20000"
+                  className="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-lg text-white text-lg placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Mostrar vuelto */}
+              {payment > 0 && (
+                <div className="pt-3 border-t border-slate-600">
+                  {payment >= total ? (
+                    <div className="flex justify-between items-center">
+                      <span className="text-base font-semibold text-white">
+                        Vuelto:
+                      </span>
+                      <span className="text-2xl font-bold text-green-400">
+                        {formatPrice(change)}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="text-center">
+                      <p className="text-sm text-red-400">
+                        El pago es insuficiente
+                      </p>
+                      <p className="text-xs text-slate-400 mt-1">
+                        Faltan {formatPrice(total - payment)}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>
