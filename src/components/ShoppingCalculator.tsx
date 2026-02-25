@@ -115,6 +115,14 @@ const ShoppingCalculator = forwardRef<
     setPaymentAmount(numericValue);
   };
 
+  // Establecer denominación rápida
+  const setQuickAmount = (amount: number) => {
+    setPaymentAmount(amount.toString());
+  };
+
+  // Denominaciones de billetes chilenos
+  const denominations = [1000, 2000, 5000, 10000, 20000];
+
   if (!isOpen) return null;
 
   return (
@@ -277,6 +285,20 @@ const ShoppingCalculator = forwardRef<
                 <label className="block text-sm text-slate-300 mb-2">
                   Pago del cliente:
                 </label>
+
+                {/* Botones de denominaciones rápidas */}
+                <div className="grid grid-cols-5 gap-1.5 mb-2">
+                  {denominations.map((amount) => (
+                    <button
+                      key={amount}
+                      onClick={() => setQuickAmount(amount)}
+                      className="px-2 py-1.5 bg-slate-600 hover:bg-blue-600 text-white text-xs font-semibold rounded transition-colors border border-slate-500 hover:border-blue-500"
+                    >
+                      ${(amount / 1000).toFixed(0)}k
+                    </button>
+                  ))}
+                </div>
+
                 <input
                   type="text"
                   inputMode="numeric"
