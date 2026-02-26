@@ -2,7 +2,25 @@
 
 import { useState, useImperativeHandle, forwardRef } from "react";
 import { Product } from "@/types/product";
-import { X, ShoppingCart, Plus, Minus, Trash2, Calculator } from "lucide-react";
+import {
+  X,
+  ShoppingCart,
+  Plus,
+  Minus,
+  Trash2,
+  Calculator,
+  AlertTriangle,
+} from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface CartItem {
   product: Product;
@@ -26,7 +44,7 @@ const ShoppingCalculator = forwardRef<
   const [cart, setCart] = useState<CartItem[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [paymentAmount, setPaymentAmount] = useState<string>("");
-
+  const [showClearAlert, setShowClearAlert] = useState(false);
   // Filtrar productos por búsqueda
   const filteredProducts = products.filter((p) =>
     p.name.toLowerCase().includes(searchTerm.toLowerCase()),
@@ -84,10 +102,9 @@ const ShoppingCalculator = forwardRef<
 
   // Limpiar carrito
   const clearCart = () => {
-    if (confirm("¿Limpiar toda la calculadora?")) {
-      setCart([]);
-      setPaymentAmount("");
-    }
+    setCart([]);
+    setPaymentAmount("");
+    setShowClearAlert(false);
   };
 
   // Calcular total
@@ -256,7 +273,7 @@ const ShoppingCalculator = forwardRef<
         <div className="bg-slate-900 p-4 border-t border-slate-700">
           {cart.length > 0 && (
             <button
-              onClick={clearCart}
+              onClick={() => setShowClearAlert(true)}
               className="w-full mb-3 text-sm text-red-400 hover:text-red-300 transition-colors"
             >
               Limpiar todo
@@ -337,6 +354,33 @@ const ShoppingCalculator = forwardRef<
           )}
         </div>
       </div>
+
+      {/* Alert Dialog para confirmar limpieza */}
+      <AlertDialog open={showClearAlert} onOpenChange={setShowClearAlert}>
+        <AlertDialogContent className="bg-slate-800 border-slate-700">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2 text-white">
+              <AlertTriangle className="w-5 h-5 text-amber-500" />
+              ¿Limpiar toda la calculadora?
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-slate-300">
+              Esta acción eliminará todos los productos del carrito y reiniciará
+              el monto de pago. Esta acción no se puede deshacer.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="bg-slate-700 text-white hover:bg-slate-600 border-slate-600">
+              Cancelar
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={clearCart}
+              className="bg-red-600 hover:bg-red-700 text-white"
+            >
+              Limpiar todo
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 });
