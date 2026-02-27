@@ -1,7 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Lock, Eye, EyeOff, Key } from "lucide-react";
+import {
+  Lock,
+  Eye,
+  EyeOff,
+  Key,
+  CheckCircle2,
+  AlertCircle,
+} from "lucide-react";
 
 interface ChangePasswordProps {
   onClose: () => void;
@@ -60,7 +67,7 @@ export default function ChangePasswordModal({ onClose }: ChangePasswordProps) {
         setCurrentPassword("");
         setNewPassword("");
         setConfirmPassword("");
-        
+
         // Cerrar el modal después de 2 segundos
         setTimeout(() => {
           onClose();
@@ -96,14 +103,18 @@ export default function ChangePasswordModal({ onClose }: ChangePasswordProps) {
         </div>
 
         {success && (
-          <div className="mb-4 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm">
-            ✓ Contraseña actualizada correctamente
+          <div className="mb-4 bg-green-900/20 border border-green-500/50 backdrop-blur-sm px-4 py-3 rounded-lg text-sm flex items-center gap-3 shadow-lg">
+            <CheckCircle2 className="w-5 h-5 text-green-400 shrink-0" />
+            <span className="text-green-200 font-medium">
+              Contraseña actualizada correctamente
+            </span>
           </div>
         )}
 
         {error && (
-          <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
-            {error}
+          <div className="mb-4 bg-red-900/20 border border-red-500/50 backdrop-blur-sm px-4 py-3 rounded-lg text-sm flex items-center gap-3 shadow-lg">
+            <AlertCircle className="w-5 h-5 text-red-400 shrink-0" />
+            <span className="text-red-200 font-medium">{error}</span>
           </div>
         )}
 
@@ -216,7 +227,8 @@ export default function ChangePasswordModal({ onClose }: ChangePasswordProps) {
 
         <div className="mt-4 p-3 bg-blue-50 rounded-lg">
           <p className="text-xs text-gray-600">
-            <strong>Nota:</strong> La nueva contraseña se guardará en la base de datos y será la que uses para iniciar sesión en el futuro.
+            <strong>Nota:</strong> La nueva contraseña se guardará en la base de
+            datos y será la que uses para iniciar sesión en el futuro.
           </p>
         </div>
       </div>
