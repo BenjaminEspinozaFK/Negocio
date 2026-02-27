@@ -24,6 +24,7 @@ import {
   ArrowUpDown,
   Printer,
   Calculator,
+  AlertCircle,
 } from "lucide-react";
 
 export default function AdminPanel() {
@@ -248,8 +249,9 @@ export default function AdminPanel() {
             </div>
 
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
-                {error}
+              <div className="bg-red-900/20 border border-red-500/50 backdrop-blur-sm px-4 py-3 rounded-lg text-sm flex items-center gap-3 shadow-lg">
+                <AlertCircle className="w-5 h-5 text-red-400 shrink-0" />
+                <span className="text-red-200 font-medium">{error}</span>
               </div>
             )}
 
