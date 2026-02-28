@@ -5,13 +5,9 @@ import { NextRequest, NextResponse } from 'next/server';
  * Para APIs protegidas del admin
  */
 export function isAuthenticated(request: NextRequest): boolean {
-    // Opción 1: Verificar header de autorización
-    const authHeader = request.headers.get('authorization');
-
-    // Opción 2: Verificar cookie de sesión (más seguro)
+    // Verificar cookie de sesión segura
     const sessionCookie = request.cookies.get('admin-session');
-
-    return !!(authHeader === `Bearer ${process.env.ADMIN_API_KEY}` || sessionCookie);
+    return sessionCookie?.value === 'authenticated';
 }
 
 /**
@@ -19,10 +15,8 @@ export function isAuthenticated(request: NextRequest): boolean {
  */
 export function withAuth(handler: (req: NextRequest) => Promise<NextResponse>) {
     return async (req: NextRequest) => {
-        // Verificar autenticación
-        const authHeader = req.headers.get('x-admin-auth');
-
-        if (authHeader !== process.env.ADMIN_API_KEY) {
+        // Verificar autenticación por cookie
+        if (!isAuthenticated(req)) {
             return NextResponse.json(
                 { error: 'No autorizado' },
                 { status: 401 }
