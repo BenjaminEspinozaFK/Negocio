@@ -15,7 +15,7 @@ export async function POST(request: Request) {
         if (!settings) {
             const envPassword = process.env.ADMIN_PASSWORD || "Lidia1980";
             const hashedPassword = await bcrypt.hash(envPassword, 10);
-            
+
             settings = await prisma.settings.create({
                 data: {
                     id: "admin-config",
@@ -28,7 +28,18 @@ export async function POST(request: Request) {
         const isValid = await bcrypt.compare(password, settings.password);
 
         if (isValid) {
-            return NextResponse.json({ success: true });
+            const response = NextResponse.json({ success: true });
+
+            // Establecer cookie de sesión segura
+            response.cookies.set('admin-session', 'authenticated', {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'lax',
+                maxAge: 60 * 60 * 24, // 24 horas
+                path: '/',
+            });
+
+            return response;
         } else {
             return NextResponse.json({ success: false }, { status: 401 });
         }

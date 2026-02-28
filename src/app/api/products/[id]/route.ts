@@ -1,14 +1,15 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { isAuthenticated } from '@/lib/auth';
+import { NextRequest } from 'next/server';
 
 export async function PUT(
-    request: Request,
+    request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        // 🔒 Verificar autenticación
-        const authHeader = request.headers.get('x-admin-auth');
-        if (authHeader !== process.env.ADMIN_API_KEY) {
+        // 🔒 Verificar autenticación por cookie
+        if (!isAuthenticated(request)) {
             return NextResponse.json(
                 { error: 'No autorizado' },
                 { status: 401 }
@@ -40,13 +41,12 @@ export async function PUT(
 }
 
 export async function DELETE(
-    request: Request,
+    request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        // 🔒 Verificar autenticación
-        const authHeader = request.headers.get('x-admin-auth');
-        if (authHeader !== process.env.ADMIN_API_KEY) {
+        // 🔒 Verificar autenticación por cookie
+        if (!isAuthenticated(request)) {
             return NextResponse.json(
                 { error: 'No autorizado' },
                 { status: 401 }

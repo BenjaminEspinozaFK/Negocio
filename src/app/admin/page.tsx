@@ -116,7 +116,16 @@ export default function AdminPanel() {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
+
     setIsAuthenticated(false);
     sessionStorage.removeItem("adminAuth");
     setPassword("");
@@ -139,8 +148,8 @@ export default function AdminPanel() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-admin-auth": process.env.NEXT_PUBLIC_ADMIN || "",
         },
+        credentials: "include", // Incluir cookies de sesión
         body: JSON.stringify(product),
       });
 
@@ -164,8 +173,8 @@ export default function AdminPanel() {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "x-admin-auth": process.env.NEXT_PUBLIC_ADMIN || "",
         },
+        credentials: "include", // Incluir cookies de sesión
         body: JSON.stringify({
           id: editingProduct.id,
           ...product,
@@ -189,9 +198,7 @@ export default function AdminPanel() {
     try {
       const response = await fetch(`/api/products/${id}`, {
         method: "DELETE",
-        headers: {
-          "x-admin-auth": process.env.NEXT_PUBLIC_ADMIN || "",
-        },
+        credentials: "include", // Incluir cookies de sesión
       });
 
       if (response.ok) {
