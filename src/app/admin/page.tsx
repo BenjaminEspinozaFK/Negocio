@@ -46,13 +46,8 @@ export default function AdminPanel() {
   const [showCalculator, setShowCalculator] = useState(false);
 
   useEffect(() => {
-    const auth = sessionStorage.getItem("adminAuth");
-    if (auth === "true") {
-      setIsAuthenticated(true);
-      fetchProducts();
-    } else {
-      setIsLoading(false);
-    }
+    // Siempre mostrar pantalla de login al entrar
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -103,7 +98,6 @@ export default function AdminPanel() {
 
       if (response.ok) {
         setIsAuthenticated(true);
-        sessionStorage.setItem("adminAuth", "true");
         fetchProducts();
       } else {
         setError("Contraseña incorrecta");
@@ -127,11 +121,9 @@ export default function AdminPanel() {
     }
 
     setIsAuthenticated(false);
-    sessionStorage.removeItem("adminAuth");
     setPassword("");
     toast.info("👋 Sesión cerrada");
   };
-
   const fetchProducts = async () => {
     try {
       const res = await fetch("/api/products");
