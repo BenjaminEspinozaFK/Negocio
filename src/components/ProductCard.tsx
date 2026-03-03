@@ -3,8 +3,19 @@
 import { useState } from "react";
 import { Product } from "@/types/product";
 import Image from "next/image";
-import { Edit2, Trash2, Package, AlertTriangle, ShoppingCart } from "lucide-react";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import {
+  Edit2,
+  Trash2,
+  Package,
+  AlertTriangle,
+  ShoppingCart,
+} from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -120,28 +131,84 @@ export default function ProductCard({
             </Button>
           </CardFooter>
 
-          <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-            <AlertDialogContent className="bg-slate-800 border-slate-700">
+          <AlertDialog
+            open={showDeleteDialog}
+            onOpenChange={setShowDeleteDialog}
+          >
+            <AlertDialogContent className="bg-slate-800 border-slate-700 max-w-md">
               <AlertDialogHeader>
-                <AlertDialogTitle className="flex items-center gap-2 text-white">
-                  <AlertTriangle className="w-5 h-5 text-red-500" />
-                  ¿Eliminar producto?
+                <AlertDialogTitle className="flex items-center gap-2 text-white text-xl">
+                  <AlertTriangle className="w-6 h-6 text-red-500 flex-shrink-0" />
+                  ¿Eliminar este producto?
                 </AlertDialogTitle>
-                <AlertDialogDescription className="text-slate-300">
-                  Estás a punto de eliminar <span className="font-semibold text-white">&quot;{product.name}&quot;</span>.
-                  Esta acción no se puede deshacer.
+                <AlertDialogDescription className="text-slate-300 space-y-4">
+                  <p className="text-base">
+                    Estás a punto de eliminar permanentemente el siguiente
+                    producto:
+                  </p>
+
+                  {/* Información del producto */}
+                  <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4 space-y-3">
+                    {product.image && (
+                      <div className="relative h-24 w-24 mx-auto mb-3 overflow-hidden rounded-lg bg-white/90">
+                        <Image
+                          src={product.image}
+                          alt={product.name}
+                          width={96}
+                          height={96}
+                          className="w-full h-full object-contain p-1"
+                          unoptimized
+                        />
+                      </div>
+                    )}
+                    <div className="space-y-2">
+                      <div>
+                        <span className="text-slate-400 text-sm">Nombre:</span>
+                        <p className="text-white font-semibold text-base">
+                          {product.name}
+                        </p>
+                      </div>
+                      <div className="flex gap-4">
+                        <div>
+                          <span className="text-slate-400 text-sm">
+                            Categoría:
+                          </span>
+                          <p className="text-white font-medium">
+                            {product.category}
+                          </p>
+                        </div>
+                        <div>
+                          <span className="text-slate-400 text-sm">
+                            Precio:
+                          </span>
+                          <p className="text-white font-medium">
+                            {formatPrice(product.price)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-2 text-amber-400 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
+                    <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <p className="text-sm">
+                      <strong>Advertencia:</strong> Esta acción no se puede
+                      deshacer. El producto será eliminado permanentemente de tu
+                      catálogo.
+                    </p>
+                  </div>
                 </AlertDialogDescription>
               </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel className="bg-slate-700 hover:bg-slate-600 text-white border-slate-600">
+              <AlertDialogFooter className="gap-2 sm:gap-2">
+                <AlertDialogCancel className="bg-slate-700 hover:bg-slate-600 text-white border-slate-600 font-medium">
                   Cancelar
                 </AlertDialogCancel>
                 <AlertDialogAction
                   onClick={handleDelete}
-                  className="bg-red-600 hover:bg-red-700 text-white"
+                  className="bg-red-600 hover:bg-red-700 text-white font-semibold"
                 >
                   <Trash2 className="w-4 h-4 mr-2" />
-                  Eliminar
+                  Sí, eliminar producto
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
