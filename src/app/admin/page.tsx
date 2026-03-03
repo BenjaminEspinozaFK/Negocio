@@ -127,8 +127,15 @@ export default function AdminPanel() {
   const fetchProducts = async () => {
     try {
       const res = await fetch("/api/products");
+      if (!res.ok) {
+        throw new Error("Error al cargar productos");
+      }
       const data = await res.json();
       setProducts(data);
+    } catch (error) {
+      console.error("Error al obtener productos:", error);
+      toast.error("❌ Error al cargar los productos");
+      setProducts([]);
     } finally {
       setIsLoading(false);
     }

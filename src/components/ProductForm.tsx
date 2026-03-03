@@ -3,7 +3,15 @@
 import { useState } from "react";
 import { Product, categories, units } from "@/types/product";
 import Image from "next/image";
-import { Tag, FolderOpen, Package, ImageIcon, DollarSign, Save, X } from "lucide-react";
+import {
+  Tag,
+  FolderOpen,
+  Package,
+  ImageIcon,
+  DollarSign,
+  Save,
+  X,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -43,10 +51,22 @@ export default function ProductForm({
       return;
     }
 
+    const priceNumber = parseFloat(price);
+
+    if (isNaN(priceNumber) || priceNumber <= 0) {
+      toast.error("El precio debe ser mayor a 0");
+      return;
+    }
+
+    if (name.trim().length < 2) {
+      toast.error("El nombre debe tener al menos 2 caracteres");
+      return;
+    }
+
     onSubmit({
-      name,
+      name: name.trim(),
       category,
-      price: parseFloat(price),
+      price: priceNumber,
       unit,
       image: image || "",
     });
@@ -77,9 +97,22 @@ export default function ProductForm({
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64String = reader.result as string;
+
+        // Verificar el tamaño del base64 (aproximadamente 33% más grande que el original)
+        const base64Size = (base64String.length * 3) / 4;
+        if (base64Size > 3 * 1024 * 1024) {
+          toast.error(
+            "La imagen codificada es muy grande. Intenta con una imagen más pequeña",
+          );
+          return;
+        }
+
         setImage(base64String);
         setImagePreview(base64String);
         toast.success("Imagen cargada correctamente");
+      };
+      reader.onerror = () => {
+        toast.error("Error al cargar la imagen");
       };
       reader.readAsDataURL(file);
     }
@@ -95,7 +128,10 @@ export default function ProductForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-5 bg-white rounded-lg p-1">
       <div className="space-y-2">
-        <Label htmlFor="name" className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+        <Label
+          htmlFor="name"
+          className="flex items-center gap-2 text-sm font-semibold text-gray-700"
+        >
           <Tag className="w-4 h-4 text-blue-600" />
           Nombre del Producto
         </Label>
@@ -111,7 +147,10 @@ export default function ProductForm({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="category" className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+          <Label
+            htmlFor="category"
+            className="flex items-center gap-2 text-sm font-semibold text-gray-700"
+          >
             <FolderOpen className="w-4 h-4 text-blue-600" />
             Categoría
           </Label>
@@ -130,7 +169,10 @@ export default function ProductForm({
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="unit" className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+          <Label
+            htmlFor="unit"
+            className="flex items-center gap-2 text-sm font-semibold text-gray-700"
+          >
             <Package className="w-4 h-4 text-blue-600" />
             Unidad
           </Label>
@@ -185,7 +227,10 @@ export default function ProductForm({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="price" className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+        <Label
+          htmlFor="price"
+          className="flex items-center gap-2 text-sm font-semibold text-gray-700"
+        >
           <DollarSign className="w-4 h-4 text-blue-600" />
           Precio (CLP)
         </Label>
