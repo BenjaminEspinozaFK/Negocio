@@ -9,6 +9,11 @@ import {
   CheckCircle2,
   AlertCircle,
 } from "lucide-react";
+import {
+  getPasswordStrength,
+  getStrengthLabel,
+  getStrengthColor,
+} from "@/lib/password-validation";
 
 interface ChangePasswordProps {
   onClose: () => void;
@@ -25,6 +30,11 @@ export default function ChangePasswordModal({ onClose }: ChangePasswordProps) {
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Calcular fuerza de contraseña
+  const passwordStrength = getPasswordStrength(newPassword);
+  const strengthLabel = getStrengthLabel(passwordStrength);
+  const strengthColor = getStrengthColor(passwordStrength);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -38,6 +48,23 @@ export default function ChangePasswordModal({ onClose }: ChangePasswordProps) {
 
     if (newPassword.length < 6) {
       setError("La nueva contraseña debe tener al menos 6 caracteres");
+      return;
+    }
+
+    // Validación de contraseña fuerte
+    if (newPassword.length < 8) {
+      setError(
+        "La contraseña debe tener al menos 8 caracteres para mayor seguridad",
+      );
+      return;
+    }
+
+    if (
+      !/[A-Z]/.test(newPassword) ||
+      !/[a-z]/.test(newPassword) ||
+      !/[0-9]/.test(newPassword)
+    ) {
+      setError("La contraseña debe incluir mayúsculas, minúsculas y números");
       return;
     }
 
@@ -160,7 +187,7 @@ export default function ChangePasswordModal({ onClose }: ChangePasswordProps) {
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
-                placeholder="Mínimo 6 caracteres"
+                placeholder="Mínimo 8 caracteres"
                 disabled={isLoading}
               />
               <button
@@ -175,6 +202,33 @@ export default function ChangePasswordModal({ onClose }: ChangePasswordProps) {
                 )}
               </button>
             </div>
+
+            {/* Indicador de fuerza de contraseña */}
+            {newPassword && (
+              <div className="mt-2">
+                <div className="flex gap-1 mb-1">
+                  {[1, 2, 3, 4, 5].map((level) => (
+                    <div
+                      key={level}
+                      className={`h-1 flex-1 rounded ${
+                        level <= passwordStrength
+                          ? strengthColor
+                          : "bg-gray-300"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <p className="text-xs text-gray-600">
+                  Fuerza: <span className="font-semibold">{strengthLabel}</span>
+                </p>
+                {passwordStrength < 4 && (
+                  <p className="text-xs text-gray-500 mt-1">
+                    Incluye mayúsculas, minúsculas, números y caracteres
+                    especiales
+                  </p>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Confirmar Nueva Contraseña */}
