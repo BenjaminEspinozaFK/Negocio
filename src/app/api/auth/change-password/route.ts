@@ -13,10 +13,18 @@ export async function POST(request: Request) {
             );
         }
 
-        // Validar que la nueva contraseña tenga al menos 6 caracteres
-        if (newPassword.length < 6) {
+        // Validar que la nueva contraseña tenga al menos 8 caracteres
+        if (newPassword.length < 8) {
             return NextResponse.json(
-                { error: "La nueva contraseña debe tener al menos 6 caracteres" },
+                { error: "La nueva contraseña debe tener al menos 8 caracteres" },
+                { status: 400 }
+            );
+        }
+
+        // Validar contraseña fuerte
+        if (!/[A-Z]/.test(newPassword) || !/[a-z]/.test(newPassword) || !/[0-9]/.test(newPassword)) {
+            return NextResponse.json(
+                { error: "La contraseña debe incluir mayúsculas, minúsculas y números" },
                 { status: 400 }
             );
         }
@@ -30,7 +38,7 @@ export async function POST(request: Request) {
         if (!settings) {
             const envPassword = process.env.ADMIN_PASSWORD || "Lidia1980";
             const hashedPassword = await bcrypt.hash(envPassword, 10);
-            
+
             settings = await prisma.settings.create({
                 data: {
                     id: "admin-config",
@@ -58,7 +66,7 @@ export async function POST(request: Request) {
             data: { password: newHashedPassword }
         });
 
-        return NextResponse.json({ 
+        return NextResponse.json({
             success: true,
             message: "Contraseña actualizada correctamente"
         });
