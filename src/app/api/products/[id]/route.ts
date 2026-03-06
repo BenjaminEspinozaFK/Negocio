@@ -2,6 +2,14 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { isAuthenticated } from '@/lib/auth';
 import { NextRequest } from 'next/server';
+import {
+    validateProductName,
+    validatePrice,
+    validateCategory,
+    validateUnit,
+    validateImageBase64
+} from '@/lib/input-validation';
+import { categories, units } from '@/types/product';
 
 export async function PUT(
     request: NextRequest,
@@ -19,39 +27,57 @@ export async function PUT(
         const { id } = await params;
         const data = await request.json();
 
-        // Validaciones
-        if (!data.name || typeof data.name !== 'string' || data.name.trim().length < 2) {
+        // Validar y sanitizar nombre
+        const nameValidation = validateProductName(data.name);
+        if (!nameValidation.isValid) {
             return NextResponse.json(
-                { error: 'El nombre del producto es inválido' },
+                { error: nameValidation.error },
                 { status: 400 }
             );
         }
 
-        if (!data.price || typeof data.price !== 'number' || data.price <= 0) {
+        // Validar precio
+        const priceValidation = validatePrice(data.price);
+        if (!priceValidation.isValid) {
             return NextResponse.json(
-                { error: 'El precio debe ser mayor a 0' },
+                { error: priceValidation.error },
                 { status: 400 }
             );
         }
 
-        if (!data.category || typeof data.category !== 'string') {
+        // Validar categoría
+        const categoryValidation = validateCategory(data.category, categories);
+        if (!categoryValidation.isValid) {
             return NextResponse.json(
-                { error: 'La categoría es requerida' },
+                { error: categoryValidation.error },
                 { status: 400 }
             );
         }
 
-        if (!data.unit || typeof data.unit !== 'string') {
+        // Validar unidad
+        const unitValidation = validateUnit(data.unit, units);
+        if (!unitValidation.isValid) {
             return NextResponse.json(
-                { error: 'La unidad es requerida' },
+                { error: unitValidation.error },
                 { status: 400 }
             );
+        }
+
+        // Validar imagen si existe
+        if (data.image) {
+            const imageValidation = validateImageBase64(data.image);
+            if (!imageValidation.isValid) {
+                return NextResponse.json(
+                    { error: imageValidation.error },
+                    { status: 400 }
+                );
+            }
         }
 
         const updatedProduct = await prisma.product.update({
             where: { id },
             data: {
-                name: data.name.trim(),
+                name: nameValidation.value, // Usar valor sanitizado
                 category: data.category,
                 price: data.price,
                 unit: data.unit,

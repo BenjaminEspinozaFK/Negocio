@@ -1,10 +1,29 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
+import { isRateLimited, logLoginAttempt, getRemainingBlockTime } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
     try {
         const { password } = await request.json();
+
+        // Obtener IP y User Agent del cliente
+        const ipAddress = request.headers.get("x-forwarded-for") ||
+            request.headers.get("x-real-ip") ||
+            "unknown";
+        const userAgent = request.headers.get("user-agent") || "unknown";
+
+        // Verificar si la IP está bloqueada por rate limiting
+        const isBlocked = await isRateLimited(ipAddress);
+        if (isBlocked) {
+            const remainingMinutes = await getRemainingBlockTime(ipAddress);
+            return NextResponse.json(
+                {
+                    error: `Demasiados intentos fallidos. Intenta nuevamente en ${remainingMinutes} minutos.`
+                },
+                { status: 429 } // Too Many Requests
+            );
+        }
 
         // Intentar obtener la contraseña de la base de datos
         let settings = await prisma.settings.findUnique({
@@ -28,6 +47,9 @@ export async function POST(request: Request) {
         const isValid = await bcrypt.compare(password, settings.password);
 
         if (isValid) {
+            // Registrar intento exitoso
+            await logLoginAttempt(ipAddress, userAgent, true);
+
             const response = NextResponse.json({ success: true });
 
             // Establecer cookie de sesión segura
@@ -41,7 +63,13 @@ export async function POST(request: Request) {
 
             return response;
         } else {
-            return NextResponse.json({ success: false }, { status: 401 });
+            // Registrar intento fallido
+            await logLoginAttempt(ipAddress, userAgent, false);
+
+            return NextResponse.json(
+                { error: "Contraseña incorrecta" },
+                { status: 401 }
+            );
         }
     } catch (error) {
         console.error("Error en login:", error);

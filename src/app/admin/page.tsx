@@ -96,11 +96,14 @@ export default function AdminPanel() {
         body: JSON.stringify({ password }),
       });
 
+      const data = await response.json();
+
       if (response.ok) {
         setIsAuthenticated(true);
         fetchProducts();
       } else {
-        setError("Contraseña incorrecta");
+        // Mostrar el mensaje de error específico del servidor
+        setError(data.error || "Contraseña incorrecta");
         setPassword("");
       }
     } catch (error) {
