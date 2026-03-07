@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import ProductCard from "@/components/ProductCard";
 import ProductForm from "@/components/ProductForm";
 import ChangePasswordModal from "@/components/ChangePasswordModal";
+import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import { Product, categories } from "@/types/product";
 import Link from "next/link";
 import PrintableProductList from "@/components/PrintableProductList";
@@ -232,7 +233,7 @@ export default function AdminPanel() {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center px-4 py-8">
-        <div className="bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg p-6 sm:p-8 max-w-md w-full border border-gray-200">
+        <div className="bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg p-6 sm:p-8 max-w-md w-full border border-gray-200 animate-scaleIn">
           <div className="text-center mb-6">
             <div className="bg-blue-600 text-white w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center mx-auto mb-4">
               <Lock className="w-7 h-7 sm:w-8 sm:h-8" />
@@ -283,7 +284,7 @@ export default function AdminPanel() {
 
             <button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 ripple-effect hover:scale-[1.02]"
             >
               Ingresar
             </button>
@@ -309,8 +310,8 @@ export default function AdminPanel() {
       <div className="min-h-screen py-3 sm:py-6 px-3 sm:px-4">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="mb-4 sm:mb-8">
-            <div className="bg-slate-800/90 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg border border-slate-700 p-4 sm:p-6">
+          <div className="mb-4 sm:mb-8 animate-fadeIn">
+            <div className="bg-slate-800/90 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg border border-slate-700 p-4 sm:p-6 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/5">
               {/* Título Principal */}
               <div className="text-center mb-6">
                 <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2">
@@ -328,7 +329,7 @@ export default function AdminPanel() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <Link
                   href="/catalogo"
-                  className="bg-slate-700/50 hover:bg-slate-700 border border-slate-600 text-white px-4 py-3 rounded-lg text-sm font-medium transition-colors inline-flex items-center justify-center gap-2 touch-manipulation"
+                  className="bg-slate-700/50 hover:bg-slate-700 border border-slate-600 text-white px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 inline-flex items-center justify-center gap-2 touch-manipulation hover:scale-105 ripple-effect"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   Ver Catálogo Público
@@ -336,7 +337,7 @@ export default function AdminPanel() {
 
                 <button
                   onClick={() => setShowChangePasswordModal(true)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg text-sm font-medium transition-colors inline-flex items-center justify-center gap-2 touch-manipulation"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 inline-flex items-center justify-center gap-2 touch-manipulation hover:scale-105 ripple-effect"
                 >
                   <Key className="w-4 h-4" />
                   Cambiar Contraseña
@@ -344,7 +345,7 @@ export default function AdminPanel() {
 
                 <button
                   onClick={handleLogout}
-                  className="bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg text-sm font-medium transition-colors inline-flex items-center justify-center gap-2 touch-manipulation"
+                  className="bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 inline-flex items-center justify-center gap-2 touch-manipulation hover:scale-105 ripple-effect"
                 >
                   <LogOut className="w-4 h-4" />
                   Cerrar Sesión
@@ -354,13 +355,13 @@ export default function AdminPanel() {
           </div>
 
           {/* Add Product Button & Print Button */}
-          <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row gap-3">
+          <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row gap-3 animate-slideDown">
             <button
               onClick={() => {
                 setEditingProduct(null);
                 setShowModal(true);
               }}
-              className="flex-1 md:flex-none bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-5 sm:px-6 rounded-lg transition-colors inline-flex items-center justify-center gap-2 touch-manipulation"
+              className="flex-1 md:flex-none bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-5 sm:px-6 rounded-lg transition-all duration-200 inline-flex items-center justify-center gap-2 touch-manipulation hover:scale-105 ripple-effect"
             >
               <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
               <span className="text-sm sm:text-base">
@@ -370,7 +371,7 @@ export default function AdminPanel() {
 
             <button
               onClick={handlePrint}
-              className="flex-1 md:flex-none bg-blue-600 hover:bg-slate-600 text-white font-semibold py-3 px-5 sm:px-6 rounded-lg transition-colors inline-flex items-center justify-center gap-2 touch-manipulation"
+              className="flex-1 md:flex-none bg-blue-600 hover:bg-slate-600 text-white font-semibold py-3 px-5 sm:px-6 rounded-lg transition-all duration-200 inline-flex items-center justify-center gap-2 touch-manipulation hover:scale-105 ripple-effect"
             >
               <Printer className="w-4 h-4 sm:w-5 sm:h-5" />
               <span className="text-sm sm:text-base">
@@ -380,12 +381,12 @@ export default function AdminPanel() {
           </div>
 
           {/* Filters */}
-          <div className="bg-slate-800/90 backdrop-blur-sm rounded-xl shadow-md border border-slate-700 p-4 sm:p-6 mb-4 sm:mb-8">
+          <div className="bg-slate-800/90 backdrop-blur-sm rounded-xl shadow-md border border-slate-700 p-4 sm:p-6 mb-4 sm:mb-8 animate-slideDown transition-all duration-300 hover:shadow-lg">
             <div className="space-y-4">
               {/* Búsqueda, Categoría y Ordenar */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-slate-200 mb-1.5 sm:mb-2 flex items-center gap-2">
+                  <label className="text-xs sm:text-sm font-semibold text-slate-200 mb-1.5 sm:mb-2 flex items-center gap-2">
                     <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" />
                     Buscar Producto
                   </label>
@@ -394,19 +395,19 @@ export default function AdminPanel() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Escribe el nombre..."
-                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-slate-600 bg-slate-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base text-white placeholder:text-slate-400"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-slate-600 bg-slate-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base text-white placeholder:text-slate-400 transition-all duration-300 focus:bg-slate-700"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-slate-200 mb-1.5 sm:mb-2 flex items-center gap-2">
+                  <label className="text-xs sm:text-sm font-semibold text-slate-200 mb-1.5 sm:mb-2 flex items-center gap-2">
                     <Filter className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" />
                     Filtrar por Categoría
                   </label>
                   <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-slate-600 bg-slate-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base text-white cursor-pointer"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-slate-600 bg-slate-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base text-white cursor-pointer transition-all duration-300 focus:bg-slate-700"
                   >
                     <option value="Todas">Todas las categorías</option>
                     {categories.map((cat) => (
@@ -418,7 +419,7 @@ export default function AdminPanel() {
                 </div>
 
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-slate-200 mb-1.5 sm:mb-2 flex items-center gap-2">
+                  <label className="text-xs sm:text-sm font-semibold text-slate-200 mb-1.5 sm:mb-2 flex items-center gap-2">
                     <ArrowUpDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" />
                     Ordenar por
                   </label>
@@ -434,7 +435,7 @@ export default function AdminPanel() {
                           | "date-desc",
                       )
                     }
-                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-slate-600 bg-slate-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base text-white cursor-pointer"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-slate-600 bg-slate-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base text-white cursor-pointer transition-all duration-300 focus:bg-slate-700"
                   >
                     <option value="date-desc">Más recientes</option>
                     <option value="name-asc">Nombre A-Z</option>
@@ -468,14 +469,13 @@ export default function AdminPanel() {
 
           {/* Products List */}
           {isLoading ? (
-            <div className="text-center py-12 sm:py-20">
-              <div className="inline-block animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-4 border-slate-700 border-t-blue-500 mb-3 sm:mb-4"></div>
-              <p className="text-slate-300 text-base sm:text-lg font-medium">
-                Cargando productos...
-              </p>
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+              {[...Array(8)].map((_, i) => (
+                <ProductCardSkeleton key={i} />
+              ))}
             </div>
           ) : filteredProducts.length === 0 ? (
-            <div className="text-center py-20 bg-slate-800/90 backdrop-blur-sm rounded-xl shadow-md border border-slate-700">
+            <div className="text-center py-20 bg-slate-800/90 backdrop-blur-sm rounded-xl shadow-md border border-slate-700 animate-fadeIn">
               <div className="text-6xl mb-4">📦</div>
               <p className="text-slate-300 text-lg font-medium">
                 {searchTerm || selectedCategory !== "Todas"
@@ -485,25 +485,33 @@ export default function AdminPanel() {
             </div>
           ) : (
             <>
-              <div className="mb-3 sm:mb-6">
+              <div className="mb-3 sm:mb-6 animate-scaleIn">
                 <p className="text-xs sm:text-sm font-medium text-slate-400 px-1">
                   Mostrando {filteredProducts.length} producto
                   {filteredProducts.length !== 1 ? "s" : ""}
                 </p>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-                {filteredProducts.map((product) => (
-                  <ProductCard
+                {filteredProducts.map((product, index) => (
+                  <div
                     key={product.id}
-                    product={product}
-                    onEdit={(product) => {
-                      setEditingProduct(product);
-                      setShowModal(true);
+                    style={{
+                      animationDelay: `${index * 0.05}s`,
+                      opacity: 0,
                     }}
-                    onDelete={handleDeleteProduct}
-                    onAddToCart={handleAddToCart}
-                    readOnly={false}
-                  />
+                    className="animate-slideUp"
+                  >
+                    <ProductCard
+                      product={product}
+                      onEdit={(product) => {
+                        setEditingProduct(product);
+                        setShowModal(true);
+                      }}
+                      onDelete={handleDeleteProduct}
+                      onAddToCart={handleAddToCart}
+                      readOnly={false}
+                    />
+                  </div>
                 ))}
               </div>
             </>
@@ -511,8 +519,8 @@ export default function AdminPanel() {
 
           {/* Modal */}
           {showModal && (
-            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-start sm:items-center justify-center p-0 sm:p-4 z-50 overflow-y-auto">
-              <div className="bg-white rounded-none sm:rounded-xl shadow-2xl w-full sm:max-w-2xl min-h-screen sm:min-h-0 sm:max-h-[90vh] overflow-y-auto">
+            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-start sm:items-center justify-center p-0 sm:p-4 z-50 overflow-y-auto animate-fadeIn">
+              <div className="bg-white rounded-none sm:rounded-xl shadow-2xl w-full sm:max-w-2xl min-h-screen sm:min-h-0 sm:max-h-[90vh] overflow-y-auto animate-scaleIn">
                 <div className="sticky top-0 bg-white border-b border-gray-200 px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center z-10">
                   <h2 className="text-lg sm:text-xl font-bold text-gray-900">
                     {editingProduct

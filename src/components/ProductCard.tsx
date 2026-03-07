@@ -59,7 +59,7 @@ export default function ProductCard({
   };
 
   return (
-    <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group bg-slate-800/90 border-slate-700 hover:border-slate-600">
+    <Card className="overflow-hidden hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 group bg-slate-800/90 border-slate-700 hover:border-blue-500/50 hover:-translate-y-1 animate-slideUp">
       {product.image && (
         <div className="relative h-32 sm:h-44 w-full overflow-hidden bg-white/95">
           <Image
@@ -67,10 +67,10 @@ export default function ProductCard({
             alt={product.name}
             width={400}
             height={300}
-            className="w-full h-full object-contain p-2 sm:p-3 group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-contain p-2 sm:p-3 group-hover:scale-110 transition-transform duration-500"
             unoptimized
           />
-          <Badge className="absolute top-2 right-2 bg-blue-600 hover:bg-blue-700 text-white border-0">
+          <Badge className="absolute top-2 right-2 bg-blue-600 hover:bg-blue-700 text-white border-0 transition-all duration-300 hover:scale-110">
             {product.category}
           </Badge>
         </div>
@@ -105,7 +105,7 @@ export default function ProductCard({
                 onClick={() => onAddToCart(product)}
                 variant="outline"
                 size="sm"
-                className="flex-1 min-w-0 bg-green-600 hover:bg-green-700 border-green-700 text-white text-xs sm:text-sm px-2 sm:px-4 h-8 sm:h-9"
+                className="flex-1 min-w-0 bg-green-600 hover:bg-green-700 border-green-700 text-white text-xs sm:text-sm px-2 sm:px-4 h-8 sm:h-9 ripple-effect hover:scale-105 transition-transform duration-200"
               >
                 <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4 sm:mr-1.5 flex-shrink-0" />
                 <span className="hidden sm:inline truncate">Agregar</span>
@@ -115,7 +115,7 @@ export default function ProductCard({
               onClick={() => onEdit?.(product)}
               variant="default"
               size="sm"
-              className="flex-1 min-w-0 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm px-2 sm:px-4 h-8 sm:h-9"
+              className="flex-1 min-w-0 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm px-2 sm:px-4 h-8 sm:h-9 ripple-effect hover:scale-105 transition-transform duration-200"
             >
               <Edit2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 sm:mr-1.5 flex-shrink-0" />
               <span className="hidden sm:inline truncate">Editar</span>
@@ -124,7 +124,7 @@ export default function ProductCard({
               onClick={() => setShowDeleteDialog(true)}
               variant="destructive"
               size="sm"
-              className="flex-1 min-w-0 text-xs sm:text-sm px-2 sm:px-4 h-8 sm:h-9"
+              className="flex-1 min-w-0 text-xs sm:text-sm px-2 sm:px-4 h-8 sm:h-9 ripple-effect hover:scale-105 transition-transform duration-200"
             >
               <Trash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 sm:mr-1.5 flex-shrink-0" />
               <span className="hidden sm:inline truncate">Eliminar</span>
