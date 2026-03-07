@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Product, categories } from "@/types/product";
 import ProductCard from "@/components/ProductCard";
+import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import Link from "next/link";
 import { Search, Filter, Store, Lock, ArrowUpDown, X } from "lucide-react";
 
@@ -18,6 +19,14 @@ export default function CatalogoClient({
   const [sortBy, setSortBy] = useState<
     "name-asc" | "name-desc" | "price-asc" | "price-desc" | "date-desc"
   >("date-desc");
+  const [isFiltering, setIsFiltering] = useState(false);
+
+  // Trigger filtering animation when filters change
+  useEffect(() => {
+    setIsFiltering(true);
+    const timer = setTimeout(() => setIsFiltering(false), 300);
+    return () => clearTimeout(timer);
+  }, [searchTerm, selectedCategory, sortBy]);
 
   const filteredProducts = useMemo(() => {
     let filtered = [...initialProducts];
@@ -53,17 +62,17 @@ export default function CatalogoClient({
     <div className="min-h-screen py-3 sm:py-6 px-3 sm:px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="relative mb-4 sm:mb-8">
-          <div className="bg-slate-800/90 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg border border-slate-700 p-4 sm:p-8 text-center">
+        <div className="relative mb-4 sm:mb-8 animate-fadeIn">
+          <div className="bg-slate-800/90 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg border border-slate-700 p-4 sm:p-8 text-center transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/5">
             <Link
               href="/admin"
-              className="absolute top-2 right-2 sm:top-4 sm:right-4 inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-slate-300 hover:text-blue-400 transition-colors px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg hover:bg-slate-700/50"
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-slate-300 hover:text-blue-400 transition-all duration-300 px-3 sm:px-4 py-2 sm:py-2 rounded-lg hover:bg-slate-700/50 hover:scale-105 bg-slate-700/30 border border-slate-600/50"
             >
               <Lock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              <span className="font-medium hidden sm:inline">Admin</span>
+              <span className="font-medium">Admin</span>
             </Link>
 
-            <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2 sm:mb-3 pr-12 sm:pr-0">
+            <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2 sm:mb-3">
               <Store className="w-7 h-7 sm:w-10 sm:h-10 text-blue-400 shrink-0" />
               <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
                 Provisiones Mily
@@ -76,7 +85,7 @@ export default function CatalogoClient({
         </div>
 
         {/* Filtros */}
-        <div className="bg-slate-800/90 backdrop-blur-sm rounded-xl shadow-md border border-slate-700 p-4 sm:p-6 mb-4 sm:mb-8">
+        <div className="bg-slate-800/90 backdrop-blur-sm rounded-xl shadow-md border border-slate-700 p-4 sm:p-6 mb-4 sm:mb-8 animate-slideDown transition-all duration-300 hover:shadow-lg">
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
               <div>
@@ -90,12 +99,12 @@ export default function CatalogoClient({
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Buscar producto..."
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-slate-700/50 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-slate-400 text-sm sm:text-base pr-8"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-slate-700/50 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-slate-400 text-sm sm:text-base pr-8 transition-all duration-300 focus:bg-slate-700 focus:border-blue-500"
                   />
                   {searchTerm && (
                     <button
                       onClick={() => setSearchTerm("")}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white p-1"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white p-1 transition-all duration-200 hover:scale-110 hover:rotate-90"
                     >
                       <X className="w-4 h-4" />
                     </button>
@@ -111,7 +120,7 @@ export default function CatalogoClient({
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-slate-700/50 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-slate-700/50 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-sm sm:text-base transition-all duration-300 focus:bg-slate-700 focus:border-blue-500"
                 >
                   <option value="Todas">Todas</option>
                   {categories.map((cat) => (
@@ -139,7 +148,7 @@ export default function CatalogoClient({
                         | "date-desc",
                     )
                   }
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-slate-700/50 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-slate-700/50 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-sm sm:text-base transition-all duration-300 focus:bg-slate-700 focus:border-blue-500"
                 >
                   <option value="date-desc">Más recientes</option>
                   <option value="name-asc">Nombre (A-Z)</option>
@@ -153,8 +162,14 @@ export default function CatalogoClient({
         </div>
 
         {/* Productos */}
-        {filteredProducts.length === 0 ? (
-          <div className="text-center py-12 bg-slate-800/50 rounded-xl border border-slate-700">
+        {isFiltering ? (
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+            {[...Array(8)].map((_, i) => (
+              <ProductCardSkeleton key={i} />
+            ))}
+          </div>
+        ) : filteredProducts.length === 0 ? (
+          <div className="text-center py-12 bg-slate-800/50 rounded-xl border border-slate-700 animate-fadeIn">
             <p className="text-slate-400 text-base sm:text-lg">
               {searchTerm || selectedCategory !== "Todas"
                 ? "No se encontraron productos"
@@ -163,17 +178,22 @@ export default function CatalogoClient({
           </div>
         ) : (
           <>
-            <div className="mb-4 sm:mb-6 inline-block bg-blue-600/20 backdrop-blur-sm border border-blue-500/30 text-blue-300 px-4 sm:px-6 py-2 sm:py-3 rounded-lg shadow-sm font-semibold text-sm sm:text-base">
+            <div className="mb-4 sm:mb-6 inline-block bg-blue-600/20 backdrop-blur-sm border border-blue-500/30 text-blue-300 px-4 sm:px-6 py-2 sm:py-3 rounded-lg shadow-sm font-semibold text-sm sm:text-base animate-scaleIn">
               📦 {filteredProducts.length} producto
               {filteredProducts.length !== 1 ? "s" : ""}
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-              {filteredProducts.map((product) => (
-                <ProductCard
+              {filteredProducts.map((product, index) => (
+                <div
                   key={product.id}
-                  product={product}
-                  readOnly={true}
-                />
+                  style={{
+                    animationDelay: `${index * 0.05}s`,
+                    opacity: 0,
+                  }}
+                  className="animate-slideUp"
+                >
+                  <ProductCard product={product} readOnly={true} />
+                </div>
               ))}
             </div>
           </>
@@ -181,7 +201,7 @@ export default function CatalogoClient({
 
         {/* Footer */}
         <div className="mt-12 sm:mt-16 text-center">
-          <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg p-6 sm:p-8 inline-block border border-slate-700">
+          <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg p-6 sm:p-8 inline-block border border-slate-700 animate-fadeIn hover:shadow-xl transition-all duration-300">
             <p className="text-xl sm:text-2xl mb-2">💚</p>
             <p className="text-slate-200 font-medium text-sm sm:text-base">
               Gracias por preferirnos
