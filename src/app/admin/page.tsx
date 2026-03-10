@@ -232,39 +232,54 @@ export default function AdminPanel() {
   // Login Screen
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 py-8">
-        <div className="bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg p-6 sm:p-8 max-w-md w-full border border-gray-200 animate-scaleIn">
-          <div className="text-center mb-6">
-            <div className="bg-blue-600 text-white w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center mx-auto mb-4">
-              <Lock className="w-7 h-7 sm:w-8 sm:h-8" />
+      <div className="min-h-screen flex items-center justify-center px-4 py-8 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+        {/* Decoración de fondo */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="relative bg-slate-800/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-2xl border border-slate-700 p-8 sm:p-10 max-w-md w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
+          {/* Logo/Icono con animación */}
+          <div className="text-center mb-8">
+            <div className="relative inline-block">
+              <div className="absolute inset-0 bg-blue-500/30 rounded-2xl blur-xl animate-pulse"></div>
+              <div className="relative bg-gradient-to-br from-blue-600 to-blue-700 text-white w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg transform hover:scale-105 transition-transform duration-300">
+                <Lock className="w-8 h-8 sm:w-10 sm:h-10" />
+              </div>
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
               Panel de Administración
             </h1>
-            <p className="text-sm sm:text-base text-gray-600">
+            <p className="text-sm sm:text-base text-slate-400">
               Ingresa la contraseña para continuar
             </p>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-5">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-slate-200 mb-2 flex items-center gap-2">
+                <Key className="w-4 h-4 text-blue-400" />
                 Contraseña
               </label>
-              <div className="relative">
+              <div className="relative group">
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Ingresa tu contraseña"
-                  className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-base"
+                  placeholder="••••••••"
+                  className="w-full px-4 py-3.5 pr-12 border-2 border-slate-600 bg-slate-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white text-base transition-all duration-200 group-hover:border-slate-500 placeholder:text-slate-500"
                   autoFocus
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-400 transition-colors p-1.5 hover:bg-slate-600 rounded-lg"
                   tabIndex={-1}
+                  aria-label={
+                    showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                  }
                 >
                   {showPassword ? (
                     <EyeOff className="w-5 h-5" />
@@ -276,28 +291,49 @@ export default function AdminPanel() {
             </div>
 
             {error && (
-              <div className="bg-red-900/20 border border-red-500/50 backdrop-blur-sm px-4 py-3 rounded-lg text-sm flex items-center gap-3 shadow-lg">
-                <AlertCircle className="w-5 h-5 text-red-400 shrink-0" />
+              <div className="bg-red-900/30 border-2 border-red-500/50 px-4 py-3.5 rounded-xl text-sm flex items-center gap-3 shadow-sm animate-in slide-in-from-top-2 duration-300 backdrop-blur-sm">
+                <div className="flex-shrink-0 w-8 h-8 bg-red-500/20 rounded-full flex items-center justify-center">
+                  <AlertCircle className="w-4 h-4 text-red-400" />
+                </div>
                 <span className="text-red-200 font-medium">{error}</span>
               </div>
             )}
 
             <button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 ripple-effect hover:scale-[1.02]"
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3.5 px-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-blue-500/25 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 group"
             >
-              Ingresar
+              <span>Ingresar</span>
+              <ArrowLeft className="w-4 h-4 rotate-180 group-hover:translate-x-1 transition-transform" />
             </button>
           </form>
 
-          <div className="mt-6 text-center">
+          {/* Separador */}
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-slate-700"></div>
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-slate-800 px-2 text-slate-500">o</span>
+            </div>
+          </div>
+
+          {/* Link al catálogo */}
+          <div className="text-center">
             <Link
               href="/catalogo"
-              className="text-sm text-blue-600 hover:text-blue-700 inline-flex items-center gap-1"
+              className="text-sm text-slate-400 hover:text-blue-400 inline-flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-slate-700/50 transition-all duration-200 group"
             >
-              <ArrowLeft className="w-4 h-4" />
-              Volver al catálogo
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+              <span className="font-medium">Volver al catálogo</span>
             </Link>
+          </div>
+
+          {/* Footer decorativo */}
+          <div className="mt-8 pt-6 border-t border-slate-700 text-center">
+            <p className="text-xs text-slate-500">
+              🔒 Conexión segura • Provisiones Mily
+            </p>
           </div>
         </div>
       </div>
