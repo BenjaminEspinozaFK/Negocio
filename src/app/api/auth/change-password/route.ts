@@ -36,7 +36,14 @@ export async function POST(request: Request) {
 
         // Si no existe, crear con la contraseña del .env
         if (!settings) {
-            const envPassword = process.env.ADMIN_PASSWORD || "Lidia1980";
+            const envPassword = process.env.ADMIN_PASSWORD;
+            if (!envPassword) {
+                console.error("ADMIN_PASSWORD no está definida en las variables de entorno");
+                return NextResponse.json(
+                    { error: "Error de configuración del servidor" },
+                    { status: 500 }
+                );
+            }
             const hashedPassword = await bcrypt.hash(envPassword, 10);
 
             settings = await prisma.settings.create({
