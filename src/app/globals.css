@@ -48,7 +48,12 @@
 
 body {
   min-height: 100vh;
-  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:
+    var(--font-geist-sans),
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e293b 100%);
   background-attachment: fixed;
 }
@@ -169,7 +174,7 @@ html {
 }
 
 .ripple-effect::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -178,13 +183,17 @@ html {
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.5);
   transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
+  transition:
+    width 0.6s,
+    height 0.6s;
 }
 
 .ripple-effect:active::after {
   width: 300px;
   height: 300px;
-  transition: width 0s, height 0s;
+  transition:
+    width 0s,
+    height 0s;
 }
 
 /* Skeleton loading shimmer effect */
@@ -199,10 +208,12 @@ html {
 }
 
 .skeleton-shimmer {
-  background: linear-gradient(90deg,
-      rgba(51, 65, 85, 0.3) 0%,
-      rgba(71, 85, 105, 0.5) 50%,
-      rgba(51, 65, 85, 0.3) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(51, 65, 85, 0.3) 0%,
+    rgba(71, 85, 105, 0.5) 50%,
+    rgba(51, 65, 85, 0.3) 100%
+  );
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.5s ease-in-out infinite;
 }
@@ -321,9 +332,8 @@ select option:checked {
 
 /* Estilos para impresión */
 @media print {
-
   /* Ocultar TODA la página principal */
-  body>div:not(#printable-area) {
+  body > div:not(#printable-area) {
     display: none !important;
   }
 

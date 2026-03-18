@@ -8,9 +8,7 @@ import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import { Product, categories } from "@/types/product";
 import Link from "next/link";
 import PrintableProductList from "@/components/PrintableProductList";
-import ShoppingCalculator, {
-  ShoppingCalculatorRef,
-} from "@/components/ShoppingCalculator";
+import ShoppingCalculator, { ShoppingCalculatorRef } from "@/components/ShoppingCalculator";
 import { toast } from "sonner";
 import {
   Search,
@@ -64,9 +62,7 @@ export default function AdminPanel() {
 
     // Filtrar por búsqueda de nombre
     if (searchTerm) {
-      filtered = filtered.filter((p) =>
-        p.name.toLowerCase().includes(searchTerm.toLowerCase()),
-      );
+      filtered = filtered.filter((p) => p.name.toLowerCase().includes(searchTerm.toLowerCase()));
     }
 
     // Ordenar productos
@@ -277,15 +273,9 @@ export default function AdminPanel() {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-400 transition-colors p-1.5 hover:bg-slate-600 rounded-lg"
                   tabIndex={-1}
-                  aria-label={
-                    showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
-                  }
+                  aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                 >
-                  {showPassword ? (
-                    <EyeOff className="w-5 h-5" />
-                  ) : (
-                    <Eye className="w-5 h-5" />
-                  )}
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
             </div>
@@ -331,9 +321,7 @@ export default function AdminPanel() {
 
           {/* Footer decorativo */}
           <div className="mt-8 pt-6 border-t border-slate-700 text-center">
-            <p className="text-xs text-slate-500">
-              🔒 Conexión segura • Provisiones Mily
-            </p>
+            <p className="text-xs text-slate-500">🔒 Conexión segura • Provisiones Mily</p>
           </div>
         </div>
       </div>
@@ -400,9 +388,7 @@ export default function AdminPanel() {
               className="flex-1 md:flex-none bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-5 sm:px-6 rounded-lg transition-all duration-200 inline-flex items-center justify-center gap-2 touch-manipulation hover:scale-105 ripple-effect"
             >
               <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="text-sm sm:text-base">
-                Agregar Nuevo Producto
-              </span>
+              <span className="text-sm sm:text-base">Agregar Nuevo Producto</span>
             </button>
 
             <button
@@ -410,9 +396,7 @@ export default function AdminPanel() {
               className="flex-1 md:flex-none bg-blue-600 hover:bg-slate-600 text-white font-semibold py-3 px-5 sm:px-6 rounded-lg transition-all duration-200 inline-flex items-center justify-center gap-2 touch-manipulation hover:scale-105 ripple-effect"
             >
               <Printer className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="text-sm sm:text-base">
-                Imprimir Lista de Precios
-              </span>
+              <span className="text-sm sm:text-base">Imprimir Lista de Precios</span>
             </button>
           </div>
 
@@ -468,7 +452,7 @@ export default function AdminPanel() {
                           | "name-desc"
                           | "price-asc"
                           | "price-desc"
-                          | "date-desc",
+                          | "date-desc"
                       )
                     }
                     className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-slate-600 bg-slate-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base text-white cursor-pointer transition-all duration-300 focus:bg-slate-700"
@@ -483,9 +467,7 @@ export default function AdminPanel() {
               </div>
 
               {/* Botón para limpiar filtros */}
-              {(searchTerm ||
-                selectedCategory !== "Todas" ||
-                sortBy !== "date-desc") && (
+              {(searchTerm || selectedCategory !== "Todas" || sortBy !== "date-desc") && (
                 <div className="flex justify-end">
                   <button
                     onClick={() => {
@@ -559,9 +541,7 @@ export default function AdminPanel() {
               <div className="bg-white rounded-none sm:rounded-xl shadow-2xl w-full sm:max-w-2xl min-h-screen sm:min-h-0 sm:max-h-[90vh] overflow-y-auto animate-scaleIn">
                 <div className="sticky top-0 bg-white border-b border-gray-200 px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center z-10">
                   <h2 className="text-lg sm:text-xl font-bold text-gray-900">
-                    {editingProduct
-                      ? "Editar Producto"
-                      : "Agregar Nuevo Producto"}
+                    {editingProduct ? "Editar Producto" : "Agregar Nuevo Producto"}
                   </h2>
                   <button
                     onClick={() => {
@@ -576,9 +556,7 @@ export default function AdminPanel() {
                 <div className="p-4 sm:p-6">
                   <ProductForm
                     product={editingProduct}
-                    onSubmit={
-                      editingProduct ? handleUpdateProduct : handleAddProduct
-                    }
+                    onSubmit={editingProduct ? handleUpdateProduct : handleAddProduct}
                     onCancel={() => {
                       setShowModal(false);
                       setEditingProduct(null);
@@ -591,9 +569,7 @@ export default function AdminPanel() {
 
           {/* Modal de Cambio de Contraseña */}
           {showChangePasswordModal && (
-            <ChangePasswordModal
-              onClose={() => setShowChangePasswordModal(false)}
-            />
+            <ChangePasswordModal onClose={() => setShowChangePasswordModal(false)} />
           )}
 
           {/* Botón flotante de calculadora */}

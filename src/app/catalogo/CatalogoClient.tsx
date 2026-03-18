@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { Product, categories } from "@/types/product";
 import ProductCard from "@/components/ProductCard";
-import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import Link from "next/link";
 import { Search, Filter, Store, Lock, ArrowUpDown, X } from "lucide-react";
 
@@ -11,22 +10,12 @@ interface CatalogoClientProps {
   initialProducts: Product[];
 }
 
-export default function CatalogoClient({
-  initialProducts,
-}: CatalogoClientProps) {
+export default function CatalogoClient({ initialProducts }: CatalogoClientProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Todas");
   const [sortBy, setSortBy] = useState<
     "name-asc" | "name-desc" | "price-asc" | "price-desc" | "date-desc"
   >("date-desc");
-  const [isFiltering, setIsFiltering] = useState(false);
-
-  // Trigger filtering animation when filters change
-  useEffect(() => {
-    setIsFiltering(true);
-    const timer = setTimeout(() => setIsFiltering(false), 300);
-    return () => clearTimeout(timer);
-  }, [searchTerm, selectedCategory, sortBy]);
 
   const filteredProducts = useMemo(() => {
     let filtered = [...initialProducts];
@@ -36,9 +25,7 @@ export default function CatalogoClient({
     }
 
     if (searchTerm) {
-      filtered = filtered.filter((p) =>
-        p.name.toLowerCase().includes(searchTerm.toLowerCase()),
-      );
+      filtered = filtered.filter((p) => p.name.toLowerCase().includes(searchTerm.toLowerCase()));
     }
 
     return filtered.sort((a, b) => {
@@ -78,9 +65,7 @@ export default function CatalogoClient({
                 Provisiones Mily
               </h1>
             </div>
-            <p className="text-slate-300 text-sm sm:text-lg">
-              Productos y precios actualizados
-            </p>
+            <p className="text-slate-300 text-sm sm:text-lg">Productos y precios actualizados</p>
           </div>
         </div>
 
@@ -145,7 +130,7 @@ export default function CatalogoClient({
                         | "name-desc"
                         | "price-asc"
                         | "price-desc"
-                        | "date-desc",
+                        | "date-desc"
                     )
                   }
                   className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-slate-700/50 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-sm sm:text-base transition-all duration-300 focus:bg-slate-700 focus:border-blue-500"
@@ -162,13 +147,7 @@ export default function CatalogoClient({
         </div>
 
         {/* Productos */}
-        {isFiltering ? (
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-            {[...Array(8)].map((_, i) => (
-              <ProductCardSkeleton key={i} />
-            ))}
-          </div>
-        ) : filteredProducts.length === 0 ? (
+        {filteredProducts.length === 0 ? (
           <div className="text-center py-12 bg-slate-800/50 rounded-xl border border-slate-700 animate-fadeIn">
             <p className="text-slate-400 text-base sm:text-lg">
               {searchTerm || selectedCategory !== "Todas"
@@ -206,9 +185,7 @@ export default function CatalogoClient({
             <p className="text-slate-200 font-medium text-sm sm:text-base">
               Gracias por preferirnos
             </p>
-            <p className="text-slate-400 text-xs sm:text-sm mt-1">
-              Tu negocio de confianza
-            </p>
+            <p className="text-slate-400 text-xs sm:text-sm mt-1">Tu negocio de confianza</p>
           </div>
         </div>
       </div>
