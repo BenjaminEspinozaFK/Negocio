@@ -3,15 +3,7 @@
 import { useState } from "react";
 import { Product, categories, units } from "@/types/product";
 import Image from "next/image";
-import {
-  Tag,
-  FolderOpen,
-  Package,
-  ImageIcon,
-  DollarSign,
-  Save,
-  X,
-} from "lucide-react";
+import { Tag, FolderOpen, Package, ImageIcon, DollarSign, Save, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -30,11 +22,7 @@ interface ProductFormProps {
   onCancel: () => void;
 }
 
-export default function ProductForm({
-  product,
-  onSubmit,
-  onCancel,
-}: ProductFormProps) {
+export default function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
   const [name, setName] = useState(product?.name || "");
   const [category, setCategory] = useState(product?.category || "Otros");
   const [price, setPrice] = useState(product?.price.toString() || "");
@@ -101,9 +89,7 @@ export default function ProductForm({
         // Verificar el tamaño del base64 (aproximadamente 33% más grande que el original)
         const base64Size = (base64String.length * 3) / 4;
         if (base64Size > 3 * 1024 * 1024) {
-          toast.error(
-            "La imagen codificada es muy grande. Intenta con una imagen más pequeña",
-          );
+          toast.error("La imagen codificada es muy grande. Intenta con una imagen más pequeña");
           return;
         }
 

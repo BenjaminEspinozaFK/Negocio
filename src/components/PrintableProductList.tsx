@@ -19,7 +19,7 @@ export default function PrintableProductList({
       acc[product.category].push(product);
       return acc;
     },
-    {} as Record<string, Product[]>,
+    {} as Record<string, Product[]>
   );
 
   const categories = Object.keys(productsByCategory).sort();
@@ -45,9 +45,7 @@ export default function PrintableProductList({
             year: "numeric",
           })}
         </p>
-        <p className="text-xs text-gray-500 mt-1">
-          Total de productos: {products.length}
-        </p>
+        <p className="text-xs text-gray-500 mt-1">Total de productos: {products.length}</p>
       </div>
 
       {/* Lista de productos */}
@@ -61,12 +59,8 @@ export default function PrintableProductList({
             <table className="w-full mb-4">
               <thead>
                 <tr className="border-b-2 border-gray-300">
-                  <th className="text-left py-2 px-2 font-semibold">
-                    Producto
-                  </th>
-                  <th className="text-center py-2 px-2 font-semibold">
-                    Unidad
-                  </th>
+                  <th className="text-left py-2 px-2 font-semibold">Producto</th>
+                  <th className="text-center py-2 px-2 font-semibold">Unidad</th>
                   <th className="text-right py-2 px-2 font-semibold">Precio</th>
                 </tr>
               </thead>
@@ -108,9 +102,7 @@ export default function PrintableProductList({
                   <td className="text-center py-2 px-2 text-sm text-gray-600">
                     {product.category}
                   </td>
-                  <td className="text-center py-2 px-2 text-sm text-gray-600">
-                    {product.unit}
-                  </td>
+                  <td className="text-center py-2 px-2 text-sm text-gray-600">{product.unit}</td>
                   <td className="text-right py-2 px-2 font-semibold">
                     {formatPrice(product.price)}
                   </td>

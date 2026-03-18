@@ -3,19 +3,8 @@
 import { useState } from "react";
 import { Product } from "@/types/product";
 import Image from "next/image";
-import {
-  Edit2,
-  Trash2,
-  Package,
-  AlertTriangle,
-  ShoppingCart,
-} from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
+import { Edit2, Trash2, Package, AlertTriangle, ShoppingCart } from "lucide-react";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -88,9 +77,7 @@ export default function ProductCard({
       </CardHeader>
 
       <CardContent className="p-3 sm:p-4 pt-0">
-        <p className="text-lg sm:text-2xl font-bold text-blue-400">
-          {formatPrice(product.price)}
-        </p>
+        <p className="text-lg sm:text-2xl font-bold text-blue-400">{formatPrice(product.price)}</p>
         <p className="text-[10px] sm:text-sm text-slate-400 mt-0.5 flex items-center gap-1.5">
           <Package className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
           <span>por {product.unit}</span>
@@ -131,10 +118,7 @@ export default function ProductCard({
             </Button>
           </CardFooter>
 
-          <AlertDialog
-            open={showDeleteDialog}
-            onOpenChange={setShowDeleteDialog}
-          >
+          <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
             <AlertDialogContent className="bg-slate-800 border-slate-700 max-w-md">
               <AlertDialogHeader>
                 <AlertDialogTitle className="flex items-center gap-2 text-white text-xl">
@@ -143,8 +127,7 @@ export default function ProductCard({
                 </AlertDialogTitle>
                 <AlertDialogDescription className="text-slate-300 space-y-4">
                   <p className="text-base">
-                    Estás a punto de eliminar permanentemente el siguiente
-                    producto:
+                    Estás a punto de eliminar permanentemente el siguiente producto:
                   </p>
 
                   {/* Información del producto */}
@@ -164,26 +147,16 @@ export default function ProductCard({
                     <div className="space-y-2">
                       <div>
                         <span className="text-slate-400 text-sm">Nombre:</span>
-                        <p className="text-white font-semibold text-base">
-                          {product.name}
-                        </p>
+                        <p className="text-white font-semibold text-base">{product.name}</p>
                       </div>
                       <div className="flex gap-4">
                         <div>
-                          <span className="text-slate-400 text-sm">
-                            Categoría:
-                          </span>
-                          <p className="text-white font-medium">
-                            {product.category}
-                          </p>
+                          <span className="text-slate-400 text-sm">Categoría:</span>
+                          <p className="text-white font-medium">{product.category}</p>
                         </div>
                         <div>
-                          <span className="text-slate-400 text-sm">
-                            Precio:
-                          </span>
-                          <p className="text-white font-medium">
-                            {formatPrice(product.price)}
-                          </p>
+                          <span className="text-slate-400 text-sm">Precio:</span>
+                          <p className="text-white font-medium">{formatPrice(product.price)}</p>
                         </div>
                       </div>
                     </div>
@@ -192,9 +165,8 @@ export default function ProductCard({
                   <div className="flex items-start gap-2 text-amber-400 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
                     <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5" />
                     <p className="text-sm">
-                      <strong>Advertencia:</strong> Esta acción no se puede
-                      deshacer. El producto será eliminado permanentemente de tu
-                      catálogo.
+                      <strong>Advertencia:</strong> Esta acción no se puede deshacer. El producto
+                      será eliminado permanentemente de tu catálogo.
                     </p>
                   </div>
                 </AlertDialogDescription>
