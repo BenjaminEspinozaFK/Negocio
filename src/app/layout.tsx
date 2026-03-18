@@ -15,8 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Provisiones Mily - Gestión de Productos",
-  description:
-    "Aplicación para gestionar productos y precios de Provisiones Mily",
+  description: "Aplicación para gestionar productos y precios de Provisiones Mily",
 };
 
 export const viewport = "width=device-width, initial-scale=1, maximum-scale=5";
@@ -28,9 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
         <Toaster />
       </body>

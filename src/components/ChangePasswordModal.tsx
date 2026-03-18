@@ -1,19 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Lock,
-  Eye,
-  EyeOff,
-  Key,
-  CheckCircle2,
-  AlertCircle,
-} from "lucide-react";
-import {
-  getPasswordStrength,
-  getStrengthLabel,
-  getStrengthColor,
-} from "@/lib/password-validation";
+import { Lock, Eye, EyeOff, Key, CheckCircle2, AlertCircle } from "lucide-react";
+import { getPasswordStrength, getStrengthLabel, getStrengthColor } from "@/lib/password-validation";
 
 interface ChangePasswordProps {
   onClose: () => void;
@@ -53,17 +42,11 @@ export default function ChangePasswordModal({ onClose }: ChangePasswordProps) {
 
     // Validación de contraseña fuerte
     if (newPassword.length < 8) {
-      setError(
-        "La contraseña debe tener al menos 8 caracteres para mayor seguridad",
-      );
+      setError("La contraseña debe tener al menos 8 caracteres para mayor seguridad");
       return;
     }
 
-    if (
-      !/[A-Z]/.test(newPassword) ||
-      !/[a-z]/.test(newPassword) ||
-      !/[0-9]/.test(newPassword)
-    ) {
+    if (!/[A-Z]/.test(newPassword) || !/[a-z]/.test(newPassword) || !/[0-9]/.test(newPassword)) {
       setError("La contraseña debe incluir mayúsculas, minúsculas y números");
       return;
     }
@@ -117,14 +100,9 @@ export default function ChangePasswordModal({ onClose }: ChangePasswordProps) {
             <div className="bg-blue-600 text-white w-10 h-10 rounded-lg flex items-center justify-center">
               <Key className="w-5 h-5" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900">
-              Cambiar Contraseña
-            </h2>
+            <h2 className="text-xl font-bold text-gray-900">Cambiar Contraseña</h2>
           </div>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
-          >
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 transition-colors">
             ✕
           </button>
         </div>
@@ -132,9 +110,7 @@ export default function ChangePasswordModal({ onClose }: ChangePasswordProps) {
         {success && (
           <div className="mb-4 bg-green-900/20 border border-green-500/50 backdrop-blur-sm px-4 py-3 rounded-lg text-sm flex items-center gap-3 shadow-lg">
             <CheckCircle2 className="w-5 h-5 text-green-400 shrink-0" />
-            <span className="text-green-200 font-medium">
-              Contraseña actualizada correctamente
-            </span>
+            <span className="text-green-200 font-medium">Contraseña actualizada correctamente</span>
           </div>
         )}
 
@@ -166,11 +142,7 @@ export default function ChangePasswordModal({ onClose }: ChangePasswordProps) {
                 onClick={() => setShowCurrentPassword(!showCurrentPassword)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
               >
-                {showCurrentPassword ? (
-                  <EyeOff className="w-5 h-5" />
-                ) : (
-                  <Eye className="w-5 h-5" />
-                )}
+                {showCurrentPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
             </div>
           </div>
@@ -195,11 +167,7 @@ export default function ChangePasswordModal({ onClose }: ChangePasswordProps) {
                 onClick={() => setShowNewPassword(!showNewPassword)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
               >
-                {showNewPassword ? (
-                  <EyeOff className="w-5 h-5" />
-                ) : (
-                  <Eye className="w-5 h-5" />
-                )}
+                {showNewPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
             </div>
 
@@ -211,9 +179,7 @@ export default function ChangePasswordModal({ onClose }: ChangePasswordProps) {
                     <div
                       key={level}
                       className={`h-1 flex-1 rounded ${
-                        level <= passwordStrength
-                          ? strengthColor
-                          : "bg-gray-300"
+                        level <= passwordStrength ? strengthColor : "bg-gray-300"
                       }`}
                     />
                   ))}
@@ -223,8 +189,7 @@ export default function ChangePasswordModal({ onClose }: ChangePasswordProps) {
                 </p>
                 {passwordStrength < 4 && (
                   <p className="text-xs text-gray-500 mt-1">
-                    Incluye mayúsculas, minúsculas, números y caracteres
-                    especiales
+                    Incluye mayúsculas, minúsculas, números y caracteres especiales
                   </p>
                 )}
               </div>
@@ -251,11 +216,7 @@ export default function ChangePasswordModal({ onClose }: ChangePasswordProps) {
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
               >
-                {showConfirmPassword ? (
-                  <EyeOff className="w-5 h-5" />
-                ) : (
-                  <Eye className="w-5 h-5" />
-                )}
+                {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
             </div>
           </div>
@@ -281,8 +242,8 @@ export default function ChangePasswordModal({ onClose }: ChangePasswordProps) {
 
         <div className="mt-4 p-3 bg-blue-50 rounded-lg">
           <p className="text-xs text-gray-600">
-            <strong>Nota:</strong> La nueva contraseña se guardará en la base de
-            datos y será la que uses para iniciar sesión en el futuro.
+            <strong>Nota:</strong> La nueva contraseña se guardará en la base de datos y será la que
+            uses para iniciar sesión en el futuro.
           </p>
         </div>
       </div>
