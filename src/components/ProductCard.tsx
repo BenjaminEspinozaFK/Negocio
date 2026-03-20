@@ -49,8 +49,8 @@ export default function ProductCard({
 
   return (
     <Card className="overflow-hidden hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 group bg-slate-800/90 border-slate-700 hover:border-blue-500/50 hover:-translate-y-1 animate-slideUp">
-      {product.image && (
-        <div className="relative h-32 sm:h-44 w-full overflow-hidden bg-white/95">
+      <div className="relative h-32 sm:h-44 w-full overflow-hidden bg-white/95">
+        {product.image ? (
           <Image
             src={product.image}
             alt={product.name}
@@ -59,18 +59,17 @@ export default function ProductCard({
             className="w-full h-full object-contain p-2 sm:p-3 group-hover:scale-110 transition-transform duration-500"
             unoptimized
           />
-          <Badge className="absolute top-2 right-2 bg-blue-600 hover:bg-blue-700 text-white border-0 transition-all duration-300 hover:scale-110">
-            {product.category}
-          </Badge>
-        </div>
-      )}
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-slate-100">
+            <Package className="w-12 h-12 sm:w-16 sm:h-16 text-slate-400" />
+          </div>
+        )}
+        <Badge className="absolute top-2 right-2 bg-blue-600 hover:bg-blue-700 text-white border-0 transition-all duration-300 hover:scale-110">
+          {product.category}
+        </Badge>
+      </div>
 
       <CardHeader className="p-3 sm:p-4 pb-2">
-        {!product.image && (
-          <Badge className="w-fit mb-2 bg-blue-600 hover:bg-blue-700 text-white border-0">
-            {product.category}
-          </Badge>
-        )}
         <h3 className="text-sm sm:text-lg font-semibold line-clamp-2 leading-tight text-white">
           {product.name}
         </h3>
