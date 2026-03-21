@@ -179,15 +179,18 @@ export default function CatalogoClient({ initialProducts }: CatalogoClientProps)
         )}
 
         {/* Footer */}
-        <div className="mt-12 sm:mt-16 text-center">
-          <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg p-6 sm:p-8 inline-block border border-slate-700 animate-fadeIn hover:shadow-xl transition-all duration-300">
-            <p className="text-xl sm:text-2xl mb-2">💚</p>
-            <p className="text-slate-200 font-medium text-sm sm:text-base">
-              Gracias por preferirnos
+        <footer className="mt-12 sm:mt-16 text-center">
+          <div className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-sm rounded-xl shadow-lg p-6 sm:p-8 border border-slate-700/50 animate-fadeIn">
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <Store className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
+              <span className="text-lg sm:text-xl font-semibold text-white">Provisiones Mily</span>
+            </div>
+            <p className="text-slate-300 text-sm sm:text-base mb-4">¡Gracias por preferirnos! 💚</p>
+            <p className="text-slate-500 text-xs">
+              © {new Date().getFullYear()} Todos los derechos reservados
             </p>
-            <p className="text-slate-400 text-xs sm:text-sm mt-1">Tu negocio de confianza</p>
           </div>
-        </div>
+        </footer>
       </div>
     </div>
   );
