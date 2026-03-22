@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { Product, categories } from "@/types/product";
+import { useEffect, useMemo, useState } from "react";
+import { Product, categories, units } from "@/types/product";
 import ProductCard from "@/components/ProductCard";
 import Link from "next/link";
-import { Search, Filter, Store, Lock, ArrowUpDown, X } from "lucide-react";
+import { Search, Filter, Store, Lock, ArrowUpDown, X, Package, DollarSign } from "lucide-react";
 
 interface CatalogoClientProps {
   initialProducts: Product[];
@@ -13,37 +13,168 @@ interface CatalogoClientProps {
 export default function CatalogoClient({ initialProducts }: CatalogoClientProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Todas");
+  const [selectedUnit, setSelectedUnit] = useState("Todas");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
   const [sortBy, setSortBy] = useState<
-    "name-asc" | "name-desc" | "price-asc" | "price-desc" | "date-desc"
-  >("date-desc");
+    "name-asc" | "name-desc" | "price-asc" | "price-desc" | "category-asc" | "date-desc"
+  >("name-asc");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [totalProducts, setTotalProducts] = useState(initialProducts.length);
+  const [totalPages, setTotalPages] = useState(1);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
 
-  const filteredProducts = useMemo(() => {
-    let filtered = [...initialProducts];
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm.trim());
+      setCurrentPage(1);
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, selectedUnit, minPrice, maxPrice, sortBy]);
+
+  const queryString = useMemo(() => {
+    const params = new URLSearchParams();
+
+    if (debouncedSearchTerm) {
+      params.set("q", debouncedSearchTerm);
+    }
 
     if (selectedCategory !== "Todas") {
-      filtered = filtered.filter((p) => p.category === selectedCategory);
+      params.set("category", selectedCategory);
     }
 
-    if (searchTerm) {
-      filtered = filtered.filter((p) => p.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    if (selectedUnit !== "Todas") {
+      params.set("unit", selectedUnit);
     }
 
-    return filtered.sort((a, b) => {
-      switch (sortBy) {
-        case "name-asc":
-          return a.name.localeCompare(b.name, "es");
-        case "name-desc":
-          return b.name.localeCompare(a.name, "es");
-        case "price-asc":
-          return a.price - b.price;
-        case "price-desc":
-          return b.price - a.price;
-        case "date-desc":
-        default:
-          return 0;
+    if (minPrice.trim()) {
+      params.set("minPrice", minPrice.trim());
+    }
+
+    if (maxPrice.trim()) {
+      params.set("maxPrice", maxPrice.trim());
+    }
+
+    switch (sortBy) {
+      case "name-desc":
+        params.set("sortBy", "name");
+        params.set("sortDir", "desc");
+        break;
+      case "price-asc":
+        params.set("sortBy", "price");
+        params.set("sortDir", "asc");
+        break;
+      case "price-desc":
+        params.set("sortBy", "price");
+        params.set("sortDir", "desc");
+        break;
+      case "category-asc":
+        params.set("sortBy", "category");
+        params.set("sortDir", "asc");
+        break;
+      case "date-desc":
+        params.set("sortBy", "createdAt");
+        params.set("sortDir", "desc");
+        break;
+      case "name-asc":
+      default:
+        params.set("sortBy", "name");
+        params.set("sortDir", "asc");
+        break;
+    }
+
+    params.set("page", String(currentPage));
+    params.set("pageSize", "12");
+
+    return params.toString();
+  }, [
+    debouncedSearchTerm,
+    selectedCategory,
+    selectedUnit,
+    minPrice,
+    maxPrice,
+    sortBy,
+    currentPage,
+  ]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function fetchProducts() {
+      try {
+        setIsLoading(true);
+        const res = await fetch(`/api/products?${queryString}`, {
+          method: "GET",
+          cache: "no-store",
+        });
+
+        if (!res.ok) {
+          throw new Error("Error al cargar productos");
+        }
+
+        const data = await res.json();
+        if (!isMounted) {
+          return;
+        }
+
+        if (Array.isArray(data)) {
+          setProducts(data);
+          setTotalProducts(data.length);
+          setTotalPages(1);
+          return;
+        }
+
+        setProducts(data.data || []);
+        setTotalProducts(data.pagination?.total || 0);
+        setTotalPages(data.pagination?.totalPages || 1);
+      } catch (error) {
+        console.error("Error al cargar productos del catálogo:", error);
+        if (!isMounted) {
+          return;
+        }
+        setProducts([]);
+        setTotalProducts(0);
+        setTotalPages(1);
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
-    });
-  }, [initialProducts, searchTerm, selectedCategory, sortBy]);
+    }
+
+    fetchProducts();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [queryString]);
+
+  const hasActiveFilters = useMemo(() => {
+    return (
+      debouncedSearchTerm.length > 0 ||
+      selectedCategory !== "Todas" ||
+      selectedUnit !== "Todas" ||
+      minPrice.trim().length > 0 ||
+      maxPrice.trim().length > 0
+    );
+  }, [debouncedSearchTerm, selectedCategory, selectedUnit, minPrice, maxPrice]);
+
+  const clearFilters = () => {
+    setSearchTerm("");
+    setSelectedCategory("Todas");
+    setSelectedUnit("Todas");
+    setMinPrice("");
+    setMaxPrice("");
+    setSortBy("name-asc");
+    setCurrentPage(1);
+  };
 
   return (
     <div className="min-h-screen py-3 sm:py-6 px-3 sm:px-4">
@@ -72,7 +203,7 @@ export default function CatalogoClient({ initialProducts }: CatalogoClientProps)
         {/* Filtros */}
         <div className="bg-slate-800/90 backdrop-blur-sm rounded-xl shadow-md border border-slate-700 p-4 sm:p-6 mb-4 sm:mb-8 animate-slideDown transition-all duration-300 hover:shadow-lg">
           <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4">
               <div>
                 <label className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-200 mb-1.5 sm:mb-2">
                   <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -118,6 +249,25 @@ export default function CatalogoClient({ initialProducts }: CatalogoClientProps)
 
               <div>
                 <label className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-200 mb-1.5 sm:mb-2">
+                  <Package className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  Unidad
+                </label>
+                <select
+                  value={selectedUnit}
+                  onChange={(e) => setSelectedUnit(e.target.value)}
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-slate-700/50 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-sm sm:text-base transition-all duration-300 focus:bg-slate-700 focus:border-blue-500"
+                >
+                  <option value="Todas">Todas</option>
+                  {units.map((unit) => (
+                    <option key={unit} value={unit}>
+                      {unit}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-200 mb-1.5 sm:mb-2">
                   <ArrowUpDown className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   Ordenar
                 </label>
@@ -128,6 +278,7 @@ export default function CatalogoClient({ initialProducts }: CatalogoClientProps)
                       e.target.value as
                         | "name-asc"
                         | "name-desc"
+                        | "category-asc"
                         | "price-asc"
                         | "price-desc"
                         | "date-desc"
@@ -135,34 +286,83 @@ export default function CatalogoClient({ initialProducts }: CatalogoClientProps)
                   }
                   className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-slate-700/50 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-sm sm:text-base transition-all duration-300 focus:bg-slate-700 focus:border-blue-500"
                 >
-                  <option value="date-desc">Más recientes</option>
                   <option value="name-asc">Nombre (A-Z)</option>
                   <option value="name-desc">Nombre (Z-A)</option>
+                  <option value="category-asc">Categoría (A-Z)</option>
                   <option value="price-asc">Precio (menor)</option>
                   <option value="price-desc">Precio (mayor)</option>
+                  <option value="date-desc">Más recientes</option>
                 </select>
               </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div>
+                <label className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-200 mb-1.5 sm:mb-2">
+                  <DollarSign className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  Precio mínimo
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  value={minPrice}
+                  onChange={(e) => setMinPrice(e.target.value)}
+                  placeholder="Ej: 1000"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-slate-700/50 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-slate-400 text-sm sm:text-base transition-all duration-300 focus:bg-slate-700 focus:border-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-200 mb-1.5 sm:mb-2">
+                  <DollarSign className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  Precio máximo
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(e.target.value)}
+                  placeholder="Ej: 12000"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-slate-700/50 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-slate-400 text-sm sm:text-base transition-all duration-300 focus:bg-slate-700 focus:border-blue-500"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
+              <p className="text-slate-300 text-sm sm:text-base">
+                Mostrando <span className="font-semibold text-white">{products.length}</span> de{" "}
+                <span className="font-semibold text-white">{totalProducts}</span> productos
+              </p>
+              <button
+                type="button"
+                onClick={clearFilters}
+                disabled={!hasActiveFilters && sortBy === "name-asc"}
+                className="px-3 sm:px-4 py-2 rounded-lg border border-slate-600 text-slate-200 text-sm hover:bg-slate-700/60 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+              >
+                Limpiar filtros
+              </button>
             </div>
           </div>
         </div>
 
         {/* Productos */}
-        {filteredProducts.length === 0 ? (
+        {isLoading ? (
+          <div className="text-center py-12 bg-slate-800/50 rounded-xl border border-slate-700 animate-fadeIn">
+            <p className="text-slate-300 text-base sm:text-lg">Cargando productos...</p>
+          </div>
+        ) : products.length === 0 ? (
           <div className="text-center py-12 bg-slate-800/50 rounded-xl border border-slate-700 animate-fadeIn">
             <p className="text-slate-400 text-base sm:text-lg">
-              {searchTerm || selectedCategory !== "Todas"
-                ? "No se encontraron productos"
-                : "No hay productos disponibles"}
+              {hasActiveFilters ? "No se encontraron productos" : "No hay productos disponibles"}
             </p>
           </div>
         ) : (
           <>
             <div className="mb-4 sm:mb-6 inline-block bg-blue-600/20 backdrop-blur-sm border border-blue-500/30 text-blue-300 px-4 sm:px-6 py-2 sm:py-3 rounded-lg shadow-sm font-semibold text-sm sm:text-base animate-scaleIn">
-              📦 {filteredProducts.length} producto
-              {filteredProducts.length !== 1 ? "s" : ""}
+              📦 {totalProducts} producto{totalProducts !== 1 ? "s" : ""}
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-              {filteredProducts.map((product, index) => (
+              {products.map((product, index) => (
                 <div
                   key={product.id}
                   style={{
@@ -175,12 +375,37 @@ export default function CatalogoClient({ initialProducts }: CatalogoClientProps)
                 </div>
               ))}
             </div>
+
+            {totalPages > 1 && (
+              <div className="mt-8 flex items-center justify-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 rounded-lg border border-slate-600 text-slate-200 text-sm hover:bg-slate-700/60 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+                >
+                  Anterior
+                </button>
+                <p className="text-slate-300 text-sm">
+                  Página <span className="font-semibold text-white">{currentPage}</span> de{" "}
+                  <span className="font-semibold text-white">{totalPages}</span>
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+                  disabled={currentPage >= totalPages}
+                  className="px-4 py-2 rounded-lg border border-slate-600 text-slate-200 text-sm hover:bg-slate-700/60 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+                >
+                  Siguiente
+                </button>
+              </div>
+            )}
           </>
         )}
 
         {/* Footer */}
         <footer className="mt-12 sm:mt-16 text-center">
-          <div className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-sm rounded-xl shadow-lg p-6 sm:p-8 border border-slate-700/50 animate-fadeIn">
+          <div className="bg-linear-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-sm rounded-xl shadow-lg p-6 sm:p-8 border border-slate-700/50 animate-fadeIn">
             <div className="flex items-center justify-center gap-2 mb-3">
               <Store className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
               <span className="text-lg sm:text-xl font-semibold text-white">Provisiones Mily</span>
