@@ -10,6 +10,7 @@ import {
   validateImageBase64,
 } from "@/lib/input-validation";
 import { categories, units } from "@/types/product";
+import { uploadImage } from "@/lib/cloudinary";
 
 // Revalidar cada 60 segundos
 export const revalidate = 60;
@@ -160,13 +161,19 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    let imageUrl: string | null = null;
+    if (data.image && data.image.startsWith("data:")) {
+      imageUrl = await uploadImage(data.image);
+    }
+
+
     const newProduct = await prisma.product.create({
       data: {
         name: nameValidation.value, // Usar valor sanitizado
         category: data.category,
         price: data.price,
         unit: data.unit,
-        image: data.image || null,
+        image: imageUrl,
       },
     });
 
