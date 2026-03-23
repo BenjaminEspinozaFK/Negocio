@@ -112,7 +112,7 @@ export default function CatalogoClient({ initialProducts }: CatalogoClientProps)
         setIsLoading(true);
         const res = await fetch(`/api/products?${queryString}`, {
           method: "GET",
-          cache: "no-store",
+          //cache: "no-store",
         });
 
         if (!res.ok) {
