@@ -349,11 +349,11 @@ export default function AdminPanel() {
                 </p>
               </div>
 
-              {/* Botones de Acción - Organizados en Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {/* Primera fila - Botones de navegación y sesión */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
                 <Link
                   href="/catalogo"
-                  className="bg-slate-700/50 hover:bg-slate-700 border border-slate-600 text-white px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 inline-flex items-center justify-center gap-2 touch-manipulation hover:scale-105 ripple-effect"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 inline-flex items-center justify-center gap-2 touch-manipulation hover:scale-105 ripple-effect"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   Ver Catálogo Público
@@ -375,29 +375,37 @@ export default function AdminPanel() {
                   Cerrar Sesión
                 </button>
               </div>
+
+              {/* Segunda fila - Acciones de productos */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <button
+                  onClick={() => {
+                    setEditingProduct(null);
+                    setShowModal(true);
+                  }}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 inline-flex items-center justify-center gap-2 touch-manipulation hover:scale-105 ripple-effect"
+                >
+                  <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
+                  Agregar Producto
+                </button>
+
+                <button
+                  onClick={handlePrint}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 inline-flex items-center justify-center gap-2 touch-manipulation hover:scale-105 ripple-effect"
+                >
+                  <Printer className="w-4 h-4 sm:w-5 sm:h-5" />
+                  Imprimir Lista
+                </button>
+
+                <button
+                  onClick={() => setShowCalculator(!showCalculator)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 inline-flex items-center justify-center gap-2 touch-manipulation hover:scale-105 ripple-effect"
+                >
+                  <Calculator className="w-4 h-4 sm:w-5 sm:h-5" />
+                  Calculadora
+                </button>
+              </div>
             </div>
-          </div>
-
-          {/* Add Product Button & Print Button */}
-          <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row gap-3 animate-slideDown">
-            <button
-              onClick={() => {
-                setEditingProduct(null);
-                setShowModal(true);
-              }}
-              className="flex-1 md:flex-none bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-5 sm:px-6 rounded-lg transition-all duration-200 inline-flex items-center justify-center gap-2 touch-manipulation hover:scale-105 ripple-effect"
-            >
-              <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="text-sm sm:text-base">Agregar Nuevo Producto</span>
-            </button>
-
-            <button
-              onClick={handlePrint}
-              className="flex-1 md:flex-none bg-blue-600 hover:bg-slate-600 text-white font-semibold py-3 px-5 sm:px-6 rounded-lg transition-all duration-200 inline-flex items-center justify-center gap-2 touch-manipulation hover:scale-105 ripple-effect"
-            >
-              <Printer className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="text-sm sm:text-base">Imprimir Lista de Precios</span>
-            </button>
           </div>
 
           {/* Filters */}
