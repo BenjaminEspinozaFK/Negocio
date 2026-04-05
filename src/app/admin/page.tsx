@@ -580,15 +580,6 @@ export default function AdminPanel() {
             <ChangePasswordModal onClose={() => setShowChangePasswordModal(false)} />
           )}
 
-          {/* Botón flotante de calculadora */}
-          <button
-            onClick={() => setShowCalculator(true)}
-            className="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all hover:scale-110 z-30"
-            title="Abrir Calculadora"
-          >
-            <Calculator className="w-6 h-6" />
-          </button>
-
           {/* Componente de calculadora */}
           <ShoppingCalculator
             ref={calculatorRef}
