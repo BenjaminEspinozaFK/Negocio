@@ -46,6 +46,8 @@ export default function AdminPanel() {
   const [showModal, setShowModal] = useState(false);
   const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
   const [showCalculator, setShowCalculator] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 12;
 
   useEffect(() => {
     // Siempre mostrar pantalla de login al entrar
@@ -83,6 +85,7 @@ export default function AdminPanel() {
     });
 
     setFilteredProducts(filtered);
+    setCurrentPage(1);
   }, [products, searchTerm, selectedCategory, sortBy]);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -482,6 +485,7 @@ export default function AdminPanel() {
                       setSearchTerm("");
                       setSelectedCategory("Todas");
                       setSortBy("date-desc");
+                      setCurrentPage(1);
                     }}
                     className="text-xs sm:text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors inline-flex items-center gap-1.5"
                   >
@@ -513,33 +517,68 @@ export default function AdminPanel() {
             <>
               <div className="mb-3 sm:mb-6 animate-scaleIn">
                 <p className="text-xs sm:text-sm font-medium text-slate-400 px-1">
-                  Mostrando {filteredProducts.length} producto
+                  Mostrando{" "}
+                  {Math.min(currentPage * ITEMS_PER_PAGE, filteredProducts.length)} de{" "}
+                  {filteredProducts.length} producto
                   {filteredProducts.length !== 1 ? "s" : ""}
                 </p>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-                {filteredProducts.map((product, index) => (
-                  <div
-                    key={product.id}
-                    style={{
-                      animationDelay: `${index * 0.05}s`,
-                      opacity: 0,
-                    }}
-                    className="animate-slideUp"
-                  >
-                    <ProductCard
-                      product={product}
-                      onEdit={(product) => {
-                        setEditingProduct(product);
-                        setShowModal(true);
+                {filteredProducts
+                  .slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
+                  .map((product, index) => (
+                    <div
+                      key={product.id}
+                      style={{
+                        animationDelay: `${index * 0.05}s`,
+                        opacity: 0,
                       }}
-                      onDelete={handleDeleteProduct}
-                      onAddToCart={handleAddToCart}
-                      readOnly={false}
-                    />
-                  </div>
-                ))}
+                      className="animate-slideUp"
+                    >
+                      <ProductCard
+                        product={product}
+                        onEdit={(product) => {
+                          setEditingProduct(product);
+                          setShowModal(true);
+                        }}
+                        onDelete={handleDeleteProduct}
+                        onAddToCart={handleAddToCart}
+                        readOnly={false}
+                      />
+                    </div>
+                  ))}
               </div>
+
+              {Math.ceil(filteredProducts.length / ITEMS_PER_PAGE) > 1 && (
+                <div className="mt-8 flex items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+                    disabled={currentPage === 1}
+                    className="px-4 py-2 rounded-lg border border-slate-600 text-slate-200 text-sm hover:bg-slate-700/60 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+                  >
+                    Anterior
+                  </button>
+                  <p className="text-slate-300 text-sm">
+                    Página <span className="font-semibold text-white">{currentPage}</span> de{" "}
+                    <span className="font-semibold text-white">
+                      {Math.ceil(filteredProducts.length / ITEMS_PER_PAGE)}
+                    </span>
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setCurrentPage((prev) =>
+                        Math.min(Math.ceil(filteredProducts.length / ITEMS_PER_PAGE), prev + 1)
+                      )
+                    }
+                    disabled={currentPage >= Math.ceil(filteredProducts.length / ITEMS_PER_PAGE)}
+                    className="px-4 py-2 rounded-lg border border-slate-600 text-slate-200 text-sm hover:bg-slate-700/60 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+                  >
+                    Siguiente
+                  </button>
+                </div>
+              )}
             </>
           )}
 
