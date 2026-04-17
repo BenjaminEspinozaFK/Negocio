@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { isRateLimited, logLoginAttempt, getRemainingBlockTime } from "@/lib/rate-limit";
+import { getOrCreateAdminSettings } from "@/lib/admin-settings";
 
 export async function POST(request: Request) {
   try {
@@ -24,26 +24,11 @@ export async function POST(request: Request) {
       );
     }
 
-    // Intentar obtener la contraseña de la base de datos
-    let settings = await prisma.settings.findUnique({
-      where: { id: "admin-config" },
-    });
-
-    // Si no existe en BD, usar la del .env y crearla hasheada
-    if (!settings) {
-      const envPassword = process.env.ADMIN_PASSWORD;
-      if (!envPassword) {
-        console.error("ADMIN_PASSWORD no está definida en las variables de entorno");
-        return NextResponse.json({ error: "Error de configuración del servidor" }, { status: 500 });
-      }
-      const hashedPassword = await bcrypt.hash(envPassword, 10);
-
-      settings = await prisma.settings.create({
-        data: {
-          id: "admin-config",
-          password: hashedPassword,
-        },
-      });
+    let settings;
+    try {
+      settings = await getOrCreateAdminSettings();
+    } catch {
+      return NextResponse.json({ error: "Error de configuración del servidor" }, { status: 500 });
     }
 
     // Comparar la contraseña ingresada con la hasheada
