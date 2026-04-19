@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { isAuthenticated } from "@/lib/auth";
 import { NextRequest } from "next/server";
+import { withAuth } from "@/lib/auth";
 import {
   validateProductName,
   validatePrice,
@@ -120,13 +120,8 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest) => {
   try {
-    // 🔒 Verificar autenticación por cookie
-    if (!isAuthenticated(request)) {
-      return NextResponse.json({ error: "No autorizado" }, { status: 401 });
-    }
-
     const data = await request.json();
 
     // Validar y sanitizar nombre
@@ -166,7 +161,6 @@ export async function POST(request: NextRequest) {
       imageUrl = await uploadImage(data.image);
     }
 
-
     const newProduct = await prisma.product.create({
       data: {
         name: nameValidation.value, // Usar valor sanitizado
@@ -182,4 +176,4 @@ export async function POST(request: NextRequest) {
     console.error("Error al crear producto:", error);
     return NextResponse.json({ error: "Error al crear el producto" }, { status: 500 });
   }
-}
+});
