@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { isAuthenticated } from "@/lib/auth";
+import { withAuth } from "@/lib/auth";
 import { NextRequest } from "next/server";
 import {
   validateProductName,
@@ -11,13 +11,9 @@ import {
 } from "@/lib/input-validation";
 import { categories, units } from "@/types/product";
 
-export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export const PUT = withAuth(async (request: NextRequest, ctx: unknown) => {
+  const { params } = ctx as { params: Promise<{ id: string }> };
   try {
-    // 🔒 Verificar autenticación por cookie
-    if (!isAuthenticated(request)) {
-      return NextResponse.json({ error: "No autorizado" }, { status: 401 });
-    }
-
     const { id } = await params;
     const data = await request.json();
 
@@ -69,18 +65,11 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     console.error("Error al actualizar producto:", error);
     return NextResponse.json({ error: "Error al actualizar el producto" }, { status: 500 });
   }
-}
+});
 
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const DELETE = withAuth(async (request: NextRequest, ctx: unknown) => {
+  const { params } = ctx as { params: Promise<{ id: string }> };
   try {
-    // 🔒 Verificar autenticación por cookie
-    if (!isAuthenticated(request)) {
-      return NextResponse.json({ error: "No autorizado" }, { status: 401 });
-    }
-
     const { id } = await params;
 
     // Verificar que el producto existe antes de eliminar
@@ -101,4 +90,4 @@ export async function DELETE(
     console.error("Error al eliminar producto:", error);
     return NextResponse.json({ error: "Error al eliminar el producto" }, { status: 500 });
   }
-}
+});

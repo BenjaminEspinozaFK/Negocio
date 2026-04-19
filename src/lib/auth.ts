@@ -10,16 +10,18 @@ export function isAuthenticated(request: NextRequest): boolean {
   return sessionCookie?.value === "authenticated";
 }
 
+type RouteHandler = (req: NextRequest, ctx?: unknown) => Promise<NextResponse>;
+
 /**
  * Middleware para proteger rutas de API
  */
-export function withAuth(handler: (req: NextRequest) => Promise<NextResponse>) {
-  return async (req: NextRequest) => {
+export function withAuth(handler: RouteHandler): RouteHandler {
+  return async (req: NextRequest, ctx?: unknown) => {
     // Verificar autenticación por cookie
     if (!isAuthenticated(req)) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 });
     }
 
-    return handler(req);
+    return handler(req, ctx);
   };
 }
