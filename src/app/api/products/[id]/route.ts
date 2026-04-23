@@ -1,24 +1,23 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { withAuth } from "@/lib/auth";
+import { withAuth, withErrorHandler } from "@/lib/auth";
 import { NextRequest } from "next/server";
 import { validateProductInput } from "@/lib/product-validation";
 // import { categories, units } from "@/types/product";
 
-export const PUT = withAuth(async (request: NextRequest, ctx: unknown) => {
-  const { params } = ctx as { params: Promise<{ id: string }> };
-  try {
+export const PUT = withAuth(
+  withErrorHandler(async (request: NextRequest, ctx: unknown) => {
+    const { params } = ctx as { params: Promise<{ id: string }> };
     const { id } = await params;
     const data = await request.json();
 
-    // Validar todos los campos del producto
     const validation = validateProductInput(data);
     if (!validation.ok) return validation.response;
 
     const updatedProduct = await prisma.product.update({
       where: { id },
       data: {
-        name: validation.sanitizedName, // Usar valor sanitizado
+        name: validation.sanitizedName,
         category: data.category,
         price: data.price,
         unit: data.unit,
@@ -27,15 +26,14 @@ export const PUT = withAuth(async (request: NextRequest, ctx: unknown) => {
     });
 
     return NextResponse.json(updatedProduct);
-  } catch (error) {
-    console.error("Error al actualizar producto:", error);
-    return NextResponse.json({ error: "Error al actualizar el producto" }, { status: 500 });
-  }
-});
+    // ← sin try/catch, withErrorHandler lo maneja
+  })
+);
 
-export const DELETE = withAuth(async (request: NextRequest, ctx: unknown) => {
-  const { params } = ctx as { params: Promise<{ id: string }> };
-  try {
+export const DELETE = withAuth(
+  withErrorHandler(async (request: NextRequest, ctx: unknown) => {
+    const { params } = ctx as { params: Promise<{ id: string }> };
+
     const { id } = await params;
 
     // Verificar que el producto existe antes de eliminar
@@ -52,8 +50,5 @@ export const DELETE = withAuth(async (request: NextRequest, ctx: unknown) => {
     });
 
     return NextResponse.json({ message: "Producto eliminado" });
-  } catch (error) {
-    console.error("Error al eliminar producto:", error);
-    return NextResponse.json({ error: "Error al eliminar el producto" }, { status: 500 });
-  }
-});
+  })
+);
