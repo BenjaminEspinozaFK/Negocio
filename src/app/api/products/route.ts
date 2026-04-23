@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { NextRequest } from "next/server";
-import { withAuth } from "@/lib/auth";
+import { withAuth, withErrorHandler } from "@/lib/auth";
 import { validateProductInput } from "@/lib/product-validation";
 import { categories, units } from "@/types/product";
 import { uploadImage } from "@/lib/cloudinary";
@@ -47,24 +47,22 @@ export async function GET(request: NextRequest) {
     const where = {
       ...(q
         ? {
-          name: {
-            contains: q,
-            mode: "insensitive" as const,
-          },
-        }
+            name: {
+              contains: q,
+              mode: "insensitive" as const,
+            },
+          }
         : {}),
-      ...(category && category !== "Todas" && categories.includes(category)
-        ? { category }
-        : {}),
+      ...(category && category !== "Todas" && categories.includes(category) ? { category } : {}),
       ...(unit && unit !== "Todas" && units.includes(unit) ? { unit } : {}),
       ...((minPrice !== null && Number.isFinite(minPrice)) ||
-        (maxPrice !== null && Number.isFinite(maxPrice))
+      (maxPrice !== null && Number.isFinite(maxPrice))
         ? {
-          price: {
-            ...(minPrice !== null && Number.isFinite(minPrice) ? { gte: minPrice } : {}),
-            ...(maxPrice !== null && Number.isFinite(maxPrice) ? { lte: maxPrice } : {}),
-          },
-        }
+            price: {
+              ...(minPrice !== null && Number.isFinite(minPrice) ? { gte: minPrice } : {}),
+              ...(maxPrice !== null && Number.isFinite(maxPrice) ? { lte: maxPrice } : {}),
+            },
+          }
         : {}),
     };
 
@@ -114,8 +112,8 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export const POST = withAuth(async (request: NextRequest) => {
-  try {
+export const POST = withAuth(
+  withErrorHandler(async (request: NextRequest) => {
     const data = await request.json();
 
     // Validar todos los campos del producto
@@ -138,8 +136,5 @@ export const POST = withAuth(async (request: NextRequest) => {
     });
 
     return NextResponse.json(newProduct, { status: 201 });
-  } catch (error) {
-    console.error("Error al crear producto:", error);
-    return NextResponse.json({ error: "Error al crear el producto" }, { status: 500 });
-  }
-});
+  })
+);
