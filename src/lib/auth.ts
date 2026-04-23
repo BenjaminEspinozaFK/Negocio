@@ -25,3 +25,17 @@ export function withAuth(handler: RouteHandler): RouteHandler {
     return handler(req, ctx);
   };
 }
+
+/**
+ * Patrón Decorator.
+ */
+export function withErrorHandler(handler: RouteHandler): RouteHandler {
+  return async (req: NextRequest, ctx?: unknown) => {
+    try {
+      return await handler(req, ctx);
+    } catch (error) {
+      console.error("[API Error]", req.method, req.nextUrl.pathname, error);
+      return NextResponse.json({ error: "Error interno del servidor" }, { status: 500 });
+    }
+  };
+}
